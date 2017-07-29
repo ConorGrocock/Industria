@@ -21,7 +21,7 @@ public class GenWorld : MonoBehaviour
         {
             for (float x = (-(float)worldWidth / 2f); x < (float)worldWidth / 2f; x++)
             {
-                Sprite cSprite = sprites[Random.Range(0, sprites.Length)];
+                Sprite cSprite = sprites[sprites.Length-1];//sprites[Random.Range(0, sprites.Length)];
 
                 GameObject cTile = Instantiate(Tile);
                 Vector3 cTrans = cTile.transform.position;
@@ -31,6 +31,14 @@ public class GenWorld : MonoBehaviour
 
                 cTile.transform.position = cTrans;
                 cTile.transform.parent = Parent.transform;
+
+
+                GameObject init = Instantiate(Building);
+                init.transform.parent = Parent.transform;
+                init.transform.position = cTrans;
+
+
+
                 cTile.AddComponent<Tile>();
                 cTile.GetComponent<SpriteRenderer>().sprite = cSprite;
                 cTile.GetComponent<Tile>().building = Building;
