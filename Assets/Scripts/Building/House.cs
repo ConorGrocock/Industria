@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class House : Building {
 
-    public float babyTime = 60f;
+    public float babyTime = 4f;
     [SerializeField]
     private float timeToNextBaby = 0f;
 
     [Space(20)]
-    public int capacity;
+    public int occupancy;
     public int maxCapacity = 5;
     public bool full;
 
@@ -25,8 +25,23 @@ public class House : Building {
 	void Update () {
 		if(timeToNextBaby <= 0) {
             timeToNextBaby = babyTime;
-            capacity++;
-            Instantiate(Villager, position: transform.position, rotation: Quaternion.identity);
+            babyTime *= 2;
+            occupancy++;
+            full = occupancy >= maxCapacity;
+
+            if(full) {
+                float xOffset = Random.Range(-1, 1);
+                float yOffset = Random.Range(-1, 1);
+
+                Vector3 cPos = GenWorld._instance.getTileCoord(transform.position);
+
+                GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building = GenWorld._instance.house;
+
+                //Spawn new house
+                //Where?
+                //How?
+                //Spawn time of new house?
+            }
         }
         timeToNextBaby -= Time.deltaTime;
 	}

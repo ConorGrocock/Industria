@@ -269,9 +269,8 @@ MonoBehaviour:
   worldWidth: 17
   Tile: {fileID: 1497144371436650, guid: ca21afeb6d86ee54fa0d7aea9eacf31e, type: 2}
   Parent: {fileID: 1563397760}
-  Building: {fileID: 1030186562742704, guid: e776dfa2e2b33d44dbef37c04562ad3a, type: 2}
+  house: {fileID: 1448488196454324, guid: 32f307ed3d5991442a4ee3c63f59df63, type: 2}
   sprites:
   - {fileID: 21300000, guid: bee6fc3ec0471d746a28db552ba31ccd, type: 3}
   - {fileID: 21300000, guid: d5dd054b2ccd09e42a49bcb50bda3591, type: 3}
   - {fileID: 21300000, guid: cc5608b3581858c418f5d8c6c15b628e, type: 3}
-  - {fileID: 21300000, guid: 5911858adfd29d541a7b134077f3116b, type: 3}

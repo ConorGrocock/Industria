@@ -4,28 +4,34 @@ using UnityEngine;
 
 public class GenWorld : MonoBehaviour
 {
+    public static GenWorld _instance;
 
     public int worldHeight = 10;
     public int worldWidth = 10;
     public GameObject Tile;
     public GameObject Parent;
 
-    public GameObject Building;
+    public GameObject house;
 
     public Sprite[] sprites;
+
+    public GameObject[][] tiles; 
 
     // Use this for initialization
     void Start()
     {
-        for (float y = (-(float)worldHeight / 2f); y < ((float)worldHeight / 2f) + 1; y++)
-        {
-            for (float x = (-(float)worldWidth / 2f); x < (float)worldWidth / 2f; x++)
-            {
-                Sprite cSprite = sprites[Random.Range(0, sprites.Length-1)];//TEMP -1
+        if (_instance == null) _instance = this;
+        else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class" );
+
+        tiles = new GameObject[worldWidth][];
+        for (int x = 0; x < worldWidth; x++) {
+            tiles[x] = new GameObject[worldHeight];
+            for (int y = 0; y < worldHeight; y++) {
+                Sprite cSprite = sprites[Random.Range(0, sprites.Length-1)];
 
                 GameObject cTile = Instantiate(Tile);
                 Vector3 cTrans = cTile.transform.position;
-
+                
                 cTrans.x = x * 1.28f;
                 cTrans.y = y * 1.28f;
                 cTrans.z = 100;
@@ -36,9 +42,15 @@ public class GenWorld : MonoBehaviour
                 cTile.AddComponent<Tile>();
                 cTile.GetComponent<SpriteRenderer>().sprite = cSprite;
                 
-                cTile.GetComponent<Tile>().building = sprites[sprites.Length - 1];
                 cTile.GetComponent<Tile>().tile = Tile;
+                tiles[x][y] = cTile;
             }
         }
+        tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = house;
+        Camera.main.transform.Translate(new Vector3((worldWidth / 2)*1.28f, ((worldHeight / 2)*1.28f) -0.5f));
+    }
+
+    public Vector3 getTileCoord(Vector3 vector) {
+        return vector / 1.28f;
     }
 }
