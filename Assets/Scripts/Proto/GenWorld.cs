@@ -25,6 +25,7 @@ public class GenWorld : MonoBehaviour
                 cTrans.x = x * cSprite.bounds.size.x;
                 cTrans.y = y * cSprite.bounds.size.y;
                 cTile.transform.position = cTrans;
+                cTile.AddComponent<Tile>();
                 cTile.GetComponent<SpriteRenderer>().sprite = cSprite;
             }
         }
