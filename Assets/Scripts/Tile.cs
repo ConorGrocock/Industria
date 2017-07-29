@@ -8,7 +8,8 @@ public class Tile : MonoBehaviour
     /// <summary>
     /// Building on this tile
     /// </summary>
-    public GameObject building;
+    public Sprite building;
+    public GameObject tile;
 
     // Use this for initialization
     void Start()
@@ -19,14 +20,11 @@ public class Tile : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
-            GameObject init = Instantiate(building);
+            Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            GameObject init = Instantiate(tile);
+            init.GetComponent<SpriteRenderer>().sprite = building;
             init.transform.parent = transform;
-            init.transform.localPosition = new Vector3(0, 0);
-            Debug.Log("==========");
-            Debug.Log(mouse);
-            Debug.Log(transform.position);
-            Debug.Log(init.transform.position);
+            init.transform.localPosition = new Vector3(0, 0, -100);
         }
     }
 
