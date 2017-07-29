@@ -33,14 +33,20 @@ public class GenWorld : MonoBehaviour
                 cTile.transform.parent = Parent.transform;
 
 
-                GameObject init = Instantiate(Building);
-                init.transform.parent = Parent.transform;
-                init.transform.position = cTrans;
+                GameObject init = Instantiate(Tile);
+                Vector3 cPos = init.transform.position;
+
+                cPos.x = x * 1.28f;
+                cPos.y = y * 1.28f;
+
+                init.transform.position = cPos;
+                init.transform.parent = cTile.transform;
 
 
 
                 cTile.AddComponent<Tile>();
                 cTile.GetComponent<SpriteRenderer>().sprite = cSprite;
+                init.GetComponent<SpriteRenderer>().sprite = cSprite;
                 cTile.GetComponent<Tile>().building = Building;
             }
         }
