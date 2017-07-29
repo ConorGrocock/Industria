@@ -13,6 +13,8 @@ public class House : Building {
     public int maxCapacity = 5;
     public bool full;
 
+    public GameObject Villager;
+
     // Use this for initialization
     new void Start () {
         base.Start();
@@ -24,6 +26,7 @@ public class House : Building {
 		if(timeToNextBaby <= 0) {
             timeToNextBaby = babyTime;
             capacity++;
+            Instantiate(Villager, position: transform.position, rotation: Quaternion.identity);
         }
         timeToNextBaby -= Time.deltaTime;
 	}

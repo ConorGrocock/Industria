@@ -17,6 +17,6 @@ public class Villager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        //transform.Translate(new Vector3(Random.Range(-1, 2) * Time.deltaTime, Random.Range(-1, 2) * Time.deltaTime));
 	}
 }

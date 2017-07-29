@@ -1,7 +1,8 @@
-﻿﻿using System.Collections;
+﻿﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class GenWorld : MonoBehaviour
 {
 
@@ -25,10 +26,12 @@ public class GenWorld : MonoBehaviour
 
                 GameObject cTile = Instantiate(Tile);
                 Vector3 cTrans = cTile.transform.position;
-                cTrans.x = x * cSprite.bounds.size.x;
-                cTrans.y = y * cSprite.bounds.size.y;
+
+                cTrans.x = x * 1.28f;
+                cTrans.y = y * 1.28f;
+
                 cTile.transform.position = cTrans;
-                //cTile.transform.parent = Parent.transform;
+                cTile.transform.parent = Parent.transform;
                 cTile.AddComponent<Tile>();
                 cTile.GetComponent<SpriteRenderer>().sprite = cSprite;
                 cTile.GetComponent<Tile>().building = Building;

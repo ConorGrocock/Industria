@@ -19,7 +19,7 @@ public class Tile : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            GameObject init = Instantiate(building, new Vector3(transform.position.x * 0.28f, transform.position.y * 0.28f), Quaternion.identity);
+            GameObject init = Instantiate(building, new Vector3(transform.position.x * 1, transform.position.y * 1), Quaternion.identity);
         }
     }
 
