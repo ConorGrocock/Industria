@@ -8,6 +8,7 @@ public class GenWorld : MonoBehaviour
     public int worldHeight = 10;
     public int worldWidth = 10;
     public GameObject Tile;
+    public GameObject Parent;
 
     public Sprite[] sprites;
 
@@ -25,6 +26,7 @@ public class GenWorld : MonoBehaviour
                 cTrans.x = x * cSprite.bounds.size.x;
                 cTrans.y = y * cSprite.bounds.size.y;
                 cTile.transform.position = cTrans;
+                cTile.transform.parent = Parent.transform;
                 cTile.AddComponent<Tile>();
                 cTile.GetComponent<SpriteRenderer>().sprite = cSprite;
             }
