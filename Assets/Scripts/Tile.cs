@@ -19,7 +19,14 @@ public class Tile : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            GameObject init = Instantiate(building, new Vector3(transform.position.x * 1, transform.position.y * 1), Quaternion.identity);
+            Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
+            GameObject init = Instantiate(building);
+            init.transform.parent = transform;
+            init.transform.localPosition = new Vector3(0, 0);
+            Debug.Log("==========");
+            Debug.Log(mouse);
+            Debug.Log(transform.position);
+            Debug.Log(init.transform.position);
         }
     }
 
