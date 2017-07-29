@@ -9,6 +9,8 @@ public class GenWorld : MonoBehaviour
     public int worldWidth = 10;
     public GameObject Tile;
 
+    public Sprite[] sprites;
+
     // Use this for initialization
     void Start()
     {
@@ -16,11 +18,13 @@ public class GenWorld : MonoBehaviour
         {
             for (int j = -worldWidth / 2; j < worldWidth / 2; j++)
             {
+                Sprite cSprite = sprites[Random.Range(0, sprites.Length)];
                 GameObject cTile = Instantiate(Tile);
                 Vector3 cTrans = cTile.transform.position;
-                cTrans.x = i * Tile.GetComponent<Renderer>().bounds.size.x;
-                cTrans.y = j * Tile.GetComponent<Renderer>().bounds.size.y;
+                cTrans.x = i * cSprite.bounds.size.x;
+                cTrans.y = j * cSprite.bounds.size.x;
                 cTile.transform.position = cTrans;
+                cTile.GetComponent<SpriteRenderer>().sprite = cSprite;
             }
         }
     }
