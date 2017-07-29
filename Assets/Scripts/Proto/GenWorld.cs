@@ -14,9 +14,9 @@ public class GenWorld : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        for (int i = -worldHeight / 2; i < worldHeight / 2; i++)
+        for (int i = -worldWidth/ 2; i < worldWidth / 2; i++)
         {
-            for (int j = -worldWidth / 2; j < worldWidth / 2; j++)
+            for (int j = -worldHeight / 2; j < worldHeight / 2; j++)
             {
                 Sprite cSprite = sprites[Random.Range(0, sprites.Length)];
 

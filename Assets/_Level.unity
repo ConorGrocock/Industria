@@ -148,11 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ab4086f19f3d445ba2fd22301f7608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldHeight: 10
-  worldWidth: 10
-  offset: 2
+  worldHeight: 9
+  worldWidth: 16
   Tile: {fileID: 1497144371436650, guid: ca21afeb6d86ee54fa0d7aea9eacf31e, type: 2}
-  Parent: {fileID: 1563397760}
   sprites:
   - {fileID: 21300000, guid: bee6fc3ec0471d746a28db552ba31ccd, type: 3}
   - {fileID: 21300000, guid: d5dd054b2ccd09e42a49bcb50bda3591, type: 3}
