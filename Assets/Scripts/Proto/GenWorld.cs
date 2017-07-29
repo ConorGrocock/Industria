@@ -8,25 +8,23 @@ public class GenWorld : MonoBehaviour
     public int worldHeight = 10;
     public int worldWidth = 10;
     public GameObject Tile;
-    public GameObject Parent;
 
     public Sprite[] sprites;
 
     // Use this for initialization
     void Start()
     {
-        for (int i = -worldWidth/ 2; i < worldWidth / 2; i++)
+        for (float y = (-(float)worldHeight / 2f); y < ((float)worldHeight / 2f) + 1; y++)
         {
-            for (int j = -worldHeight / 2; j < worldHeight / 2; j++)
+            for (float x = (-(float)worldWidth / 2f); x < (float)worldWidth / 2f; x++)
             {
                 Sprite cSprite = sprites[Random.Range(0, sprites.Length)];
 
                 GameObject cTile = Instantiate(Tile);
                 Vector3 cTrans = cTile.transform.position;
-                cTrans.x = i * cSprite.bounds.size.x;
-                cTrans.y = j * cSprite.bounds.size.y;
+                cTrans.x = x * cSprite.bounds.size.x;
+                cTrans.y = y * cSprite.bounds.size.y;
                 cTile.transform.position = cTrans;
-                cTile.transform.parent = Parent.transform;
                 cTile.GetComponent<SpriteRenderer>().sprite = cSprite;
             }
         }
