@@ -2,20 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour {
+public class Tile : MonoBehaviour
+{
 
     /// <summary>
     /// Building on this tile
     /// </summary>
-    public Building building;
+    public GameObject building;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+    void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject init = Instantiate(building);
+            Vector3 pos = init.transform.position;
+            pos.x = transform.position.x;
+            pos.y = transform.position.y;
+            init.transform.position = pos;
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

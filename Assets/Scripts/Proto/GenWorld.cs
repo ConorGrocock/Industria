@@ -10,6 +10,8 @@ public class GenWorld : MonoBehaviour
     public GameObject Tile;
     public GameObject Parent;
 
+    public GameObject Building;
+
     public Sprite[] sprites;
 
     // Use this for initialization
@@ -29,6 +31,7 @@ public class GenWorld : MonoBehaviour
                 cTile.transform.parent = Parent.transform;
                 cTile.AddComponent<Tile>();
                 cTile.GetComponent<SpriteRenderer>().sprite = cSprite;
+                //cTile.GetComponent<Tile>().building = Building;
             }
         }
     }
