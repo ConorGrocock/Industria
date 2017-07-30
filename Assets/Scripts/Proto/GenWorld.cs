@@ -16,7 +16,9 @@ public class GenWorld : MonoBehaviour
 
     public Sprite[] sprites;
 
-    public GameObject[][] tiles; 
+    public GameObject[][] tiles;
+
+    private int iron, copper, wood, coal;
 
     // Use this for initialization
     void Start()
@@ -47,6 +49,53 @@ public class GenWorld : MonoBehaviour
 
                 cTile.AddComponent<Tile>();
                 cTile.GetComponent<SpriteRenderer>().sprite = cSprite;
+
+
+                if(Random.Range(0, 20) == 0) {
+                    if(cTile.GetComponent<Tile>().building != null) {
+                        return;
+                    }
+                    if (coal == 0) {
+                        cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Coal, 1000);
+                        coal++;
+                    }
+                    else if (copper == 0) {
+                        cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
+                        copper++;
+                    }
+                    else if (iron == 0) {
+                        cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
+                        iron++;
+                    }
+                    else if (wood == 0) {
+                        cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
+                        wood++;
+                    }
+                    else {
+                        switch (Random.Range(0, 4)) {
+                            case (0): {
+                                    cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Coal, 1000);
+                                    coal++;
+                                    break;
+                                }
+                            case (1): {
+                                    cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
+                                    copper++;
+                                    break;
+                                }
+                            case (2): {
+                                    cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
+                                    iron++;
+                                    break;
+                                }
+                            case (3): {
+                                    cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
+                                    wood++;
+                                    break;
+                                }
+                        }
+                    }
+                }
                 
                 cTile.GetComponent<Tile>().tile = Tile;
                 tiles[x][y] = cTile;

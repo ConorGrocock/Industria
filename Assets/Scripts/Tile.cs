@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    Ore ore;
+    public Ore ore;
     /// <summary>
     /// Building on this tile
     /// </summary>
@@ -31,10 +31,16 @@ public class Tile : MonoBehaviour
     public GameObject tile;
     public bool hover = false;
 
+    private SpriteRenderer spriteRenderer;
+
     // Use this for initialization
     void Start()
     {
-
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (ore != null) {
+            Debug.Log(Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString()));
+            spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString());
+        }
     }
 
     public void OnMouseOver()
