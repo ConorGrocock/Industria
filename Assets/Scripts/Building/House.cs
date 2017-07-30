@@ -14,7 +14,7 @@ public class House : Building {
     }
 
     [Space(20)]
-    public int occupancy;
+    public int occupancy = 2;
     public int maxCapacity = 5;
     public bool full;
 
@@ -45,7 +45,15 @@ public class House : Building {
                             xOffset = Random.Range(-2, 2);
                             yOffset = Random.Range(-2, 2);
                         }
+                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null) {
+                            cPos = GenWorld._instance.getTileCoord(new Vector3((cPos.x + xOffset),(cPos.y + yOffset)));
+                            xOffset = Random.Range(-2, 2);
+                            yOffset = Random.Range(-2, 2);
+                        }
 
+                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null) {
+                            return;
+                        }
                         if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building == null)
                             GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building = GenWorld._instance.buildings["House"];
                     }

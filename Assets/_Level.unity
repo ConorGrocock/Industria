@@ -566,10 +566,10 @@ RectTransform:
   m_Father: {fileID: 511875693}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 534.6, y: -307.5}
-  m_SizeDelta: {x: 430, y: 615}
+  m_AnchoredPosition: {x: 284.59998, y: -317.5}
+  m_SizeDelta: {x: 930, y: 635}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &712869341
 MonoBehaviour:
@@ -1387,6 +1387,7 @@ MonoBehaviour:
   worldWidth: 17
   Tile: {fileID: 1497144371436650, guid: ca21afeb6d86ee54fa0d7aea9eacf31e, type: 2}
   Parent: {fileID: 1563397760}
+  houses: []
   buildingPanel: {fileID: 712869339}
   buildTile: {fileID: 0}
   sprites:
