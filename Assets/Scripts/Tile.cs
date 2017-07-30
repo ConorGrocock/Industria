@@ -47,7 +47,7 @@ public class Tile : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
-    // Update is called once per frame
+    // Update 
     void Update()
     {
 
