@@ -138,6 +138,7 @@ public class GenWorld : MonoBehaviour
     void registerBuildings()
     {
         new House().register();
+        new Mine().register();
     }
 
     public Vector3 getTileCoord(Vector3 vector)
