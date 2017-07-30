@@ -40,8 +40,16 @@ public class Tile : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (ore != null)
         {
-            Debug.Log(Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString()));
-            spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString());
+            if (ore.type != OreTypes.Wood) {
+                Debug.Log(Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString()));
+                spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString());
+            } else {
+                GameObject fB = Instantiate(new GameObject("Forest_Background"));
+                fB.transform.position = this.transform.position;
+                fB.transform.Translate(new Vector3(0, 0, 1));
+                fB.AddComponent<SpriteRenderer>().sprite = spriteRenderer.sprite;
+                spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString());
+            }
         }
     }
 

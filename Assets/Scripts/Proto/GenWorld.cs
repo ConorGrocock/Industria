@@ -160,6 +160,7 @@ public class GenWorld : MonoBehaviour {
         new House().register();
         new Mine().register();
         new Mill().register();
+        new Lab().register();
     }
 
     public Vector3 getTileCoord(Vector3 vector) {
