@@ -21,6 +21,7 @@ public class Tile : MonoBehaviour
             GameObject init = Instantiate(tile);
             init.GetComponent<SpriteRenderer>().sprite = value.sprite;
             init.AddComponent(value.script.GetType());
+            Destroy(init.GetComponent<BoxCollider>());
             init.transform.parent = transform;
             init.transform.localPosition = new Vector3(0, 0, -10);
             Building = value;
