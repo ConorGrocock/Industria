@@ -163,12 +163,14 @@ public class GenWorld : MonoBehaviour {
         new Lab().register();
     }
 
-    public Vector3 getTileCoord(Vector3 vector) {
+    public Vector3 getTileCoord(Vector3 vector)
+    {
         return vector / 1.28f;
     }
 
     public void buildOnTile(string building) {
         buildTile.building = buildings[building];
         buildingPanel.SetActive(false);
+        BuildTile = null;
     }
 }

@@ -14,15 +14,19 @@ public class Menu : MonoBehaviour
 
     int clicksRequired = 1;
 
+    void OnDisable()
+    {
+        clicksRequired = 1;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (GenWorld._instance.buildTile == null)
+            if (GenWorld._instance.buildTile == null && clicksRequired == 0)
             {
                 gameObject.SetActive(false);
-                clicksRequired = 1;
                 return;
             }
             if (clicksRequired != 0)
@@ -33,7 +37,6 @@ public class Menu : MonoBehaviour
 
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                clicksRequired = 1;
                 gameObject.SetActive(false);
                 GenWorld._instance.buildTile = null;
             }
