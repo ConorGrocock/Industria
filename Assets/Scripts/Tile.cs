@@ -20,6 +20,7 @@ public class Tile : MonoBehaviour
             init.AddComponent(value.script.GetType());
             init.transform.parent = transform;
             init.transform.localPosition = new Vector3(0, 0, -10);
+            Destroy(init.GetComponent<BoxCollider>());
             Building = value;
         }
     }
