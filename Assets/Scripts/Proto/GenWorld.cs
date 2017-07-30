@@ -12,6 +12,7 @@ public class GenWorld : MonoBehaviour {
     public GameObject Parent;
 
     public Dictionary<string, BuildingType> buildings;
+    public Dictionary<OreTypes, int> Resources;
 
     public List<House> houses = new List<House>();
     public GameObject buildingPanel;
@@ -27,7 +28,11 @@ public class GenWorld : MonoBehaviour {
             Button[] buttons = buildingPanel.GetComponentsInChildren<Button>();
             
             foreach (Button b in buttons) {
-                if (value.ore == null) { b.interactable = false; continue; }
+                if (value.ore == null) {
+                    if (b.name == "Lab") b.interactable = true;
+                    else b.interactable = false; 
+                    continue;
+                }
                 if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill) b.interactable = true;
                 else if (b.name == "Mine" && value.ore.mine == MineType.Shaft) b.interactable = true;
                 else b.interactable = false;
@@ -50,6 +55,13 @@ public class GenWorld : MonoBehaviour {
 
         buildings = new Dictionary<string, BuildingType>();
         registerBuildings();
+
+        Resources = new Dictionary<OreTypes, int>();
+        Resources.Add(OreTypes.Coal, 0);
+        Resources.Add(OreTypes.Copper, 0);
+        Resources.Add(OreTypes.Iron, 0);
+        Resources.Add(OreTypes.Wood, 0);
+        
 
         Camera.main.transform.Translate(new Vector3((worldWidth / 2) * 1.28f, ((worldHeight / 2) * 1.28f) - 0.5f));
 
@@ -135,6 +147,13 @@ public class GenWorld : MonoBehaviour {
             count += house.occupancy;
         }
         GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = "Normal: " + count;
+
+        string resource = "";
+        foreach (KeyValuePair<OreTypes, int> entry in Resources) {
+            resource += entry.Key.ToString() + ": " + entry.Value + " ";
+        }
+        GameObject.Find("ResourceCount").GetComponent<UnityEngine.UI.Text>().text = resource;
+
     }
 
     void registerBuildings() {
