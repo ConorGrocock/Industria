@@ -59,6 +59,7 @@ public class House : Building {
             } else occupancy++;
         }
         timeToNextBaby -= Time.deltaTime;
+        GameObject.Find("ResourceCount").GetComponent<UnityEngine.UI.Text>().text = "Hello";
     }
 
     public void register() {
