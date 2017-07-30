@@ -66,7 +66,7 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(hover) gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
+        if (hover || GenWorld._instance.buildTile == this) gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
         else gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 }
