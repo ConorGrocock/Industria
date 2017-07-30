@@ -52,7 +52,7 @@ public class GenWorld : MonoBehaviour
                 tiles[x][y] = cTile;
             }
         }
-        tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = buildings["House"].sprite;
+        tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = buildings["House"];
     }
 
     void registerBuildings() {

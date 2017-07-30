@@ -8,7 +8,22 @@ public class Tile : MonoBehaviour
     /// <summary>
     /// Building on this tile
     /// </summary>
-    public Sprite building;
+    public BuildingType Building;
+    public BuildingType building {
+        get {
+            return Building;
+        }
+
+        set {
+            GameObject init = Instantiate(tile);
+            init.GetComponent<SpriteRenderer>().sprite = value.sprite;
+            init.AddComponent(value.script.GetType());
+            init.transform.parent = transform;
+            init.transform.localPosition = new Vector3(0, 0, -10);
+            Building = value;
+        }
+    }
+
     public GameObject tile;
     public bool hover = false;
 
@@ -22,7 +37,7 @@ public class Tile : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             GameObject init = Instantiate(tile);
-            init.GetComponent<SpriteRenderer>().sprite = building;
+            init.GetComponent<SpriteRenderer>().sprite = building.sprite;
             init.transform.parent = transform;
             init.transform.localPosition = new Vector3(0, 0, -10);
         }
