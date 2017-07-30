@@ -62,7 +62,6 @@ public class House : Building {
 	}
 
     public void register() {
-        Debug.Log((Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite).bounds);
         GenWorld._instance.buildings.Add("House", new BuildingType(this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite));
     }
 }
