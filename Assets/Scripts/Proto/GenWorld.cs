@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class GenWorld : MonoBehaviour
-{
+public class GenWorld : MonoBehaviour {
     public static GenWorld _instance;
 
     public int worldHeight = 10;
@@ -15,7 +15,25 @@ public class GenWorld : MonoBehaviour
 
     public List<House> houses = new List<House>();
     public GameObject buildingPanel;
-    public Tile buildTile;
+    Tile BuildTile;
+    public Tile buildTile {
+        get {
+            return BuildTile;
+        }
+        set {
+            BuildTile = value;
+            buildingPanel.SetActive(true);
+            Button[] buttons = buildingPanel.GetComponentsInChildren<Button>();
+            
+            foreach (Button b in buttons) {
+                if (value.ore == null) { b.interactable = false; continue; }
+                if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill) b.interactable = true;
+                else if (b.name == "Mine" && value.ore.mine == MineType.Shaft) b.interactable = true;
+                else b.interactable = false;
+            }
+
+        }
+    }
 
     public Sprite[] sprites;
 
@@ -24,8 +42,7 @@ public class GenWorld : MonoBehaviour
     private int iron, copper, wood, coal;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
         if (_instance == null) _instance = this;
         else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class");
         buildingPanel.SetActive(false);
@@ -36,11 +53,9 @@ public class GenWorld : MonoBehaviour
         Camera.main.transform.Translate(new Vector3((worldWidth / 2) * 1.28f, ((worldHeight / 2) * 1.28f) - 0.5f));
 
         tiles = new GameObject[worldWidth][];
-        for (int x = 0; x < worldWidth; x++)
-        {
+        for (int x = 0; x < worldWidth; x++) {
             tiles[x] = new GameObject[worldHeight];
-            for (int y = 0; y < worldHeight; y++)
-            {
+            for (int y = 0; y < worldHeight; y++) {
                 Sprite cSprite = sprites[Random.Range(0, sprites.Length - 1)];
 
                 GameObject cTile = Instantiate(Tile);
@@ -62,58 +77,46 @@ public class GenWorld : MonoBehaviour
             }
         }
 
-        for (int ores = 0; ores < Random.Range(4, 10); ores++)
-        {
+        for (int ores = 0; ores < Random.Range(4, 10); ores++) {
             GameObject cTile = null;
 
-            while (cTile == null || cTile.GetComponent<Tile>().building != null)
-            {
+            while (cTile == null || cTile.GetComponent<Tile>().building != null) {
                 cTile = tiles[Random.Range(2, worldWidth - 2)][Random.Range(2, worldHeight - 2)];
             }
-            if (coal == 0)
-            {
+            if (coal == 0) {
                 cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Coal, 1000);
                 coal++;
             }
-            else if (copper == 0)
-            {
+            else if (copper == 0) {
                 cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
                 copper++;
             }
-            else if (iron == 0)
-            {
+            else if (iron == 0) {
                 cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
                 iron++;
             }
-            else if (wood == 0)
-            {
+            else if (wood == 0) {
                 cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
                 wood++;
             }
-            else
-            {
-                switch (Random.Range(0, 4))
-                {
-                    case (0):
-                        {
+            else {
+                switch (Random.Range(0, 4)) {
+                    case (0): {
                             cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Coal, 1000);
                             coal++;
                             break;
                         }
-                    case (1):
-                        {
+                    case (1): {
                             cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
                             copper++;
                             break;
                         }
-                    case (2):
-                        {
+                    case (2): {
                             cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
                             iron++;
                             break;
                         }
-                    case (3):
-                        {
+                    case (3): {
                             cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
                             wood++;
                             break;
@@ -125,29 +128,25 @@ public class GenWorld : MonoBehaviour
         tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = buildings["House"];
     }
 
-    void Update()
-    {
+    void Update() {
         int count = 0;
-        foreach (House house in houses)
-        {
+        foreach (House house in houses) {
             count += house.occupancy;
         }
         GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = "Normal: " + count;
     }
 
-    void registerBuildings()
-    {
+    void registerBuildings() {
         new House().register();
         new Mine().register();
+        new Mill().register();
     }
 
-    public Vector3 getTileCoord(Vector3 vector)
-    {
+    public Vector3 getTileCoord(Vector3 vector) {
         return vector / 1.28f;
     }
 
-    public void buildOnTile(string building)
-    {
+    public void buildOnTile(string building) {
         buildTile.building = buildings[building];
         buildingPanel.SetActive(false);
     }

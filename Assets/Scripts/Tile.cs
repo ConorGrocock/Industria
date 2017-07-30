@@ -54,7 +54,6 @@ public class Tile : MonoBehaviour
         {
             //building = GenWorld._instance.buildings["House"];
             GenWorld._instance.buildTile = this;
-            GenWorld._instance.buildingPanel.SetActive(true);
         }
     }
 
