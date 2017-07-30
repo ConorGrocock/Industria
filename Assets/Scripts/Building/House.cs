@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class House : Building {
 
-    public float babyTime = 0f;
+    public float babyTime = 60f;
     [SerializeField]
     private float timeToNextBaby = 0f;
 
@@ -30,7 +30,7 @@ public class House : Building {
 	void Update () {
 		if(timeToNextBaby <= 0) {
             timeToNextBaby = babyTime;
-            babyTime *= 0f;
+            babyTime *= 1.5f;
             full = occupancy >= maxCapacity;
 
             if(full) {
