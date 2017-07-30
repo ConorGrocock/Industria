@@ -47,9 +47,9 @@ public class Tile : MonoBehaviour
 
     public void OnMouseOver()
     {
-        hover = true;
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
+        hover = true;
         if (Input.GetMouseButtonDown(0))
         {
             //building = GenWorld._instance.buildings["House"];
