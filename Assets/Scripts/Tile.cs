@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Tile : MonoBehaviour
 {
@@ -37,7 +38,8 @@ public class Tile : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if (ore != null) {
+        if (ore != null)
+        {
             Debug.Log(Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString()));
             spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString());
         }
@@ -45,6 +47,8 @@ public class Tile : MonoBehaviour
 
     public void OnMouseOver()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             building = GenWorld._instance.buildings["House"];
