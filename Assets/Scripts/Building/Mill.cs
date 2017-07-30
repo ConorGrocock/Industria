@@ -36,6 +36,6 @@ public class Mill : Building {
     }
 
     public void register() {
-        GenWorld._instance.buildings.Add("Mill", new BuildingType(this, Resources.Load("Sprites/Building/Mill/1", typeof(Sprite)) as Sprite));
+        GenWorld._instance.buildings.Add("Mill", new BuildingType("Mill", this, Resources.Load("Sprites/Building/Mill/1", typeof(Sprite)) as Sprite));
     }
 }

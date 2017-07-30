@@ -9,7 +9,8 @@ public class Building : MonoBehaviour
     public Sprite sprite;
     private SpriteRenderer spriteRenderer;
     public Tile tile;
-
+    
+    // if (housePanel != null) Destroy(housePanel);
     // Use this for initialization
     protected void Start()
     {

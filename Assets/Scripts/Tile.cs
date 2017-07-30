@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class Tile : MonoBehaviour
     public GameObject tile;
     public bool hover = false;
 
+    GameObject housePanel;
+
     private SpriteRenderer spriteRenderer;
 
     // Use this for initialization
@@ -41,7 +44,6 @@ public class Tile : MonoBehaviour
         if (ore != null)
         {
             if (ore.type != OreTypes.Wood) {
-                Debug.Log(Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString()));
                 spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString());
             } else {
                 GameObject fB = Instantiate(new GameObject("Forest_Background"));
@@ -57,12 +59,30 @@ public class Tile : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        hover = true;
+        
         if (Input.GetMouseButtonDown(0))
         {
             //building = GenWorld._instance.buildings["House"];
-            GenWorld._instance.buildTile = this;
+            if(building == null) GenWorld._instance.buildTile = this;
+            else {
+                GameObject panel = Instantiate(Resources.Load<GameObject>("Prefabs/UI/HousePanel"));
+                panel.transform.SetParent(GameObject.Find("Canvas").transform);
+                //panel.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+                panel.transform.localPosition = new Vector3(0, 0, 0);
+
+                Text[] t = panel.GetComponentsInChildren<Text>();
+                foreach (Text text in t) {
+                    if (text.gameObject.name == "Power") text.text = "POWER";
+                    switch(building.name) {
+                        case ("House"): {
+
+                                break;
+                            }
+                    }
+                }
+            }
         }
+        hover = true;
     }
 
     public void OnMouseExit()

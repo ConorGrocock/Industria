@@ -28,7 +28,7 @@ public class Mine : Building {
 	void Update () {
         if(Time.time - timeSinceLastMine > 1) {
             timeSinceLastMine = Time.time;
-            if (tile.ore.amount > (int)miningSpeed) {
+            if (tile.ore.amount >= (int)miningSpeed) {
                 tile.ore.amount -= (int)miningSpeed;
                 GenWorld._instance.Resources[tile.ore.type] += (int)miningSpeed;
             }
@@ -36,6 +36,6 @@ public class Mine : Building {
     }
 
     public void register() {
-        GenWorld._instance.buildings.Add("Mine", new BuildingType(this, Resources.Load("Sprites/Building/Mine/1", typeof(Sprite)) as Sprite));
+        GenWorld._instance.buildings.Add("Mine", new BuildingType("Mine", this, Resources.Load("Sprites/Building/Mine/1", typeof(Sprite)) as Sprite));
     }
 }
