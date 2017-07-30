@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-
+    Ore ore;
     /// <summary>
     /// Building on this tile
     /// </summary>
