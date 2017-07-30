@@ -6,7 +6,6 @@ using UnityEngine;
 public class Building : MonoBehaviour {
 
     public Sprite sprite;
-
     private SpriteRenderer spriteRenderer;
 
 	// Use this for initialization

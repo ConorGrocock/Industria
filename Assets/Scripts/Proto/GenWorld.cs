@@ -11,7 +11,8 @@ public class GenWorld : MonoBehaviour
     public GameObject Tile;
     public GameObject Parent;
 
-    public GameObject house;
+    public Dictionary<string, BuildingType> buildings;
+
 
     public Sprite[] sprites;
 
@@ -22,6 +23,11 @@ public class GenWorld : MonoBehaviour
     {
         if (_instance == null) _instance = this;
         else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class" );
+
+        buildings = new Dictionary<string, BuildingType>();
+        registerBuildings();
+
+        Camera.main.transform.Translate(new Vector3((worldWidth / 2) * 1.28f, ((worldHeight / 2) * 1.28f) - 0.5f));
 
         tiles = new GameObject[worldWidth][];
         for (int x = 0; x < worldWidth; x++) {
@@ -46,8 +52,11 @@ public class GenWorld : MonoBehaviour
                 tiles[x][y] = cTile;
             }
         }
-        tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = house;
-        Camera.main.transform.Translate(new Vector3((worldWidth / 2)*1.28f, ((worldHeight / 2)*1.28f) -0.5f));
+        tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = buildings["House"];
+    }
+
+    void registerBuildings() {
+        new House().register();
     }
 
     public Vector3 getTileCoord(Vector3 vector) {

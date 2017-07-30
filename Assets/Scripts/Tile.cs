@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
@@ -9,15 +11,19 @@ public class Tile : MonoBehaviour
     /// <summary>
     /// Building on this tile
     /// </summary>
-    public GameObject building {
+    public BuildingType Building;
+    public BuildingType building {
         get {
-            return building;
+            return Building;
         }
 
         set {
-            GameObject init = Instantiate(value);
+            GameObject init = Instantiate(tile);
+            init.GetComponent<SpriteRenderer>().sprite = value.sprite;
+            init.AddComponent(value.script.GetType());
             init.transform.parent = transform;
             init.transform.localPosition = new Vector3(0, 0, -10);
+            Building = value;
         }
     }
 
@@ -29,8 +35,6 @@ public class Tile : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-
+    void Update() {
     }
 }
