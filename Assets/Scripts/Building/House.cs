@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class House : Building {
-
     public float babyTime = 60f;
     [SerializeField]
     private float timeToNextBaby = 0f;
@@ -23,6 +22,7 @@ public class House : Building {
     
     // Use this for initialization
     protected void Start (){
+        GenWorld._instance.houses.Add(this);
         timeToNextBaby = babyTime;
 	}
 	
@@ -59,7 +59,6 @@ public class House : Building {
             } else occupancy++;
         }
         timeToNextBaby -= Time.deltaTime;
-        GameObject.Find("ResourceCount").GetComponent<UnityEngine.UI.Text>().text = "Hello";
     }
 
     public void register() {

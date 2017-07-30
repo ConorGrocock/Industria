@@ -13,6 +13,7 @@ public class GenWorld : MonoBehaviour
 
     public Dictionary<string, BuildingType> buildings;
 
+    public List<House> houses = new List<House>();
     public GameObject buildingPanel;
     public Tile buildTile;
 
@@ -27,7 +28,6 @@ public class GenWorld : MonoBehaviour
     {
         if (_instance == null) _instance = this;
         else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class");
-        
         buildingPanel.SetActive(false);
 
         buildings = new Dictionary<string, BuildingType>();
@@ -125,6 +125,16 @@ public class GenWorld : MonoBehaviour
         tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = buildings["House"];
     }
 
+    void Update()
+    {
+        int count = 0;
+        foreach (House house in houses)
+        {
+            count += house.occupancy;
+        }
+        GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = "Normal: " + count;
+    }
+
     void registerBuildings()
     {
         new House().register();
@@ -135,7 +145,8 @@ public class GenWorld : MonoBehaviour
         return vector / 1.28f;
     }
 
-    public void buildOnTile(string building) {
+    public void buildOnTile(string building)
+    {
         buildTile.building = buildings[building];
         buildingPanel.SetActive(false);
     }
