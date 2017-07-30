@@ -8,22 +8,7 @@ public class Tile : MonoBehaviour
     /// <summary>
     /// Building on this tile
     /// </summary>
-    public BuildingType Building;
-    public BuildingType building {
-        get {
-            return Building;
-        }
-
-        set {
-            GameObject init = Instantiate(tile);
-            init.GetComponent<SpriteRenderer>().sprite = value.sprite;
-            init.AddComponent(value.script.GetType());
-            init.transform.parent = transform;
-            init.transform.localPosition = new Vector3(0, 0, -10);
-            Building = value;
-        }
-    }
-
+    public BuildingType building;
     public GameObject tile;
     public bool hover = false;
 
