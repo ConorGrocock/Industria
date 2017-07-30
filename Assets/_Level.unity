@@ -208,7 +208,7 @@ RectTransform:
   m_GameObject: {fileID: 510242000}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.9999995, y: 1, z: 1}
+  m_LocalScale: {x: 5.6247716, y: 1, z: 1}
   m_Children:
   - {fileID: 298732776}
   m_Father: {fileID: 712869340}
@@ -216,7 +216,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.000122, y: 268.3}
+  m_AnchoredPosition: {x: 4, y: 268.3}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &510242002
@@ -254,10 +254,21 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 510242003}
+  m_TargetGraphic: {fileID: 1735211063}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1563397762}
+        m_MethodName: buildOnTile
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: House
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &510242003
@@ -321,6 +332,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1095650792}
+  - {fileID: 712869340}
   m_Father: {fileID: 1884850821}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -530,7 +542,7 @@ GameObject:
   - component: {fileID: 712869342}
   - component: {fileID: 712869341}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: BuildingPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -542,7 +554,7 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 712869339}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 1, z: 1}
   m_Children:
@@ -551,13 +563,13 @@ RectTransform:
   - {fileID: 1544612453}
   - {fileID: 1559915077}
   - {fileID: 1062958472}
-  m_Father: {fileID: 1884850821}
-  m_RootOrder: 2
+  m_Father: {fileID: 511875693}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 383.5, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 534.6, y: -307.5}
+  m_SizeDelta: {x: 430, y: 615}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &712869341
 MonoBehaviour:
@@ -810,7 +822,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Mine
+  m_Text: House
 --- !u!222 &1014343191
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -843,7 +855,7 @@ RectTransform:
   m_GameObject: {fileID: 1062958471}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.9999995, y: 1, z: 1}
+  m_LocalScale: {x: 5.6247716, y: 1, z: 1}
   m_Children:
   - {fileID: 1590123343}
   m_Father: {fileID: 712869340}
@@ -851,7 +863,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.000122, y: 176}
+  m_AnchoredPosition: {x: 4, y: 176}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1062958473
@@ -889,10 +901,21 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1062958474}
+  m_TargetGraphic: {fileID: 1735211063}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1563397762}
+        m_MethodName: buildOnTile
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: House
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1062958474
@@ -1102,7 +1125,7 @@ RectTransform:
   m_GameObject: {fileID: 1544612452}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.9999995, y: 1, z: 1}
+  m_LocalScale: {x: 5.6247716, y: 1, z: 1}
   m_Children:
   - {fileID: 948127679}
   m_Father: {fileID: 712869340}
@@ -1110,7 +1133,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.000122, y: 237.4}
+  m_AnchoredPosition: {x: 4, y: 237.4}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1544612454
@@ -1148,10 +1171,21 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1544612455}
+  m_TargetGraphic: {fileID: 1735211063}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1563397762}
+        m_MethodName: buildOnTile
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: House
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1544612455
@@ -1213,7 +1247,7 @@ RectTransform:
   m_GameObject: {fileID: 1559915076}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.9999995, y: 1, z: 1}
+  m_LocalScale: {x: 5.6247716, y: 1, z: 1}
   m_Children:
   - {fileID: 2074531504}
   m_Father: {fileID: 712869340}
@@ -1221,7 +1255,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.000122, y: 206.7}
+  m_AnchoredPosition: {x: 4, y: 206.7}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1559915078
@@ -1259,10 +1293,21 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1559915079}
+  m_TargetGraphic: {fileID: 1735211063}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1563397762}
+        m_MethodName: buildOnTile
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: House
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1559915079
@@ -1342,6 +1387,8 @@ MonoBehaviour:
   worldWidth: 17
   Tile: {fileID: 1497144371436650, guid: ca21afeb6d86ee54fa0d7aea9eacf31e, type: 2}
   Parent: {fileID: 1563397760}
+  buildingPanel: {fileID: 712869339}
+  buildTile: {fileID: 0}
   sprites:
   - {fileID: 21300000, guid: bee6fc3ec0471d746a28db552ba31ccd, type: 3}
   - {fileID: 21300000, guid: d5dd054b2ccd09e42a49bcb50bda3591, type: 3}
@@ -1446,7 +1493,7 @@ RectTransform:
   m_GameObject: {fileID: 1735211060}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6, y: 1, z: 1}
+  m_LocalScale: {x: 5.624772, y: 1, z: 1}
   m_Children:
   - {fileID: 1014343189}
   m_Father: {fileID: 712869340}
@@ -1454,7 +1501,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9, y: 299.5}
+  m_AnchoredPosition: {x: 4, y: 299.5}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1735211062
@@ -1495,7 +1542,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1735211063}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1563397762}
+        m_MethodName: buildOnTile
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: House
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1735211063
@@ -1618,7 +1676,6 @@ RectTransform:
   m_Children:
   - {fileID: 844028157}
   - {fileID: 511875693}
-  - {fileID: 712869340}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

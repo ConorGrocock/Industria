@@ -47,23 +47,26 @@ public class Tile : MonoBehaviour
 
     public void OnMouseOver()
     {
+        hover = true;
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
         if (Input.GetMouseButtonDown(0))
         {
-            building = GenWorld._instance.buildings["House"];
+            //building = GenWorld._instance.buildings["House"];
+            GenWorld._instance.buildTile = this;
+            GenWorld._instance.buildingPanel.SetActive(true);
         }
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
     }
 
     public void OnMouseExit()
     {
-        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        hover = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(hover) gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
+        else gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 }

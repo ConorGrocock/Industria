@@ -13,6 +13,8 @@ public class GenWorld : MonoBehaviour
 
     public Dictionary<string, BuildingType> buildings;
 
+    public GameObject buildingPanel;
+    public Tile buildTile;
 
     public Sprite[] sprites;
 
@@ -25,6 +27,8 @@ public class GenWorld : MonoBehaviour
     {
         if (_instance == null) _instance = this;
         else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class");
+        
+        buildingPanel.SetActive(false);
 
         buildings = new Dictionary<string, BuildingType>();
         registerBuildings();
@@ -129,5 +133,10 @@ public class GenWorld : MonoBehaviour
     public Vector3 getTileCoord(Vector3 vector)
     {
         return vector / 1.28f;
+    }
+
+    public void buildOnTile(string building) {
+        buildTile.building = buildings[building];
+        buildingPanel.SetActive(false);
     }
 }
