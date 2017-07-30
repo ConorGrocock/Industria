@@ -13,10 +13,10 @@ public class Building : MonoBehaviour {
         this.transform.Translate(new Vector3(this.transform.position.x, this.transform.position.y, -1));
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprite;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }

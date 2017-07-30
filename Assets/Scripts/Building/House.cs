@@ -59,7 +59,7 @@ public class House : Building {
             } else occupancy++;
         }
         timeToNextBaby -= Time.deltaTime;
-	}
+    }
 
     public void register() {
         GenWorld._instance.buildings.Add("House", new BuildingType(this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite));
