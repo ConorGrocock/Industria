@@ -47,32 +47,39 @@ public class House : Building
             babyTime *= 1.5f;
             full = occupancy >= maxCapacity;
 
-            if (full) {
+            if (full)
+            {
                 float xOffset = Random.Range(-2, 2);
                 float yOffset = Random.Range(-2, 2);
 
                 Vector3 cPos = GenWorld._instance.getTileCoord(transform.position);
 
-                try {
-                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)] != null) {
-                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null) {
+                try
+                {
+                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)] != null)
+                    {
+                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
+                        {
                             xOffset = Random.Range(-2, 2);
                             yOffset = Random.Range(-2, 2);
                         }
-                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null) {
+                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
+                        {
                             cPos = GenWorld._instance.getTileCoord(new Vector3((cPos.x + xOffset), (cPos.y + yOffset)));
                             xOffset = Random.Range(-2, 2);
                             yOffset = Random.Range(-2, 2);
                         }
 
-                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null) {
+                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
+                        {
                             return;
                         }
                         if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building == null)
                             GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building = GenWorld._instance.buildings["House"];
                     }
                 }
-                catch (System.IndexOutOfRangeException e) {
+                catch (System.IndexOutOfRangeException e)
+                {
                     return;
                 }
                 //Spawn new house
@@ -80,7 +87,8 @@ public class House : Building
                 //How?
                 //Spawn time of new house?
             }
-            else {
+            else
+            {
                 occupants.Add(new Villager());
             }
         }
@@ -92,15 +100,21 @@ public class House : Building
         GenWorld._instance.buildings.Add("House", new BuildingType("House", this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite));
     }
 
-    public override void clickMenu(GameObject top, GameObject panel) {
+    int shown = 0;
+
+    public override void clickMenu(GameObject top, GameObject panel)
+    {
         House h = top.GetComponent<House>();
         GameObject[] profiles = new GameObject[h.occupants.Count];
-        for (int i = 0; i < h.occupants.Count; i++) {
+        for (int i = 0; i < h.occupants.Count; i++)
+        {
+            if (i < shown) continue;
             profiles[i] = Instantiate(Resources.Load<GameObject>("Prefabs/UI/UIPerson"));
             profiles[i].transform.SetParent(panel.transform);
-            profiles[i].transform.localPosition = new Vector3((i * 150), -100, 0);
+            profiles[i].transform.localPosition = new Vector3((i * 150), -100, 1);
             profiles[i].GetComponentInChildren<Text>().text = h.occupants[i].Vname;
             profiles[i].GetComponentInChildren<Dropdown>().value = (int)h.occupants[i].role;
         }
+        shown = h.occupants.Count;
     }
 }
