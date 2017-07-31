@@ -96,6 +96,8 @@ public class GenWorld : MonoBehaviour {
             }
         }
 
+        tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = buildings["House"];
+
         for (int ores = 0; ores < Random.Range(4, 10); ores++) {
             GameObject cTile = null;
 
@@ -143,8 +145,6 @@ public class GenWorld : MonoBehaviour {
                 }
             }
         }
-
-        tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = buildings["House"];
     }
 
     void Update() {
