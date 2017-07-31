@@ -21,6 +21,8 @@ public class Mill : Building {
 
     // Use this for initialization
     void Start() {
+
+        base.Start();
         timeSinceLastMine = Time.time;
     }
 

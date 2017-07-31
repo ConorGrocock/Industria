@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class House : Building {
+public class House : Building
+{
     public float babyTime = 60f;
     [SerializeField]
     private float timeToNextBaby = 0f;
 
-    public new Sprite sprite {
-        get {
+    public new Sprite sprite
+    {
+        get
+        {
             return Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite;
         }
     }
@@ -19,57 +22,71 @@ public class House : Building {
     public bool full;
 
     public GameObject Villager;
-    
+
     // Use this for initialization
-    protected void Start (){
+    protected void Start()
+    {
+        base.Start();
         GenWorld._instance.houses.Add(this);
         timeToNextBaby = babyTime;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(timeToNextBaby <= 0) {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (timeToNextBaby <= 0)
+        {
             timeToNextBaby = babyTime;
             babyTime *= 1.5f;
             full = occupancy >= maxCapacity;
 
-            if(full) {
+            if (full)
+            {
                 float xOffset = Random.Range(-2, 2);
                 float yOffset = Random.Range(-2, 2);
 
                 Vector3 cPos = GenWorld._instance.getTileCoord(transform.position);
 
-                try {
-                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)] != null) {
-                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null) {
+                try
+                {
+                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)] != null)
+                    {
+                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
+                        {
                             xOffset = Random.Range(-2, 2);
                             yOffset = Random.Range(-2, 2);
                         }
-                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null) {
-                            cPos = GenWorld._instance.getTileCoord(new Vector3((cPos.x + xOffset),(cPos.y + yOffset)));
+                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
+                        {
+                            cPos = GenWorld._instance.getTileCoord(new Vector3((cPos.x + xOffset), (cPos.y + yOffset)));
                             xOffset = Random.Range(-2, 2);
                             yOffset = Random.Range(-2, 2);
                         }
 
-                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null) {
+                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
+                        {
                             return;
                         }
                         if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building == null)
                             GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building = GenWorld._instance.buildings["House"];
                     }
-                } catch (System.IndexOutOfRangeException e) {
+                }
+                catch (System.IndexOutOfRangeException e)
+                {
                     return;
                 }
                 //Spawn new house
                 //Where?
                 //How?
                 //Spawn time of new house?
-            } else occupancy++;
+            }
+            else occupancy++;
         }
         timeToNextBaby -= Time.deltaTime;
     }
 
-    public void register() {
-        GenWorld._instance.buildings.Add("House", new BuildingType("House", this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite));
+    public void register()
+    {
+        GenWorld._instance.buildings.Add("House", new BuildingType(this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite));
     }
 }
