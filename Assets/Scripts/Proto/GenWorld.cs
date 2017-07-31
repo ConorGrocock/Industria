@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class GenWorld : MonoBehaviour
 {
     public static GenWorld _instance;
+    public GameObject gameManager;
+    private Manager managerScript;
 
     public int worldHeight = 10;
     public int worldWidth = 10;
@@ -191,7 +193,14 @@ public class GenWorld : MonoBehaviour
     {
         if (PowerStored < 0)
         {
+            if (managerScript == null)
+            {
+                managerScript = gameManager.GetComponent<Manager>();
+            }
+
+            PowerStored = 0;
             Time.timeScale = 0;
+            managerScript.ShowGameOver();
         }
 
 
