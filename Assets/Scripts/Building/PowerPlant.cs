@@ -54,7 +54,7 @@ public class PowerPlant : Building {
 
             GameObject powerInfomation = new GameObject();
             Text info = powerInfomation.AddComponent<Text>();
-            info.text = string.Format("{0} Power drawn \n {1} Power generated", Mathf.Round(GenWorld._instance.powerSupply), Mathf.Round(GenWorld._instance.powerDraw));
+            info.text = string.Format("{0} Power generated \n {1} Power drawn", Mathf.Round(GenWorld._instance.powerSupply), Mathf.Round(GenWorld._instance.powerDraw));
             powerInfomation.transform.parent = panel.transform;
             powerInfomation.transform.localPosition = new Vector3(-400, 175);
             info.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
