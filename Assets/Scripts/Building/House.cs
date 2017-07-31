@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class House : Building
 {
-    public float babyTime = 60f;
+    public float babyTime = 10f;
     [SerializeField]
     private float timeToNextBaby = 0f;
 
@@ -83,6 +83,7 @@ public class House : Building
             else {
                 occupants[occupants.Length - 1] = new Villager();
                 occupants[occupants.Length - 1].role = VillagerRole.Default;
+                occupancy++;
             }
         }
         timeToNextBaby -= Time.deltaTime;

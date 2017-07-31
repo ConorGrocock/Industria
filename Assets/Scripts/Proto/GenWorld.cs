@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +37,8 @@ public class GenWorld : MonoBehaviour {
                 if (value.ore == null) {
                     if (b.name == "Lab") b.interactable = true;
                     if (b.name == "Power plant") b.interactable = true;
-                    else b.interactable = false; 
+                    else b.interactable = false;
+                    continue;
                 }
                 if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill) b.interactable = true;
                 else if (b.name == "Mine" && value.ore.mine == MineType.Shaft) b.interactable = true;
@@ -96,8 +97,6 @@ public class GenWorld : MonoBehaviour {
             }
         }
 
-        tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = buildings["House"];
-
         for (int ores = 0; ores < Random.Range(4, 10); ores++) {
             GameObject cTile = null;
 
@@ -145,6 +144,8 @@ public class GenWorld : MonoBehaviour {
                 }
             }
         }
+
+        tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = buildings["House"];
     }
 
     void Update() {
