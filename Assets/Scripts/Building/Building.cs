@@ -33,7 +33,7 @@ public class Building : MonoBehaviour
             Debug.Log(buildings[i + 1].transform.position);
 
 
-            DrawLine(buildings[i].transform.position, buildings[i + 1].transform.position, Color.gray);// getTileCenter(buildings[i].transform.position), getTileCenter(buildings[i + 1].transform.position));
+            DrawLine(buildings[i].transform.position, buildings[i + 1].transform.position, Color.black);// getTileCenter(buildings[i].transform.position), getTileCenter(buildings[i + 1].transform.position));
 
             i += 1;
         }
@@ -44,16 +44,15 @@ public class Building : MonoBehaviour
         myLine.transform.position = start;
         myLine.AddComponent<LineRenderer>();
         LineRenderer lr = myLine.GetComponent<LineRenderer>();
+        myLine.transform.SetParent(transform);
         lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
         lr.startColor = color;
         lr.endColor = color;
-        lr.startWidth = 0.05f;
-        lr.endWidth = 0.05f;
-
+        lr.startWidth = 0.025f;
+        lr.endWidth = 0.025f;
+        
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
-
-        myLine.transform.parent = this.transform;
     }
 
     Vector3 getTileCenter(Vector3 pos)
