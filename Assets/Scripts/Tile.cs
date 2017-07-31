@@ -44,14 +44,24 @@ public class Tile : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (ore != null)
         {
-            if (ore.type != OreTypes.Wood) {
-                spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString());
-            } else {
-                GameObject fB = Instantiate(new GameObject("Forest_Background"));
+            Sprite oreResource = Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString());
+            if (ore.type != OreTypes.Wood)
+            {
+                spriteRenderer.sprite = oreResource;
+            }
+            else
+            {
+                //GameObject fB = Instantiate(new GameObject("Forest_Background"));
+                //fB.transform.position = this.transform.position;
+                //fB.transform.Translate(new Vector3(0, 0, 1));
+                //fB.AddComponent<SpriteRenderer>().sprite = spriteRenderer.sprite;
+                //spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString());
+
+                GameObject fB = new GameObject("Tree");
                 fB.transform.position = this.transform.position;
-                fB.transform.Translate(new Vector3(0, 0, 1));
-                fB.AddComponent<SpriteRenderer>().sprite = spriteRenderer.sprite;
-                spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString());
+                fB.transform.Translate(new Vector3(0, 0, -1));
+                fB.AddComponent<SpriteRenderer>().sprite = oreResource;
+                fB.transform.SetParent(transform);
             }
         }
     }
@@ -60,41 +70,49 @@ public class Tile : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        
+
         if (Input.GetMouseButtonDown(0))
         {
             //building = GenWorld._instance.buildings["House"];
-            if(building == null) GenWorld._instance.buildTile = this;
-            else {
+            if (building == null) GenWorld._instance.buildTile = this;
+            else
+            {
                 GameObject panel = Instantiate(Resources.Load<GameObject>("Prefabs/UI/HousePanel"));
                 panel.transform.SetParent(GameObject.Find("Canvas").transform);
                 //panel.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
                 panel.transform.localPosition = new Vector3(0, 0, 0);
 
                 Text[] t = panel.GetComponentsInChildren<Text>();
-                foreach (Text text in t) {
+                foreach (Text text in t)
+                {
                     if (text.gameObject.name == "Power") text.text = "POWER";
-                    switch(building.name) {
-                        case ("House"): {
-                                House h =top.GetComponent<House>();
+                    switch (building.name)
+                    {
+                        case ("House"):
+                            {
+                                House h = top.GetComponent<House>();
                                 GameObject[] profiles = new GameObject[h.occupancy];
-                                for (int i = 0; i < h.occupancy; i++) {
+                                for (int i = 0; i < h.occupancy; i++)
+                                {
                                     profiles[i] = Instantiate(Resources.Load<GameObject>("Prefabs/UI/UIPerson"));
                                     profiles[i].transform.SetParent(panel.transform);
-                                    profiles[i].transform.localPosition = new Vector3(120+(i*210), -100, 0);
-                                    
+                                    profiles[i].transform.localPosition = new Vector3(120 + (i * 210), -100, 0);
+
                                 }
                                 break;
                             }
-                        case ("Mine"): {
+                        case ("Mine"):
+                            {
 
                                 break;
                             }
-                        case ("Mill"): {
+                        case ("Mill"):
+                            {
 
                                 break;
                             }
-                        case ("Lab"): {
+                        case ("Lab"):
+                            {
 
                                 break;
                             }
@@ -113,7 +131,7 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (hover || GenWorld._instance.buildTile == this) gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
+        if ((hover || GenWorld._instance.buildTile == this) && !EventSystem.current.IsPointerOverGameObject()) gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
         else gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 }
