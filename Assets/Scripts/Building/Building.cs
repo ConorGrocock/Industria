@@ -43,37 +43,17 @@ public class Building : MonoBehaviour
         GameObject myLine = new GameObject();
         myLine.transform.position = start;
         myLine.AddComponent<LineRenderer>();
-        CurvedLineRenderer clr = myLine.AddComponent<CurvedLineRenderer>();
-        clr.showGizmos = true;
+        LineRenderer lr = myLine.GetComponent<LineRenderer>();
+        lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+        lr.startColor = color;
+        lr.endColor = color;
+        lr.startWidth = 0.05f;
+        lr.endWidth = 0.05f;
 
-        GameObject p1 = new GameObject();
-        GameObject p2 = new GameObject();
-        GameObject p3 = new GameObject();
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
 
-        p1.transform.position = start;
-        p2.transform.position = start + new Vector3(0.5f, 0.5f);
-        p3.transform.position = end;
-
-        p1.transform.SetParent(clr.transform);
-        p2.transform.SetParent(clr.transform);
-        p3.transform.SetParent(clr.transform);
-
-
-        //GameObject myLine = new GameObject();
-        //myLine.transform.position = start;
-        //myLine.AddComponent<LineRenderer>();
-        //LineRenderer lr = myLine.GetComponent<LineRenderer>();
-        //lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
-        //lr.startColor = color;
-        //lr.endColor = color;
-        ////lr.startWidth = 0.05f;
-        ////lr.endWidth = 0.05f;
-        //AnimationCurve curve = new AnimationCurve();
-        ////curve.AddKey(0.0f, 0.0f);
-        //curve.AddKey(0.0f, 0.05f);
-        //lr.widthCurve = curve;
-        //lr.SetPosition(0, start);
-        //lr.SetPosition(2, end);
+        myLine.transform.parent = this.transform;
     }
 
     Vector3 getTileCenter(Vector3 pos)
