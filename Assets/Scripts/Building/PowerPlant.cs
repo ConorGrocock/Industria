@@ -18,8 +18,10 @@ public class PowerPlant : Building {
 	void Update () {
         cBurnTime -= Time.deltaTime;
         if(cBurnTime < 0) {
-            GenWorld._instance.Resources[OreTypes.Coal]--;
-            cBurnTime = coalBurnTime;
+            if (GenWorld._instance.Resources[OreTypes.Coal] > 1) {
+                GenWorld._instance.Resources[OreTypes.Coal]--;
+                cBurnTime = coalBurnTime;
+            }
         }
         GenWorld._instance.power += powerPerSecond * Time.deltaTime;
     }
