@@ -66,6 +66,8 @@ public class Tile : MonoBehaviour
         }
     }
 
+    private bool menuOpen = false;
+    GameObject panel;
     public void OnMouseOver()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
@@ -77,10 +79,12 @@ public class Tile : MonoBehaviour
             if (building == null) GenWorld._instance.buildTile = this;
             else
             {
-                GameObject panel = Instantiate(Resources.Load<GameObject>("Prefabs/UI/HousePanel"));
+                panel = Instantiate(Resources.Load<GameObject>("Prefabs/UI/HousePanel"));
                 panel.transform.SetParent(GameObject.Find("Canvas").transform);
                 //panel.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
                 panel.transform.localPosition = new Vector3(0, 0, 0);
+
+                menuOpen = true;
 
                 Text[] t = panel.GetComponentsInChildren<Text>();
                 foreach (Text text in t)
@@ -133,5 +137,9 @@ public class Tile : MonoBehaviour
     {
         if ((hover || GenWorld._instance.buildTile == this) && !EventSystem.current.IsPointerOverGameObject()) gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
         else gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        if(Input.GetKeyDown(KeyCode.Escape) && menuOpen && panel != null) {
+            Destroy(panel);
+            menuOpen = false;
+        }
     }
 }
