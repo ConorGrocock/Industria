@@ -11,6 +11,12 @@ public class GenWorld : MonoBehaviour {
     public GameObject Tile;
     public GameObject Parent;
 
+    float Power;
+    public float power {
+        get { return Power;  }
+        set { Power = value; }
+    }
+
     public Dictionary<string, BuildingType> buildings;
     public Dictionary<OreTypes, int> Resources;
 
