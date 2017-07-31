@@ -70,7 +70,7 @@ public class Tile : MonoBehaviour
     GameObject panel;
     public void OnMouseOver()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) { return; }
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
 
         if (Input.GetMouseButtonDown(0))
@@ -101,7 +101,8 @@ public class Tile : MonoBehaviour
                                     profiles[i] = Instantiate(Resources.Load<GameObject>("Prefabs/UI/UIPerson"));
                                     profiles[i].transform.SetParent(panel.transform);
                                     profiles[i].transform.localPosition = new Vector3(120 + (i * 210), -100, 0);
-
+                                    profiles[i].GetComponentInChildren<Text>().text = h.occupants[i].Vname;
+                                    profiles[i].GetComponentInChildren<Dropdown>().value = (int)h.occupants[i].role;
                                 }
                                 break;
                             }
@@ -135,7 +136,7 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((hover && !EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.buildTile == this)) gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
+        if ((hover || GenWorld._instance.buildTile == this) && !EventSystem.current.IsPointerOverGameObject()) gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
         else gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         if(Input.GetKeyDown(KeyCode.Escape) && menuOpen && panel != null) {
             Destroy(panel);

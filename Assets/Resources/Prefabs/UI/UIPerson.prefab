@@ -688,11 +688,13 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Option A
+    - m_Text: Default
       m_Image: {fileID: 0}
-    - m_Text: Option B
+    - m_Text: Miner
       m_Image: {fileID: 0}
-    - m_Text: Option C
+    - m_Text: Lumberjack
+      m_Image: {fileID: 0}
+    - m_Text: Scientist
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
