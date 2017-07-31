@@ -8,7 +8,7 @@ public class Mine : Building {
     /// Mining speed
     /// amount of ore to mine per second.
     /// </summary>
-    float miningSpeed = 10;
+    float miningSpeed = 1;
     float timeSinceLastMine;
 
     public new Sprite sprite {

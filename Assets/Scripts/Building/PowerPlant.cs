@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PowerPlant : Building {
 
@@ -18,11 +19,31 @@ public class PowerPlant : Building {
         cBurnTime -= Time.deltaTime;
         if(cBurnTime < 0) {
             GenWorld._instance.Resources[OreTypes.Coal]--;
+            cBurnTime = coalBurnTime;
         }
         GenWorld._instance.power += powerPerSecond * Time.deltaTime;
     }
 
     public void register() {
-        GenWorld._instance.buildings.Add("POwerPlant", new BuildingType("PowerPlant", this, Resources.Load("Sprites/Building/PowerPlant/1", typeof(Sprite)) as Sprite));
+        GenWorld._instance.buildings.Add("PowerPlant", new BuildingType("PowerPlant", this, Resources.Load("Sprites/Building/PowerPlant/1", typeof(Sprite)) as Sprite));
+    }
+    public bool menuDrawn = false;
+    public override void clickMenu(GameObject top, GameObject panel) {
+        if (!menuDrawn) {
+            menuDrawn = true;
+            GameObject powerGo = new GameObject();
+            powerGo.transform.parent = panel.transform;
+            Image power = powerGo.AddComponent<Image>();
+            powerGo.transform.localPosition = new Vector3(-200, 150);
+            powerGo.name = "PowerGraph";
+            power.color = Color.yellow;
+
+            GameObject coalGo = new GameObject();
+            coalGo.transform.parent = panel.transform;
+            Image coal = coalGo.AddComponent<Image>();
+            coalGo.transform.localPosition = new Vector3(-400, 150);
+            coalGo.name = "CoalGraph";
+            coal.color = Color.red;
+        }
     }
 }

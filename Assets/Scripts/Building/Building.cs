@@ -71,4 +71,8 @@ public class Building : MonoBehaviour
     {
 
     }
+
+    public virtual void clickMenu(GameObject top, GameObject panel) {
+
+    }
 }

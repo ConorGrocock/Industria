@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class House : Building
 {
@@ -90,5 +91,17 @@ public class House : Building
     public void register()
     {
         GenWorld._instance.buildings.Add("House", new BuildingType("House", this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite));
+    }
+
+    public override void clickMenu(GameObject top, GameObject panel) {
+        House h = top.GetComponent<House>();
+        GameObject[] profiles = new GameObject[h.occupancy];
+        for (int i = 0; i < h.occupancy; i++) {
+            profiles[i] = Instantiate(Resources.Load<GameObject>("Prefabs/UI/UIPerson"));
+            profiles[i].transform.SetParent(panel.transform);
+            profiles[i].transform.localPosition = new Vector3(120 + (i * 210), -100, 0);
+            profiles[i].GetComponentInChildren<Text>().text = h.occupants[i].Vname;
+            profiles[i].GetComponentInChildren<Dropdown>().value = (int)h.occupants[i].role;
+        }
     }
 }

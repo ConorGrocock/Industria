@@ -90,38 +90,7 @@ public class Tile : MonoBehaviour
                 foreach (Text text in t)
                 {
                     if (text.gameObject.name == "Power") text.text = "POWER";
-                    switch (building.name)
-                    {
-                        case ("House"):
-                            {
-                                House h = top.GetComponent<House>();
-                                GameObject[] profiles = new GameObject[h.occupancy];
-                                for (int i = 0; i < h.occupancy; i++)
-                                {
-                                    profiles[i] = Instantiate(Resources.Load<GameObject>("Prefabs/UI/UIPerson"));
-                                    profiles[i].transform.SetParent(panel.transform);
-                                    profiles[i].transform.localPosition = new Vector3(120 + (i * 210), -100, 0);
-                                    profiles[i].GetComponentInChildren<Text>().text = h.occupants[i].Vname;
-                                    profiles[i].GetComponentInChildren<Dropdown>().value = (int)h.occupants[i].role;
-                                }
-                                break;
-                            }
-                        case ("Mine"):
-                            {
-
-                                break;
-                            }
-                        case ("Mill"):
-                            {
-
-                                break;
-                            }
-                        case ("Lab"):
-                            {
-
-                                break;
-                            }
-                    }
+                    top.GetComponent<Building>().clickMenu(top, panel);
                 }
             }
         }

@@ -36,6 +36,7 @@ public class GenWorld : MonoBehaviour {
             foreach (Button b in buttons) {
                 if (value.ore == null) {
                     if (b.name == "Lab") b.interactable = true;
+                    if (b.name == "Power plant") b.interactable = true;
                     else b.interactable = false; 
                     continue;
                 }
@@ -167,6 +168,7 @@ public class GenWorld : MonoBehaviour {
         new Mine().register();
         new Mill().register();
         new Lab().register();
+        new PowerPlant().register();
     }
 
     public Vector3 getTileCoord(Vector3 vector)
