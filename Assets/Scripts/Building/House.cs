@@ -17,6 +17,8 @@ public class House : Building
         }
     }
 
+    float basePowerDraw = 5f;
+
     [Space(20)]
     public int occupancy = 2;
     public int maxCapacity = 5;
@@ -93,6 +95,7 @@ public class House : Building
             }
         }
         timeToNextBaby -= Time.deltaTime;
+        this.powerDraw = basePowerDraw * occupants.Count;
     }
 
     public void register()
