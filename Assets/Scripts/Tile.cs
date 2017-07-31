@@ -105,9 +105,10 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((hover || GenWorld._instance.buildTile == this) && !EventSystem.current.IsPointerOverGameObject()) gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
+        if ((hover && !EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.buildTile == this)) gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
         else gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-        if(Input.GetKeyDown(KeyCode.Escape) && menuOpen && panel != null) {
+        if (Input.GetKeyDown(KeyCode.Escape) && menuOpen && panel != null)
+        {
             Destroy(panel);
             menuOpen = false;
         }
