@@ -162,6 +162,11 @@ public class GenWorld : MonoBehaviour {
     }
 
     void Update() {
+        if(PowerStored < 0) {
+            Time.timeScale = 0;
+        }
+
+
         int count = 0;
         foreach (House house in houses) {
             count += house.occupancy;
