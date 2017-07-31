@@ -22,7 +22,7 @@ public class House : Building
     public int maxCapacity = 5;
     public bool full;
 
-    public Villager[] occupants;
+    public List<Villager> occupants;
 
     // Use this for initialization
     protected void Start()
@@ -30,11 +30,11 @@ public class House : Building
         base.Start();
         GenWorld._instance.houses.Add(this);
         timeToNextBaby = babyTime;
-        occupants = new Villager[5];
+        occupants = new List<Villager>();
 
-        occupants[0] = new Villager();
+        occupants.Add(new Villager());
         occupants[0].role = VillagerRole.Default;
-        occupants[1] = new Villager();
+        occupants.Add(new Villager());
         occupants[1].role = VillagerRole.Default;
     }
 
@@ -81,9 +81,7 @@ public class House : Building
                 //Spawn time of new house?
             }
             else {
-                occupants[occupants.Length - 1] = new Villager();
-                occupants[occupants.Length - 1].role = VillagerRole.Default;
-                occupancy++;
+                occupants.Add(new Villager());
             }
         }
         timeToNextBaby -= Time.deltaTime;
@@ -96,11 +94,11 @@ public class House : Building
 
     public override void clickMenu(GameObject top, GameObject panel) {
         House h = top.GetComponent<House>();
-        GameObject[] profiles = new GameObject[h.occupancy];
-        for (int i = 0; i < h.occupancy; i++) {
+        GameObject[] profiles = new GameObject[h.occupants.Count];
+        for (int i = 0; i < h.occupants.Count; i++) {
             profiles[i] = Instantiate(Resources.Load<GameObject>("Prefabs/UI/UIPerson"));
             profiles[i].transform.SetParent(panel.transform);
-            profiles[i].transform.localPosition = new Vector3(120 + (i * 210), -100, 0);
+            profiles[i].transform.localPosition = new Vector3((i * 150), -100, 0);
             profiles[i].GetComponentInChildren<Text>().text = h.occupants[i].Vname;
             profiles[i].GetComponentInChildren<Dropdown>().value = (int)h.occupants[i].role;
         }
