@@ -38,7 +38,6 @@ public class GenWorld : MonoBehaviour {
                     if (b.name == "Lab") b.interactable = true;
                     if (b.name == "Power plant") b.interactable = true;
                     else b.interactable = false; 
-                    continue;
                 }
                 if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill) b.interactable = true;
                 else if (b.name == "Mine" && value.ore.mine == MineType.Shaft) b.interactable = true;
