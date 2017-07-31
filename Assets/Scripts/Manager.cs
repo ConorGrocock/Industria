@@ -22,7 +22,8 @@ public class Manager : MonoBehaviour
 	
 	public void RestartScene()
     {
+        Building.buildings.Clear();
         Time.timeScale = 1;
-        SceneManager.LoadScene("_Level");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
