@@ -25,20 +25,27 @@ public class Building : MonoBehaviour
         }
         int i = 0;
 
+        bool plantExists = false;
+
         foreach (Building building in buildings)
-        {
-            Vector3 pos = GenWorld._instance.getTileCoord(building.transform.position);
+            if (building.tile.building.name == "PowerPlant")
+                plantExists = true;
 
-            if (buildings.Count <= i + 1) break;
+        if (plantExists)
+            foreach (Building building in buildings)
+            {
+                Vector3 pos = GenWorld._instance.getTileCoord(building.transform.position);
 
-            Debug.Log(buildings[i].transform.position);
-            Debug.Log(buildings[i + 1].transform.position);
+                if (buildings.Count <= i + 1) break;
+
+                Debug.Log(buildings[i].transform.position);
+                Debug.Log(buildings[i + 1].transform.position);
 
 
-            DrawLine(buildings[i].transform.position, buildings[i + 1].transform.position, Color.black);// getTileCenter(buildings[i].transform.position), getTileCenter(buildings[i + 1].transform.position));
+                DrawLine(buildings[i].transform.position, buildings[i + 1].transform.position, Color.black);// getTileCenter(buildings[i].transform.position), getTileCenter(buildings[i + 1].transform.position));
 
-            i += 1;
-        }
+                i += 1;
+            }
     }
     void DrawLine(Vector3 start, Vector3 end, Color color)
     {
@@ -52,7 +59,7 @@ public class Building : MonoBehaviour
         lr.endColor = color;
         lr.startWidth = 0.025f;
         lr.endWidth = 0.025f;
-        
+
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
     }
@@ -74,7 +81,13 @@ public class Building : MonoBehaviour
 
     }
 
-    public virtual void clickMenu(GameObject top, GameObject panel) {
+    public virtual void clickMenu(GameObject top, GameObject panel)
+    {
+
+    }
+
+    public virtual void closeMenu()
+    {
 
     }
 }

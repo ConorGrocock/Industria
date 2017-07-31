@@ -107,14 +107,24 @@ public class House : Building
 
     public override void clickMenu(GameObject top, GameObject panel)
     {
+        if (GenWorld.menu == panel) shown = 0;
+        else GenWorld.menu = panel;
         House h = top.GetComponent<House>();
+
+        GameObject.Find("Occupants").GetComponent<UnityEngine.UI.Text>().text = h.occupants.Count + "";
+
         GameObject[] profiles = new GameObject[h.occupants.Count];
         for (int i = 0; i < h.occupants.Count; i++)
         {
             if (i < shown) continue;
             profiles[i] = Instantiate(Resources.Load<GameObject>("Prefabs/UI/UIPerson"));
             profiles[i].transform.SetParent(panel.transform);
-            profiles[i].transform.localPosition = new Vector3((i * 150), -100, 1);
+            RectTransform rt = (RectTransform)profiles[i].transform;
+            rt.pivot = new Vector2(1f, 0f);
+            rt.anchorMin = new Vector2(0, 0);
+            rt.anchorMax = new Vector2(0, 0);
+
+            profiles[i].transform.localPosition = new Vector3((i * 170) - 260, -100, 1);
             profiles[i].GetComponentInChildren<Text>().text = h.occupants[i].Vname;
             profiles[i].GetComponentInChildren<Dropdown>().value = (int)h.occupants[i].role;
         }

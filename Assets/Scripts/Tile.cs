@@ -75,11 +75,17 @@ public class Tile : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            if (GenWorld.menu != null)
+            {
+                GenWorld._instance.closeMenu();
+                return;
+            }
+
             //building = GenWorld._instance.buildings["House"];
             if (building == null) GenWorld._instance.buildTile = this;
             else
             {
-                panel = Instantiate(Resources.Load<GameObject>("Prefabs/UI/HousePanel"));
+                panel = Instantiate(Resources.Load<GameObject>("Prefabs/UI/" + building.name + "Panel"));
                 panel.transform.SetParent(GameObject.Find("Canvas").transform);
                 //panel.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
                 panel.transform.localPosition = new Vector3(0, 0, 0);

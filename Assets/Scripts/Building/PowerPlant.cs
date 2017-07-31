@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PowerPlant : Building {
+public class PowerPlant : Building
+{
 
     public float coalBurnTime = 1f;
     float cBurnTime = 0;
@@ -11,17 +12,21 @@ public class PowerPlant : Building {
     public float powerStored = 0f;
 
     // Use this for initialization
-    protected override void Start (){
+    protected override void Start()
+    {
         base.Start();
         this.powerDraw = 0f;
         GenWorld._instance.plants.Add(this);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         cBurnTime -= Time.deltaTime;
-        if (cBurnTime < 0) {
-            if (GenWorld._instance.Resources[OreTypes.Coal] > 1) {
+        if (cBurnTime < 0)
+        {
+            if (GenWorld._instance.Resources[OreTypes.Coal] > 1)
+            {
                 GenWorld._instance.Resources[OreTypes.Coal]--;
                 cBurnTime = coalBurnTime;
             }
@@ -29,12 +34,18 @@ public class PowerPlant : Building {
         powerStored += (powerPerSecond);//* Time.deltaTime);
     }
 
-    public void register() {
+    public void register()
+    {
         GenWorld._instance.buildings.Add("PowerPlant", new BuildingType("PowerPlant", this, Resources.Load("Sprites/Building/PowerPlant/1", typeof(Sprite)) as Sprite));
     }
+
     public bool menuDrawn = false;
-    public override void clickMenu(GameObject top, GameObject panel) {
-        if (!menuDrawn) {
+    public override void clickMenu(GameObject top, GameObject panel)
+    {
+        if (GenWorld.menu == panel) menuDrawn = false;
+        else GenWorld.menu = panel;
+        if (!menuDrawn)
+        {
             menuDrawn = true;
             GameObject powerGo = new GameObject();
             powerGo.transform.parent = panel.transform;
@@ -52,7 +63,7 @@ public class PowerPlant : Building {
             powerBackGo.transform.localPosition = new Vector3(-400, 240, -1);
             powerBackGo.name = "powerBackGo";
             powerBack.color = Color.yellow;
-            powerBack.transform.localScale = new Vector3(Mathf.Min((GenWorld._instance.powerSupply / GenWorld._instance.powerDraw),1), 0.25f, 1);
+            powerBack.transform.localScale = new Vector3(Mathf.Min((GenWorld._instance.powerSupply / GenWorld._instance.powerDraw), 1), 0.25f, 1);
 
 
             GameObject powerInfomation = new GameObject();
