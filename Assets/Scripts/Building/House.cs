@@ -87,6 +87,6 @@ public class House : Building
 
     public void register()
     {
-        GenWorld._instance.buildings.Add("House", new BuildingType(this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite));
+        GenWorld._instance.buildings.Add("House", new BuildingType("House", this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite));
     }
 }
