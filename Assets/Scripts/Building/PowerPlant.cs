@@ -5,25 +5,28 @@ using UnityEngine.UI;
 
 public class PowerPlant : Building {
 
-    public float coalBurnTime = 10f;
+    public float coalBurnTime = 1f;
     float cBurnTime = 0;
-    float powerPerSecond = 1f;
-    
+    float powerPerSecond = 4f;
+    public float powerStored = 0f;
+
     // Use this for initialization
-    void Start (){
+    protected override void Start (){
         base.Start();
+        this.powerDraw = 0f;
+        GenWorld._instance.plants.Add(this);
     }
 	
 	// Update is called once per frame
 	void Update () {
         cBurnTime -= Time.deltaTime;
-        if(cBurnTime < 0) {
+        if (cBurnTime < 0) {
             if (GenWorld._instance.Resources[OreTypes.Coal] > 1) {
                 GenWorld._instance.Resources[OreTypes.Coal]--;
                 cBurnTime = coalBurnTime;
             }
         }
-        GenWorld._instance.powerSupply += powerPerSecond * Time.deltaTime;
+        powerStored += (powerPerSecond);//* Time.deltaTime);
     }
 
     public void register() {

@@ -14,7 +14,7 @@ public class Building : MonoBehaviour
 
     // if (housePanel != null) Destroy(housePanel);
     // Use this for initialization
-    protected void Start()
+    protected virtual void Start()
     {
         buildings.Add(this);
         //this.transform.Translate(new Vector3(this.transform.position.x, this.transform.position.y, -1));

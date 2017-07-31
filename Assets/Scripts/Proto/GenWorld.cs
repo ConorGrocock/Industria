@@ -16,6 +16,8 @@ public class GenWorld : MonoBehaviour {
         get { return PowerSupply; }
         set { PowerSupply = value; }
     }
+
+    float PowerStored = 200f;
     
     public float powerDraw {
         get {
@@ -31,6 +33,7 @@ public class GenWorld : MonoBehaviour {
     public Dictionary<OreTypes, int> Resources;
 
     public List<House> houses = new List<House>();
+    public List<PowerPlant> plants = new List<PowerPlant>();
     public GameObject buildingPanel;
     Tile BuildTile;
     public Tile buildTile {
@@ -163,6 +166,14 @@ public class GenWorld : MonoBehaviour {
         foreach (House house in houses) {
             count += house.occupancy;
         }
+
+        this.PowerSupply = 0;
+        foreach (PowerPlant building in plants) {
+            this.PowerSupply += building.powerStored;
+            Debug.Log(powerSupply);
+            building.powerStored = 0;
+        }
+
         GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = "Normal: " + count;
 
         string resource = "";
@@ -171,6 +182,8 @@ public class GenWorld : MonoBehaviour {
         }
         GameObject.Find("ResourceCount").GetComponent<UnityEngine.UI.Text>().text = resource;
 
+        PowerStored += (Mathf.Round(this.PowerSupply) * Time.deltaTime) - (Mathf.Round(this.powerDraw) * Time.deltaTime);
+        GameObject.Find("UIBarPower").GetComponent<Text>().text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn",Mathf.Round(this.PowerStored), Mathf.Round(this.powerSupply), Mathf.Round(this.powerDraw));
     }
 
     void registerBuildings() {

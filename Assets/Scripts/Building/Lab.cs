@@ -5,9 +5,9 @@ using UnityEngine;
 public class Lab : Building {
     
     public GameObject Villager;
-    
+
     // Use this for initialization
-    void Start (){
+    protected override void Start (){
         base.Start();
     }
 	

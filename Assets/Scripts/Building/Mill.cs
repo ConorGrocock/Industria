@@ -20,8 +20,7 @@ public class Mill : Building {
     public GameObject Villager;
 
     // Use this for initialization
-    void Start() {
-
+    protected override void Start() {
         base.Start();
         timeSinceLastMine = Time.time;
     }
