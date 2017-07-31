@@ -202,14 +202,21 @@ public class GenWorld : MonoBehaviour
             Time.timeScale = 0;
             managerScript.ShowGameOver();
         }
-
-
+        
         int count = 0;
         foreach (House house in houses)
         {
             count += house.occupancy;
         }
         GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = "Normal: " + count;
+
+        this.PowerSupply = 0;
+        foreach (PowerPlant building in plants)
+        {
+            this.PowerSupply += building.powerStored;
+            Debug.Log(powerSupply);
+            building.powerStored = 0;
+        }
 
         string resource = "";
         foreach (KeyValuePair<OreTypes, int> entry in Resources)
