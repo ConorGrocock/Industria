@@ -23,6 +23,7 @@ public class Manager : MonoBehaviour
 	public void RestartScene()
     {
         Building.buildings.Clear();
+        GenWorld._instance.closeMenu();
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
