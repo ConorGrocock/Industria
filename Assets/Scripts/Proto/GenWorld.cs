@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,10 +11,20 @@ public class GenWorld : MonoBehaviour {
     public GameObject Tile;
     public GameObject Parent;
 
-    float Power;
-    public float power {
-        get { return Power;  }
-        set { Power = value; }
+    float PowerSupply;
+    public float powerSupply {
+        get { return PowerSupply; }
+        set { PowerSupply = value; }
+    }
+    
+    public float powerDraw {
+        get {
+            float p = 0f;
+            foreach (Building building in Building.buildings) {
+                p += building.powerDraw;
+            }
+            return p;
+        }
     }
 
     public Dictionary<string, BuildingType> buildings;
@@ -36,8 +46,8 @@ public class GenWorld : MonoBehaviour {
             foreach (Button b in buttons) {
                 if (value.ore == null) {
                     if (b.name == "Lab") b.interactable = true;
-                    if (b.name == "Power plant") b.interactable = true;
-                    else b.interactable = false;
+                    else if (b.name == "Power plant") b.interactable = true;
+                    else b.interactable = false; 
                     continue;
                 }
                 if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill) b.interactable = true;
