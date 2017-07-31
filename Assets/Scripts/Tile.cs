@@ -20,15 +20,16 @@ public class Tile : MonoBehaviour
 
         set
         {
-            GameObject init = Instantiate(tile);
-            init.GetComponent<SpriteRenderer>().sprite = value.sprite;
-            ((Building)init.AddComponent(value.script.GetType())).tile = this;
-            Destroy(init.GetComponent<BoxCollider>());
-            init.transform.parent = transform;
-            init.transform.localPosition = new Vector3(0, 0, -10);
+            top = Instantiate(tile);
+            top.GetComponent<SpriteRenderer>().sprite = value.sprite;
+            ((Building)top.AddComponent(value.script.GetType())).tile = this;
+            Destroy(top.GetComponent<BoxCollider>());
+            top.transform.parent = transform;
+            top.transform.localPosition = new Vector3(0, 0, -10);
             Building = value;
         }
     }
+    public GameObject top;
 
     public GameObject tile;
     public bool hover = false;
@@ -75,6 +76,25 @@ public class Tile : MonoBehaviour
                     if (text.gameObject.name == "Power") text.text = "POWER";
                     switch(building.name) {
                         case ("House"): {
+                                House h =top.GetComponent<House>();
+                                GameObject[] profiles = new GameObject[h.occupancy];
+                                for (int i = 0; i < h.occupancy; i++) {
+                                    profiles[i] = Instantiate(Resources.Load<GameObject>("Prefabs/UI/UIPerson"));
+                                    profiles[i].transform.SetParent(panel.transform);
+                                    profiles[i].transform.localPosition = new Vector3(120+(i*210), -100, 0);
+                                    
+                                }
+                                break;
+                            }
+                        case ("Mine"): {
+
+                                break;
+                            }
+                        case ("Mill"): {
+
+                                break;
+                            }
+                        case ("Lab"): {
 
                                 break;
                             }
