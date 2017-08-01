@@ -225,17 +225,10 @@ public class GenWorld : MonoBehaviour
         {
             switch (building.tile.building.name)
             {
-                case "PowerPlant":
-                    PowerPlant plant = (PowerPlant)building;
-                    if (plant.workers >= plant.maxWorkers) continue;
-                    int inc = Mathf.Min(plant.maxWorkers, totalPowerWorkers);
-                    plant.workers += inc;
-                    totalPowerWorkers -= inc;
-                    break;
                 case "Mine":
                     Mine mine = (Mine)building;
                     if (mine.workers >= mine.maxWorkers) continue;
-                    inc = Mathf.Min(mine.maxWorkers, totalPowerWorkers);
+                    int inc = Mathf.Min(mine.maxWorkers, totalPowerWorkers);
                     mine.workers += inc;
                     totalMiners -= inc;
                     break;
