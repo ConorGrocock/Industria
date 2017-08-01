@@ -794,7 +794,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 565.9, y: -10}
+  m_AnchoredPosition: {x: 555.7, y: -10}
   m_SizeDelta: {x: 500, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &511875694
@@ -2803,7 +2803,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Normal: X'
+  m_Text: 'Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}'
 --- !u!222 &1408040986
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3771,7 +3771,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 665.3, y: -20}
+  m_AnchoredPosition: {x: 655.1, y: -20}
   m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1872077471
@@ -4065,7 +4065,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '{0}'
+  m_Text: '{0} Power stored  {1} Power generated  {2} Power drawn'
 --- !u!222 &1920137009
 CanvasRenderer:
   m_ObjectHideFlags: 0
