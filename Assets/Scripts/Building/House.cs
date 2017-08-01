@@ -142,7 +142,10 @@ public class House : Building
 
     public void register()
     {
-        GenWorld._instance.buildings.Add("House", new BuildingType("House", this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite));
+        Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
+        required.Add(OreTypes.Copper, 0);
+        required.Add(OreTypes.Wood, 5);
+        GenWorld._instance.buildings.Add("House", new BuildingType("House", this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite, required));
     }
 
     int shown = 0;

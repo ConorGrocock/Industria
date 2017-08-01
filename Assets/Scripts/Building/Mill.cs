@@ -45,8 +45,10 @@ public class Mill : Building
         }
     }
 
-    public void register()
-    {
-        GenWorld._instance.buildings.Add("Mill", new BuildingType("Mill", this, Resources.Load("Sprites/Building/Mill/1", typeof(Sprite)) as Sprite));
+    public void register() {
+        Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
+        required.Add(OreTypes.Copper, 6);
+        required.Add(OreTypes.Wood, 10);
+        GenWorld._instance.buildings.Add("Mill", new BuildingType("Mill", this, Resources.Load("Sprites/Building/Mill/1", typeof(Sprite)) as Sprite, required));
     }
 }

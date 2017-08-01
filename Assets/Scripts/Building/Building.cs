@@ -13,6 +13,7 @@ public class Building : MonoBehaviour
     public float powerLimit = 100f;
     public float powerDraw = 5f;
 
+
     // if (housePanel != null) Destroy(housePanel);
     // Use this for initialization
     protected virtual void Start() {

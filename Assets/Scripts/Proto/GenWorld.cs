@@ -62,21 +62,16 @@ public class GenWorld : MonoBehaviour
             Button[] buttons = buildingPanel.GetComponentsInChildren<Button>();
 
             foreach (Button b in buttons) {
-                if (Resources[OreTypes.Copper] >= 1 && Resources[OreTypes.Wood] >= 10) {
-                    if (value.ore == null) {
-                        if (b.name == "Lab") b.interactable = false;
-                        else if (b.name == "Power plant") b.interactable = true;
-                        else b.interactable = false;
-                        continue;
-                    }
-                    if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill) b.interactable = true;
-                    else if (b.name == "Mine" && value.ore.mine == MineType.Shaft) b.interactable = true;
-                    else b.interactable = false;
+                if (value.ore == null) {
                     if (b.name == "Lab") b.interactable = false;
+                    else if (b.name == "Power plant" && buildings["PowerPlant"].buildable) b.interactable = true;
+                    else b.interactable = false;
+                    continue;
                 }
-                else {
-                    b.interactable = false;
-                }
+                if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill && buildings["Mill"].buildable) b.interactable = true;
+                else if (b.name == "Mine" && value.ore.mine == MineType.Shaft && buildings["Mine"].buildable) b.interactable = true;
+                else b.interactable = false;
+                if (b.name == "Lab") b.interactable = false;
             }
         }
     }

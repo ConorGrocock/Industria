@@ -7,10 +7,22 @@ public class BuildingType{
     public Sprite sprite;
     public String name;
 
-    public BuildingType(String name, Component script, Sprite sprite) {
+    Dictionary<OreTypes, int> costs;
+
+    public bool buildable {
+        get {
+            foreach (KeyValuePair<OreTypes, int> cost in costs) {
+                if (GenWorld._instance.Resources[cost.Key] < cost.Value) return false;
+            }
+            return true;
+        }
+    }
+
+    public BuildingType(String name, Component script, Sprite sprite, Dictionary<OreTypes, int> costs) {
         this.name = name;
         this.script = script;
         this.sprite = sprite;
+        this.costs = costs;
     }
 }
 

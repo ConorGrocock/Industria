@@ -48,6 +48,8 @@ public class Mine : Building
 
     public void register()
     {
-        GenWorld._instance.buildings.Add("Mine", new BuildingType("Mine", this, Resources.Load("Sprites/Building/Mine/1", typeof(Sprite)) as Sprite));
+        Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
+        required.Add(OreTypes.Wood, 15);
+        GenWorld._instance.buildings.Add("Mine", new BuildingType("Mine", this, Resources.Load("Sprites/Building/Mine/1", typeof(Sprite)) as Sprite, required));
     }
 }
