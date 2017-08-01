@@ -17,6 +17,7 @@ public class Manager : MonoBehaviour
 
     public void ShowGameOver()
     {
+        GenWorld._instance.closeMenu();
         gameOverObject.SetActive(true);
     }
 	

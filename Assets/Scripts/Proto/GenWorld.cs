@@ -14,6 +14,7 @@ public class GenWorld : MonoBehaviour
     public GameObject Tile;
     public GameObject Parent;
 
+    [HideInInspector]
     public bool gameOver;
 
     float PowerSupply;
@@ -193,7 +194,7 @@ public class GenWorld : MonoBehaviour
 
     void Update()
     {
-        if (PowerStored < 0)
+        if (PowerStored < 0 && !gameOver)
         {
             if (managerScript == null)
             {
