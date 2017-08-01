@@ -85,18 +85,22 @@ public class Tile : MonoBehaviour
             if (building == null) GenWorld._instance.buildTile = this;
             else
             {
-                panel = Instantiate(Resources.Load<GameObject>("Prefabs/UI/" + building.name + "Panel"));
-                panel.transform.SetParent(GameObject.Find("Canvas").transform);
-                //panel.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
-                panel.transform.localPosition = new Vector3(0, 0, 0);
-
-                menuOpen = true;
-
-                Text[] t = panel.GetComponentsInChildren<Text>();
-                foreach (Text text in t)
+                GameObject sprite = Resources.Load<GameObject>("Prefabs/UI/" + building.name + "Panel");
+                if (sprite != null)
                 {
-                    if (text.gameObject.name == "Power") text.text = "POWER";
-                    top.GetComponent<Building>().clickMenu(top, panel);
+                    panel = Instantiate(sprite);
+                    panel.transform.SetParent(GameObject.Find("Canvas").transform);
+                    //panel.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+                    panel.transform.localPosition = new Vector3(0, 0, 0);
+
+                    menuOpen = true;
+
+                    Text[] t = panel.GetComponentsInChildren<Text>();
+                    foreach (Text text in t)
+                    {
+                        if (text.gameObject.name == "Power") text.text = "POWER";
+                        top.GetComponent<Building>().clickMenu(top, panel);
+                    }
                 }
             }
         }

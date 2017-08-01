@@ -231,15 +231,15 @@ public class GenWorld : MonoBehaviour
                 case "Mine":
                     Mine mine = (Mine)building;
                     if (mine.workers >= mine.maxWorkers) continue;
-                    int inc = Mathf.Min(mine.maxWorkers, totalPowerWorkers);
-                    mine.workers += inc;
+                    int inc = Mathf.Min(mine.maxWorkers, totalMiners);
+                    mine.workers = inc;
                     totalMiners -= inc;
                     break;
                 case "Mill":
                     Mill mill = (Mill)building;
                     if (mill.workers >= mill.maxWorkers) continue;
                     inc = Mathf.Min(mill.maxWorkers, totalJacks);
-                    mill.workers += inc;
+                    mill.workers = inc;
                     totalJacks -= inc;
                     break;
             }

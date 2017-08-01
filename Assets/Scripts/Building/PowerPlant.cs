@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PowerPlant : Building
 {
-    public float coalBurnTime = 3f;
+    public float coalBurnTime = 1.5f;
     float cBurnTime = 0;
     float powerPerSecond = 3f;
     public float powerStored = 0f;

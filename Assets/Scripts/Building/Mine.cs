@@ -38,7 +38,6 @@ public class Mine : Building
         if (Time.time - timeSinceLastMine >= 1f / miningSpeed)
         {
             timeSinceLastMine = Time.time;
-            Debug.Log("I have " + workers);
             //if (tile.ore.amount >= (int)miningSpeed)
             //{
             //tile.ore.amount -= (int)miningSpeed;
