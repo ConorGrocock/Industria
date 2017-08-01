@@ -1,3 +1,5 @@
+The system cannot find the path specified.
+The system cannot find the path specified.
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,7 +65,7 @@ public class GenWorld : MonoBehaviour
             {
                 if (value.ore == null)
                 {
-                    if (b.name == "Lab") b.interactable = true;
+                    if (b.name == "Lab") b.interactable = false;
                     else if (b.name == "Power plant") b.interactable = true;
                     else b.interactable = false;
                     continue;
@@ -71,6 +73,7 @@ public class GenWorld : MonoBehaviour
                 if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill) b.interactable = true;
                 else if (b.name == "Mine" && value.ore.mine == MineType.Shaft) b.interactable = true;
                 else b.interactable = false;
+                if (b.name == "Lab") b.interactable = false;
             }
 
         }
