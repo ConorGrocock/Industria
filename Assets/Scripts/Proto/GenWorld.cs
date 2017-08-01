@@ -272,6 +272,8 @@ public class GenWorld : MonoBehaviour
 
     public void buildOnTile(string building)
     {
+        Resources[OreTypes.Copper]--;
+        Resources[OreTypes.Wood]-= 10;
         buildTile.building = buildings[building];
         buildingPanel.SetActive(false);
         BuildTile = null;
