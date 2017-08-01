@@ -17,7 +17,7 @@ public class House : Building
         }
     }
 
-    float basePowerDraw = 5f;
+    float basePowerDraw = 1.5f;
 
     [Space(20)]
     public int occupancy = 2;
@@ -35,14 +35,61 @@ public class House : Building
         occupants = new List<Villager>();
 
         occupants.Add(new Villager());
-        occupants[0].role = VillagerRole.Default;
+        occupants[0].role = VillagerRole.Miner;
         occupants.Add(new Villager());
-        occupants[1].role = VillagerRole.Default;
+        occupants[1].role = VillagerRole.None;
     }
+
+    public int miners = 0;
+    public int lumberjacks = 0;
+    public int power = 0;
 
     // Update is called once per frame
     void Update()
     {
+        if (currentMenu == GenWorld.menu)
+        {
+            int i = 0;
+            foreach (KeyValuePair<Dropdown, Image> entry in dropdowns)
+            {
+                switch (entry.Key.value)
+                {
+                    case 0:
+                        occupants[i].role = VillagerRole.None;
+                        entry.Value.sprite = Resources.Load<Sprite>("Sprites/Villager/3");
+                        break;
+                    case 1:
+                        occupants[i].role = VillagerRole.Miner;
+                        entry.Value.sprite = Resources.Load<Sprite>("Sprites/Villager/1");
+                        break;
+                    case 2:
+                        occupants[i].role = VillagerRole.Lumberjack;
+                        entry.Value.sprite = Resources.Load<Sprite>("Sprites/Villager/4");
+                        break;
+                }
+                i++;
+            }
+        }
+
+        miners = 0;
+        lumberjacks = 0;
+        power = 0;
+        for (int i = 0; i < occupants.Count; i++)
+        {
+            switch (occupants[i].role)
+            {
+                case VillagerRole.None:
+                    power++;
+                    break;
+                case VillagerRole.Miner:
+                    miners++;
+                    break;
+                case VillagerRole.Lumberjack:
+                    lumberjacks++;
+                    break;
+            }
+        }
+
         if (timeToNextBaby <= 0)
         {
             timeToNextBaby = babyTime;
@@ -88,7 +135,7 @@ public class House : Building
             }
         }
         timeToNextBaby -= Time.deltaTime;
-        this.powerDraw = basePowerDraw * occupants.Count;
+        this.powerDraw = basePowerDraw * (occupants.Count);
     }
 
     public void register()
@@ -98,10 +145,17 @@ public class House : Building
 
     int shown = 0;
 
+    Dictionary<Dropdown, Image> dropdowns = new Dictionary<Dropdown, Image>();
+    GameObject currentMenu = null;
+
     public override void clickMenu(GameObject top, GameObject panel)
     {
         if (GenWorld.menu == panel) shown = 0;
         else GenWorld.menu = panel;
+
+        dropdowns.Clear();
+
+        currentMenu = panel;
         House h = top.GetComponent<House>();
 
         GameObject.Find("Occupants").GetComponent<UnityEngine.UI.Text>().text = h.occupants.Count + "";
@@ -109,7 +163,7 @@ public class House : Building
         GameObject[] profiles = new GameObject[h.occupants.Count];
         for (int i = 0; i < h.occupants.Count; i++)
         {
-            if (i < shown) continue;
+            //if (i < shown) continue;
             profiles[i] = Instantiate(Resources.Load<GameObject>("Prefabs/UI/UIPerson"));
             profiles[i].transform.SetParent(panel.transform);
             RectTransform rt = (RectTransform)profiles[i].transform;
@@ -120,8 +174,10 @@ public class House : Building
             profiles[i].transform.localPosition = new Vector3((i * 170) - 260, -100, 1);
             profiles[i].GetComponentInChildren<Text>().text = h.occupants[i].Vname;
             profiles[i].GetComponentInChildren<Dropdown>().value = (int)h.occupants[i].role;
-            profiles[i].GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Villager/" + Random.Range(1, 4));
+            dropdowns.Add(profiles[i].GetComponentInChildren<Dropdown>(), profiles[i].GetComponentInChildren<Image>());
+            //profiles[i].GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Villager/" + Random.Range(1, 4));
         }
+
         shown = h.occupants.Count;
     }
 }

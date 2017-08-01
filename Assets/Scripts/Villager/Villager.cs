@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum VillagerRole {
-    Default,
+    None,
     Miner,
-    Lumberjack,
-    Scientist
+    Lumberjack
 }
 
 [RequireComponent(typeof(SpriteRenderer))]

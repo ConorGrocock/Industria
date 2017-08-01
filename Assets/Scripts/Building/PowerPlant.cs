@@ -5,11 +5,10 @@ using UnityEngine.UI;
 
 public class PowerPlant : Building
 {
-    public float coalBurnTime = 1f;
+    public float coalBurnTime = 3f;
     float cBurnTime = 0;
-    float powerPerSecond = 4f;
+    float powerPerSecond = 3f;
     public float powerStored = 0f;
-    public int workers = 0;
 
     // Use this for initialization
     protected override void Start()
@@ -23,15 +22,15 @@ public class PowerPlant : Building
     void Update()
     {
         cBurnTime -= Time.deltaTime;
-        if (cBurnTime < 0)
+        if (cBurnTime <= 0)
         {
-            if (GenWorld._instance.Resources[OreTypes.Coal] > 1)
+            if (GenWorld._instance.Resources[OreTypes.Coal] >= 1)
             {
                 GenWorld._instance.Resources[OreTypes.Coal]--;
                 cBurnTime = coalBurnTime;
             }
         }
-        powerStored += (powerPerSecond);//* Time.deltaTime);
+        else powerStored += (powerPerSecond);//* Time.deltaTime);
     }
 
     public void register()
@@ -76,7 +75,7 @@ public class PowerPlant : Building
 
             Text[] textPanels = panel.GetComponentsInChildren<Text>();
             foreach (Text text in textPanels) {
-                if (text.name == "Occupants") text.text = workers.ToString();
+                //if (text.name == "Occupants") text.text = workers.ToString();
             }
         }
     }

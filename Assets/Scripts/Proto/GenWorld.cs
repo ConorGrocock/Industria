@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +14,6 @@ public class GenWorld : MonoBehaviour
     public GameObject Tile;
     public GameObject Parent;
 
-    [HideInInspector]
     public bool gameOver;
 
     float PowerSupply;
@@ -24,7 +23,7 @@ public class GenWorld : MonoBehaviour
         set { PowerSupply = value; }
     }
 
-    float PowerStored = 200f;
+    float PowerStored = 100f;
 
     public float powerDraw
     {
@@ -59,21 +58,18 @@ public class GenWorld : MonoBehaviour
             buildingPanel.SetActive(true);
             Button[] buttons = buildingPanel.GetComponentsInChildren<Button>();
 
-            foreach (Button b in buttons) {
-                if (Resources[OreTypes.Copper] >= 1 && Resources[OreTypes.Wood] >= 10) {
-                    if (value.ore == null) {
-                        if (b.name == "Lab") b.interactable = false;
-                        else if (b.name == "Power plant") b.interactable = true;
-                        else b.interactable = false;
-                        continue;
-                    }
-                    if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill) b.interactable = true;
-                    else if (b.name == "Mine" && value.ore.mine == MineType.Shaft) b.interactable = true;
+            foreach (Button b in buttons)
+            {
+                if (value.ore == null)
+                {
+                    if (b.name == "Lab") b.interactable = true;
+                    else if (b.name == "Power plant") b.interactable = true;
                     else b.interactable = false;
-                    if (b.name == "Lab") b.interactable = false;
-                } else {
-                    b.interactable = false;
+                    continue;
                 }
+                if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill) b.interactable = true;
+                else if (b.name == "Mine" && value.ore.mine == MineType.Shaft) b.interactable = true;
+                else b.interactable = false;
             }
 
         }
@@ -95,9 +91,9 @@ public class GenWorld : MonoBehaviour
 
         Resources = new Dictionary<OreTypes, int>();
         Resources.Add(OreTypes.Coal, 0);
-        Resources.Add(OreTypes.Copper, 10);
+        Resources.Add(OreTypes.Copper, 0);
         Resources.Add(OreTypes.Iron, 0);
-        Resources.Add(OreTypes.Wood, 100);
+        Resources.Add(OreTypes.Wood, 0);
 
 
         Camera.main.transform.Translate(new Vector3((worldWidth / 2) * 1.28f, ((worldHeight / 2) * 1.28f) - 0.5f));
@@ -197,7 +193,7 @@ public class GenWorld : MonoBehaviour
 
     void Update()
     {
-        if (PowerStored < 0 && !gameOver)
+        if (PowerStored < 0)
         {
             if (managerScript == null)
             {
@@ -208,15 +204,51 @@ public class GenWorld : MonoBehaviour
             Time.timeScale = 0;
             managerScript.ShowGameOver();
             gameOver = true;
-
-            return;
         }
 
         int count = 0;
+
+        int totalMiners = 0;
+        int totalJacks = 0;
+        int totalPowerWorkers = 0;
+
         foreach (House house in houses)
         {
             count += house.occupancy;
+
+            totalMiners += house.miners;
+            totalJacks += house.lumberjacks;
+            totalPowerWorkers += house.power;
         }
+
+        foreach (Building building in Building.buildings)
+        {
+            switch (building.tile.building.name)
+            {
+                case "PowerPlant":
+                    PowerPlant plant = (PowerPlant)building;
+                    if (plant.workers >= plant.maxWorkers) continue;
+                    int inc = Mathf.Min(plant.maxWorkers, totalPowerWorkers);
+                    plant.workers += inc;
+                    totalPowerWorkers -= inc;
+                    break;
+                case "Mine":
+                    Mine mine = (Mine)building;
+                    if (mine.workers >= mine.maxWorkers) continue;
+                    inc = Mathf.Min(mine.maxWorkers, totalPowerWorkers);
+                    mine.workers += inc;
+                    totalMiners -= inc;
+                    break;
+                case "Mill":
+                    Mill mill = (Mill)building;
+                    if (mill.workers >= mill.maxWorkers) continue;
+                    inc = Mathf.Min(mill.maxWorkers, totalJacks);
+                    mill.workers += inc;
+                    totalJacks -= inc;
+                    break;
+            }
+        }
+
         GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = "Normal: " + count;
 
         this.PowerSupply = 0;
@@ -272,8 +304,6 @@ public class GenWorld : MonoBehaviour
 
     public void buildOnTile(string building)
     {
-        Resources[OreTypes.Copper]--;
-        Resources[OreTypes.Wood]-= 10;
         buildTile.building = buildings[building];
         buildingPanel.SetActive(false);
         BuildTile = null;
