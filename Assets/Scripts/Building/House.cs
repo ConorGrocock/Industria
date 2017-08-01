@@ -24,7 +24,7 @@ public class House : Building
     public int maxCapacity = 5;
     public bool full;
 
-    public List<Villager> occupants;
+    List<Villager> occupants = new List<Villager>();
 
     // Use this for initialization
     protected void Start()
@@ -32,7 +32,6 @@ public class House : Building
         base.Start();
         GenWorld._instance.houses.Add(this);
         timeToNextBaby = babyTime;
-        occupants = new List<Villager>();
 
         occupants.Add(new Villager());
         occupants[0].role = VillagerRole.Miner;
@@ -54,6 +53,8 @@ public class House : Building
             int i = 0;
             foreach (KeyValuePair<Dropdown, Image> entry in dropdowns)
             {
+                if (occupants.Count < i + 1) continue;
+                if (occupants[i] == null) occupants[i] = new Villager();
                 switch (entry.Key.value)
                 {
                     case 0:

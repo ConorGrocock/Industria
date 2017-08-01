@@ -68,9 +68,10 @@ public class Tile : MonoBehaviour
 
     public void OnMouseUp()
     {
+        if (menuClose) { menuClose = false; return; }
         if (EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.gameOver) { mouseOver = false; return; }
         if (GenWorld._instance.buildTile != null) { GenWorld._instance.buildTile = null; return; }
-        if (mouseOver)
+        if (mouseOver && GenWorld.menu == null)
             GenWorld._instance.buildTile = this;
         else if (GenWorld._instance.buildTile == this) GenWorld._instance.buildTile = null;
     }
@@ -78,6 +79,7 @@ public class Tile : MonoBehaviour
     private bool menuOpen = false;
     GameObject panel;
     bool mouseOver = false;
+    bool menuClose = false;
     public void OnMouseOver()
     {
         if (EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.gameOver || GenWorld._instance.isMainMenu) { mouseOver = false; return; }
@@ -87,6 +89,7 @@ public class Tile : MonoBehaviour
         {
             if (GenWorld.menu != null)
             {
+                menuClose = true;
                 GenWorld._instance.closeMenu();
                 return;
             }
@@ -94,6 +97,7 @@ public class Tile : MonoBehaviour
             //building = GenWorld._instance.buildings["House"];
             if (building != null)
             {
+                GenWorld._instance.buildTile = null;
                 GameObject sprite = Resources.Load<GameObject>("Prefabs/UI/" + building.name + "Panel");
                 if (sprite != null)
                 {

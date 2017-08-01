@@ -18,12 +18,14 @@ public class Manager : MonoBehaviour
     public void ShowGameOver()
     {
         GenWorld._instance.closeMenu();
+        GenWorld._instance.buildingPanel.SetActive(false);
         gameOverObject.SetActive(true);
     }
 	
 	public void RestartScene()
     {
         Building.buildings.Clear();
+        GenWorld._instance.buildingPanel.SetActive(false);
         GenWorld._instance.closeMenu();
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
