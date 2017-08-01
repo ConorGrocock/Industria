@@ -205,6 +205,8 @@ public class GenWorld : MonoBehaviour
             Time.timeScale = 0;
             managerScript.ShowGameOver();
             gameOver = true;
+
+            return;
         }
 
         int count = 0;
