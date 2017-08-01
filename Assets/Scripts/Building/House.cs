@@ -17,7 +17,7 @@ public class House : Building
         }
     }
 
-    float basePowerDraw = 1.5f;
+    float basePowerDraw = 0.8f;
 
     [Space(20)]
     public int occupancy = 2;

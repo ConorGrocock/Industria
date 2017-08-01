@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 222904587905903160}
   - component: {fileID: 114298291001822124}
   m_Layer: 5
-  m_Name: PowerPlantPanel
+  m_Name: PowerPlantPaneldisabled
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

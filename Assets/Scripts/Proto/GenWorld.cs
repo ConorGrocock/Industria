@@ -54,7 +54,7 @@ public class GenWorld : MonoBehaviour
         set
         {
             BuildTile = value;
-            if (value == null) return;
+            if (value == null) { buildingPanel.SetActive(false); return; }
             buildingPanel.SetActive(true);
             Button[] buttons = buildingPanel.GetComponentsInChildren<Button>();
 
