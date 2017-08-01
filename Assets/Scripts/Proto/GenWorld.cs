@@ -289,7 +289,7 @@ public class GenWorld : MonoBehaviour
         new House().register();
         new Mine().register();
         new Mill().register();
-        new Lab().register();
+        //new Lab().register();
         new PowerPlant().register();
     }
 
