@@ -94,9 +94,9 @@ public class GenWorld : MonoBehaviour
 
         Resources = new Dictionary<OreTypes, int>();
         Resources.Add(OreTypes.Coal, 0);
-        Resources.Add(OreTypes.Copper, 0);
+        Resources.Add(OreTypes.Copper, 10);
         Resources.Add(OreTypes.Iron, 0);
-        Resources.Add(OreTypes.Wood, 0);
+        Resources.Add(OreTypes.Wood, 100);
 
 
         Camera.main.transform.Translate(new Vector3((worldWidth / 2) * 1.28f, ((worldHeight / 2) * 1.28f) - 0.5f));
