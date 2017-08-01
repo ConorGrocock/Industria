@@ -243,16 +243,32 @@ public class GenWorld : MonoBehaviour
         int totalMiners = 0;
         int totalJacks = 0;
         int totalPowerWorkers = 0;
+        int maxPopulation = 0;
 
         foreach (House house in houses)
         {
             count += house.occupancy;
+            maxPopulation += house.maxCapacity;
 
             totalMiners += house.miners;
             totalJacks += house.lumberjacks;
             totalPowerWorkers += house.power;
         }
+        int maxMineWorkers = 0, maxMillWorkers = 0;
+        foreach (Building building in Building.buildings) {
+            switch (building.tile.building.name) {
+                case "Mine":
+                    Mine mine = (Mine)building;
+                    maxMineWorkers += mine.maxWorkers;
+                    break;
+                case "Mill":
+                    Mill mill = (Mill)building;
+                    maxMillWorkers += mill.maxWorkers;
+                    break;
+            }
+        }
 
+        GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = string.Format("Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}", count,maxPopulation, totalMiners, maxMineWorkers, totalJacks, maxMillWorkers);
         foreach (Building building in Building.buildings)
         {
             switch (building.tile.building.name)
@@ -274,7 +290,7 @@ public class GenWorld : MonoBehaviour
             }
         }
 
-        GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = "Normal: " + count;
+        
 
         this.PowerSupply = 0;
         float powerLimitOverall = 0;
