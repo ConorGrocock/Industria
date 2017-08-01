@@ -65,5 +65,6 @@ public class DialogueManager : MonoBehaviour
     private void EndDialogue()
     {
         dialogueBox.SetActive(false);
+        Manager._instance.Unpause();
     }
 }
