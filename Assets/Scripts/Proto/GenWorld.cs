@@ -18,6 +18,7 @@ public class GenWorld : MonoBehaviour
     public bool gameOver;
 
     public bool isMainMenu;
+    public bool isPaused;
 
     float PowerSupply;
     public float powerSupply
@@ -200,11 +201,29 @@ public class GenWorld : MonoBehaviour
                 }
             }
         }
+
+        int count = 0;
+
+        foreach (House house in houses)
+        {
+            count += house.occupancy;
+        }
+
+        GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = "Normal: " + count;
+
+        string resource = "";
+        foreach (KeyValuePair<OreTypes, int> entry in Resources)
+        {
+            resource += entry.Key.ToString() + ": " + entry.Value + " ";
+        }
+
+        GameObject.Find("ResourceCount").GetComponent<UnityEngine.UI.Text>().text = resource;
+        GameObject.Find("UIBarPower").GetComponent<Text>().text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(this.PowerStored), Mathf.Round(this.powerSupply), Mathf.Round(this.powerDraw));
     }
 
     void Update()
     {
-        if (isMainMenu) return;
+        if (isMainMenu || Manager._instance.isPaused) return;
 
         if (PowerStored < 0)
         {

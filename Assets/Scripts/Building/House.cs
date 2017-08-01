@@ -46,7 +46,7 @@ public class House : Building
     // Update is called once per frame
     void Update()
     {
-        if (GenWorld._instance.isMainMenu) return;
+        if (GenWorld._instance.isMainMenu || Manager._instance.isPaused) return;
 
         if (currentMenu == GenWorld.menu)
         {

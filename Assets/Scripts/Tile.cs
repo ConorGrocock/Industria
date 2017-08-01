@@ -82,7 +82,7 @@ public class Tile : MonoBehaviour
     bool menuClose = false;
     public void OnMouseOver()
     {
-        if (EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.gameOver || GenWorld._instance.isMainMenu) { mouseOver = false; return; }
+        if (EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.gameOver || GenWorld._instance.isMainMenu || Manager._instance.isPaused) { mouseOver = false; return; }
         mouseOver = true;
 
         if (Input.GetMouseButtonDown(0))

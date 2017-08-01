@@ -21,6 +21,8 @@ public class PowerPlant : Building
     // Update is called once per frame
     void Update()
     {
+        if (Manager._instance.isPaused) return;
+
         cBurnTime -= Time.deltaTime;
         if (cBurnTime <= 0)
         {
