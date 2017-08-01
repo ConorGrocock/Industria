@@ -127,7 +127,7 @@ public class House : Building
             profiles[i].transform.localPosition = new Vector3((i * 170) - 260, -100, 1);
             profiles[i].GetComponentInChildren<Text>().text = h.occupants[i].Vname;
             profiles[i].GetComponentInChildren<Dropdown>().value = (int)h.occupants[i].role;
-            profiles[i].GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Villager/" + Random.Range(0, 4));
+            profiles[i].GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Villager/" + Random.Range(1, 4));
         }
         shown = h.occupants.Count;
     }
