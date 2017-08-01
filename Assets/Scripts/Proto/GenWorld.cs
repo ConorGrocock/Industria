@@ -14,6 +14,8 @@ public class GenWorld : MonoBehaviour
     public GameObject Tile;
     public GameObject Parent;
 
+    public bool gameOver;
+
     float PowerSupply;
     public float powerSupply
     {
@@ -201,6 +203,7 @@ public class GenWorld : MonoBehaviour
             PowerStored = 0;
             Time.timeScale = 0;
             managerScript.ShowGameOver();
+            gameOver = true;
         }
         
         int count = 0;
