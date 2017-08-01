@@ -7,6 +7,5 @@ public class Dialogue : MonoBehaviour
     public string speakerName;
     public Sprite speakerImage;
 
-    [TextArea(3, 10)]
-    public string[] sentences;
+    public DialogueStruct[] sentences;
 }
