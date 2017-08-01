@@ -6,7 +6,7 @@ PlayerSettings:
   serializedVersion: 11
   productGUID: 9e9a9810c97065e45b0385de46792579
   AndroidProfiler: 0
-  defaultScreenOrientation: 4
+  defaultScreenOrientation: 2
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
@@ -143,7 +143,7 @@ PlayerSettings:
     Android: com.ProjectFocus.Industry
   buildNumber: {}
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 24
+  AndroidMinSdkVersion: 21
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   aotOptions: 
@@ -588,6 +588,7 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Build: 1
     Collab: 1
     UNet: 1
   facebookSdkVersion: 7.9.4
