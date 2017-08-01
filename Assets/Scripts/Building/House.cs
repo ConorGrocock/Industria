@@ -47,9 +47,9 @@ public class House : Building
         {
             timeToNextBaby = babyTime;
             babyTime *= 1.5f;
-            full = occupancy >= maxCapacity;
+            full = occupants.Count >= maxCapacity;
 
-            if (full)
+            if (occupants.Count >= maxCapacity)
             {
                 float xOffset = Random.Range(-2, 2);
                 float yOffset = Random.Range(-2, 2);
