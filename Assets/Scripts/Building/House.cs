@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,33 +56,26 @@ public class House : Building
 
                 Vector3 cPos = GenWorld._instance.getTileCoord(transform.position);
 
-                try
+                if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)] != null)
                 {
-                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)] != null)
+                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
                     {
-                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
-                        {
-                            xOffset = Random.Range(-2, 2);
-                            yOffset = Random.Range(-2, 2);
-                        }
-                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
-                        {
-                            cPos = GenWorld._instance.getTileCoord(new Vector3((cPos.x + xOffset), (cPos.y + yOffset)));
-                            xOffset = Random.Range(-2, 2);
-                            yOffset = Random.Range(-2, 2);
-                        }
-
-                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
-                        {
-                            return;
-                        }
-                        if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building == null)
-                            GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building = GenWorld._instance.buildings["House"];
+                        xOffset = Random.Range(-2, 2);
+                        yOffset = Random.Range(-2, 2);
                     }
-                }
-                catch (System.IndexOutOfRangeException e)
-                {
-                    return;
+                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
+                    {
+                        cPos = GenWorld._instance.getTileCoord(new Vector3((cPos.x + xOffset), (cPos.y + yOffset)));
+                        xOffset = Random.Range(-2, 2);
+                        yOffset = Random.Range(-2, 2);
+                    }
+
+                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
+                    {
+                        return;
+                    }
+                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building == null)
+                        GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building = GenWorld._instance.buildings["House"];
                 }
                 //Spawn new house
                 //Where?
@@ -124,10 +117,9 @@ public class House : Building
             rt.anchorMin = new Vector2(0, 0);
             rt.anchorMax = new Vector2(0, 0);
 
-            profiles[i].transform.localPosition = new Vector3((i * 170) - 260, -100, 1);
+            profiles[i].transform.localPosition = new Vector3((i * 170) - 275, -100, 1);
             profiles[i].GetComponentInChildren<Text>().text = h.occupants[i].Vname;
             profiles[i].GetComponentInChildren<Dropdown>().value = (int)h.occupants[i].role;
-            profiles[i].GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Villager/" + Random.Range(1, 4));
         }
         shown = h.occupants.Count;
     }

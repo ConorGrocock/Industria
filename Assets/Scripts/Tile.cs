@@ -70,7 +70,7 @@ public class Tile : MonoBehaviour
     GameObject panel;
     public void OnMouseOver()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.gameOver) return;
 
 
         if (Input.GetMouseButtonDown(0))

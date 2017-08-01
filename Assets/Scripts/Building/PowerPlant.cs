@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class PowerPlant : Building
 {
-
     public float coalBurnTime = 1f;
     float cBurnTime = 0;
     float powerPerSecond = 4f;
     public float powerStored = 0f;
+    public int workers = 0;
 
     // Use this for initialization
     protected override void Start()
