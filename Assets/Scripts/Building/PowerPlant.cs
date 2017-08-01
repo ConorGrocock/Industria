@@ -73,6 +73,11 @@ public class PowerPlant : Building
             powerInfomation.transform.localPosition = new Vector3(-400, 175);
             info.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
             powerInfomation.transform.localScale = new Vector3(1, 1, 1);
+
+            Text[] textPanels = panel.GetComponentsInChildren<Text>();
+            foreach (Text text in textPanels) {
+                if (text.name == "Occupants") text.text = workers.ToString();
+            }
         }
     }
 }
