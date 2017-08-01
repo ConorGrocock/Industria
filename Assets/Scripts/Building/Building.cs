@@ -15,12 +15,10 @@ public class Building : MonoBehaviour
 
     // if (housePanel != null) Destroy(housePanel);
     // Use this for initialization
-    protected virtual void Start()
-    {
+    protected virtual void Start() {
         buildings.Add(this);
         //this.transform.Translate(new Vector3(this.transform.position.x, this.transform.position.y, -1));
-        if (sprite != null)
-        {
+        if (sprite != null) {
             spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = sprite;
         }
@@ -32,9 +30,8 @@ public class Building : MonoBehaviour
             if (building.tile.building.name == "PowerPlant")
                 plantExists = true;
 
-        if (plantExists)
-            foreach (Building building in buildings)
-            {
+        if (plantExists) { 
+            foreach (Building building in buildings) {
                 Vector3 pos = GenWorld._instance.getTileCoord(building.transform.position);
 
                 if (buildings.Count <= i + 1) break;
@@ -47,6 +44,9 @@ public class Building : MonoBehaviour
 
                 i += 1;
             }
+        }
+
+
     }
     void DrawLine(Vector3 start, Vector3 end, Color color)
     {
