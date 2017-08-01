@@ -1,6 +1,4 @@
-The system cannot find the path specified.
-The system cannot find the path specified.
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
