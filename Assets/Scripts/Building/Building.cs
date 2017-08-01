@@ -10,6 +10,7 @@ public class Building : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public Tile tile;
 
+    public float powerLimit = 100f;
     public float powerDraw = 5f;
 
     // if (housePanel != null) Destroy(housePanel);

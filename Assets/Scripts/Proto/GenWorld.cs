@@ -205,7 +205,7 @@ public class GenWorld : MonoBehaviour
             managerScript.ShowGameOver();
             gameOver = true;
         }
-        
+
         int count = 0;
         foreach (House house in houses)
         {
@@ -214,6 +214,14 @@ public class GenWorld : MonoBehaviour
         GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = "Normal: " + count;
 
         this.PowerSupply = 0;
+        float powerLimitOverall = 0;
+
+        foreach (Building building in Building.buildings)
+        {
+            if (building.tile.building.name != "PowerPlant")
+                powerLimitOverall += building.powerLimit;
+        }
+
         foreach (PowerPlant building in plants)
         {
             this.PowerSupply += building.powerStored;
@@ -231,7 +239,7 @@ public class GenWorld : MonoBehaviour
         GameObject.Find("UIBarPower").GetComponent<Text>().text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(this.PowerStored), Mathf.Round(this.powerSupply), Mathf.Round(this.powerDraw));
 
         GameObject PowerForground = GameObject.Find("PowerForground");
-        PowerForground.transform.localScale = new Vector3(Mathf.Min((GenWorld._instance.powerSupply / GenWorld._instance.powerDraw), 1), 1,1);
+        PowerForground.transform.localScale = new Vector3(Mathf.Min(/*(GenWorld._instance.powerSupply / GenWorld._instance.powerDraw)*/this.PowerStored / powerLimitOverall, 1), 1, 1);
     }
 
     public static GameObject menu;
