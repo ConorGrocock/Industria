@@ -130,11 +130,11 @@ public class GenWorld : MonoBehaviour
 
 
         int iron = 0, copper = 0, wood = 0, coal = 0;
-        for (int ores = 0; ores < Random.Range(4, 10); ores++)
+        for (int ores = 0; ores < Random.Range(6, 10); ores++)
         {
             GameObject cTile = null;
 
-            while (cTile == null || cTile.GetComponent<Tile>().building != null)
+            while (cTile == null || cTile.GetComponent<Tile>().building != null || cTile.GetComponent<Tile>().ore != null)
             {
                 cTile = tiles[Random.Range(2, worldWidth - 2)][Random.Range(2, worldHeight - 2)];
             }
