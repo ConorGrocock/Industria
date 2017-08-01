@@ -95,7 +95,7 @@ public class GenWorld : MonoBehaviour
         Resources = new Dictionary<OreTypes, int>();
         Resources.Add(OreTypes.Coal, 0);
         Resources.Add(OreTypes.Copper, 10);
-        Resources.Add(OreTypes.Iron, 0);
+        //Resources.Add(OreTypes.Iron, 0);
         Resources.Add(OreTypes.Wood, 100);
 
 
@@ -132,7 +132,7 @@ public class GenWorld : MonoBehaviour
 
 
 
-        int iron = 0, copper = 0, wood = 0, coal = 0;
+        int copper = 0, wood = 0, coal = 0;
         for (int ores = 0; ores < Random.Range(6, 10); ores++)
         {
             GameObject cTile = null;
@@ -151,11 +151,11 @@ public class GenWorld : MonoBehaviour
                 cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
                 copper++;
             }
-            else if (iron == 0)
-            {
-                cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
-                iron++;
-            }
+            //else if (iron == 0)
+            //{
+            //    cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
+            //    iron++;
+            //}
             else if (wood == 0)
             {
                 cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
@@ -172,17 +172,18 @@ public class GenWorld : MonoBehaviour
                             break;
                         }
                     case (1):
+                    case 2:
                         {
                             cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
                             copper++;
                             break;
                         }
-                    case (2):
-                        {
-                            cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
-                            iron++;
-                            break;
-                        }
+                    //case (2):
+                    //    {
+                    //        cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
+                    //        iron++;
+                    //        break;
+                    //    }
                     case (3):
                         {
                             cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);

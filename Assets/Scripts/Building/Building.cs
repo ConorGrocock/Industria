@@ -55,7 +55,7 @@ public class Building : MonoBehaviour
         myLine.AddComponent<LineRenderer>();
         LineRenderer lr = myLine.GetComponent<LineRenderer>();
         myLine.transform.SetParent(transform);
-        lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+        //lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
         lr.startColor = color;
         lr.endColor = color;
         lr.startWidth = 0.025f;
