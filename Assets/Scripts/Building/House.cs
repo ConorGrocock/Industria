@@ -156,8 +156,12 @@ public class House : Building
 
     public override void clickMenu(GameObject top, GameObject panel)
     {
-        if (GenWorld.menu == panel) shown = 0;
-        else GenWorld.menu = panel;
+        if (GenWorld.menu != panel)
+        {
+            shown = 0;
+            GenWorld.menu = panel;
+        }
+        else return;
 
         dropdowns.Clear();
 
@@ -165,12 +169,13 @@ public class House : Building
         House h = top.GetComponent<House>();
 
         GameObject.Find("Occupants").GetComponent<UnityEngine.UI.Text>().text = h.occupants.Count + "";
-
+        GameObject person = Resources.Load<GameObject>("Prefabs/UI/UIPerson");
         GameObject[] profiles = new GameObject[h.occupants.Count];
         for (int i = 0; i < h.occupants.Count; i++)
         {
-            //if (i < shown) continue;
-            profiles[i] = Instantiate(Resources.Load<GameObject>("Prefabs/UI/UIPerson"));
+            if (i < shown) continue;
+            //profiles[i] = Instantiate(Resources.Load<GameObject>("Prefabs/UI/UIPerson"));
+            profiles[i] = Instantiate(person);
             profiles[i].transform.SetParent(panel.transform);
             RectTransform rt = (RectTransform)profiles[i].transform;
             rt.pivot = new Vector2(1f, 0f);

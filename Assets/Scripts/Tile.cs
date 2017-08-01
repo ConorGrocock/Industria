@@ -70,6 +70,7 @@ public class Tile : MonoBehaviour
     {
         if (menuClose) { menuClose = false; return; }
         if (EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.gameOver) { mouseOver = false; return; }
+        if (building != null) return;
         if (GenWorld._instance.buildTile != null) { GenWorld._instance.buildTile = null; return; }
         if (mouseOver && GenWorld.menu == null)
             GenWorld._instance.buildTile = this;
