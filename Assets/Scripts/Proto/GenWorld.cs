@@ -309,8 +309,9 @@ public class GenWorld : MonoBehaviour
     }
 
     public void buildOnTile(string building) {
-        Resources[OreTypes.Copper]--;
-        Resources[OreTypes.Wood] -= 10;
+        foreach (KeyValuePair<OreTypes, int> cost in buildings[building].costs) {
+            GenWorld._instance.Resources[cost.Key] -= cost.Value;
+        }
         buildTile.building = buildings[building];
         buildingPanel.SetActive(false);
         BuildTile = null;

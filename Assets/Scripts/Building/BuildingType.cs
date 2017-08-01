@@ -7,7 +7,7 @@ public class BuildingType{
     public Sprite sprite;
     public String name;
 
-    Dictionary<OreTypes, int> costs;
+    public Dictionary<OreTypes, int> costs;
 
     public bool buildable {
         get {
