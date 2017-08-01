@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GenWorld : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class GenWorld : MonoBehaviour
     public GameObject Parent;
 
     public bool gameOver;
+
+    public bool isMainMenu;
 
     float PowerSupply;
     public float powerSupply
@@ -87,7 +90,16 @@ public class GenWorld : MonoBehaviour
     {
         if (_instance == null) _instance = this;
         else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class");
-        buildingPanel.SetActive(false);
+
+        isMainMenu = SceneManager.GetActiveScene().name == "_Menu";
+
+        if (managerScript == null && !isMainMenu)
+        {
+            managerScript = gameManager.GetComponent<Manager>();
+        }
+
+        if (!isMainMenu)
+            buildingPanel.SetActive(false);
 
         buildings = new Dictionary<string, BuildingType>();
         registerBuildings();
@@ -197,6 +209,8 @@ public class GenWorld : MonoBehaviour
 
     void Update()
     {
+        if (isMainMenu) return;
+
         if (PowerStored < 0)
         {
             if (managerScript == null)

@@ -17,7 +17,7 @@ public class House : Building
         }
     }
 
-    float basePowerDraw = 0.8f;
+    float basePowerDraw = 1.5f;
 
     [Space(20)]
     public int occupancy = 2;
@@ -47,6 +47,8 @@ public class House : Building
     // Update is called once per frame
     void Update()
     {
+        if (GenWorld._instance.isMainMenu) return;
+
         if (currentMenu == GenWorld.menu)
         {
             int i = 0;
