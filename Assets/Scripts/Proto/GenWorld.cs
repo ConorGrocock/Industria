@@ -58,20 +58,23 @@ public class GenWorld : MonoBehaviour
             buildingPanel.SetActive(true);
             Button[] buttons = buildingPanel.GetComponentsInChildren<Button>();
 
-            foreach (Button b in buttons)
-            {
-                if (value.ore == null)
-                {
-                    if (b.name == "Lab") b.interactable = true;
-                    else if (b.name == "Power plant") b.interactable = true;
+            foreach (Button b in buttons) {
+                if (Resources[OreTypes.Copper] >= 1 && Resources[OreTypes.Wood] >= 10) {
+                    if (value.ore == null) {
+                        if (b.name == "Lab") b.interactable = false;
+                        else if (b.name == "Power plant") b.interactable = true;
+                        else b.interactable = false;
+                        continue;
+                    }
+                    if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill) b.interactable = true;
+                    else if (b.name == "Mine" && value.ore.mine == MineType.Shaft) b.interactable = true;
                     else b.interactable = false;
-                    continue;
+                    if (b.name == "Lab") b.interactable = false;
                 }
-                if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill) b.interactable = true;
-                else if (b.name == "Mine" && value.ore.mine == MineType.Shaft) b.interactable = true;
-                else b.interactable = false;
+                else {
+                    b.interactable = false;
+                }
             }
-
         }
     }
 
@@ -295,8 +298,9 @@ public class GenWorld : MonoBehaviour
         return vector / 1.28f;
     }
 
-    public void buildOnTile(string building)
-    {
+    public void buildOnTile(string building) {
+        Resources[OreTypes.Copper]--;
+        Resources[OreTypes.Wood] -= 10;
         buildTile.building = buildings[building];
         buildingPanel.SetActive(false);
         BuildTile = null;
