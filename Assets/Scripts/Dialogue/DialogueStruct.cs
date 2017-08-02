@@ -8,6 +8,7 @@ public enum DialogueResponseType
     YES_NO
 }
 
+[RequireComponent(typeof(TypingSoundScript))]
 public class DialogueStruct : MonoBehaviour
 {
     public DialogueScript scriptToRun;
@@ -17,6 +18,19 @@ public class DialogueStruct : MonoBehaviour
     public DialogueTrigger yesResponseTree;
     public DialogueTrigger noResponseTree;
 
+    [HideInInspector]
+    public DialogueScript typingSoundScript;
+
     [TextArea(3, 10)]
     public string sentence;
+
+    void Awake()
+    {
+        typingSoundScript = GetComponent<TypingSoundScript>();
+
+        if (typingSoundScript == null)
+        {
+            Debug.LogError("[DialogueStruct] Could not find typing sound script!");
+        }
+    }
 }

@@ -36,14 +36,14 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("You have not assigned the dialogue box to the dialogue manager!");
+            Debug.LogError("[DialogueManager] You have not assigned the dialogue box to the dialogue manager!");
             Manager._instance.Unpause();
             return;
         }
 
         if (dialogue == null)
         {
-            Debug.LogError("The dialogue to be displayed is null!");
+            Debug.LogError("[DialogueManager] The dialogue to be displayed is null!");
             Manager._instance.Unpause();
             return;
         }
@@ -53,7 +53,7 @@ public class DialogueManager : MonoBehaviour
         if (speakerImage != null)
             speakerImage.sprite = dialogue.speakerImage;
         else
-            Debug.LogError("No speaker image assigned to dialogue! Name: " + dialogue.speakerName);
+            Debug.LogError("[DialogueManager] No speaker image assigned to dialogue! Name: " + dialogue.speakerName);
 
         dialogueQueue.Clear();
 
@@ -70,17 +70,17 @@ public class DialogueManager : MonoBehaviour
         if (continueButton != null)
             continueButton.gameObject.SetActive(false);
         else
-            Debug.LogError("You have not assigned the continue button to the dialogue manager!");
+            Debug.LogError("[DialogueManager] You have not assigned the continue button to the dialogue manager!");
 
         if (yesButton != null)
             yesButton.gameObject.SetActive(false);
         else
-            Debug.LogError("You have not assigned the yes button to the dialogue manager!");
+            Debug.LogError("[DialogueManager] You have not assigned the yes button to the dialogue manager!");
 
         if (noButton != null)
             noButton.gameObject.SetActive(false);
         else
-            Debug.LogError("You have not assigned the no button to the dialogue manager!");
+            Debug.LogError("[DialogueManager] You have not assigned the no button to the dialogue manager!");
 
         if (dialogueQueue.Count == 0)
         {
@@ -92,13 +92,23 @@ public class DialogueManager : MonoBehaviour
         {
             if (currentDialogue.scriptToRun != null && !endOfSentence)
                 currentDialogue.scriptToRun.OnFinish();
+
+            if (currentDialogue.typingSoundScript != null)
+            {
+                if (!endOfSentence)
+                    currentDialogue.typingSoundScript.OnFinish();
+            }
+            else
+            {
+                Debug.LogError("[DialogueManager] Typing sound script is null for the current dialogue! Text: " + currentDialogue.sentence);
+            }
         }
 
         currentDialogue = dialogueQueue.Dequeue();
 
         if (currentDialogue == null)
         {
-            Debug.LogError("You have not assigned a dialogue struct!");
+            Debug.LogError("[DialogueManager] You have not assigned a dialogue struct!");
             return;
         }
 
@@ -111,19 +121,19 @@ public class DialogueManager : MonoBehaviour
             if (continueButton != null)
                 continueButton.gameObject.SetActive(true);
             else
-                Debug.LogError("You have not assigned the continue button to the dialogue manager!");
+                Debug.LogError("[DialogueManager] You have not assigned the continue button to the dialogue manager!");
         }
         else if (currentDialogue.responseType == DialogueResponseType.YES_NO)
         {
             if (yesButton != null)
                 yesButton.gameObject.SetActive(true);
             else
-                Debug.LogError("You have not assigned the yes button to the dialogue manager!");
+                Debug.LogError("[DialogueManager] You have not assigned the yes button to the dialogue manager!");
 
             if (noButton != null)
                 noButton.gameObject.SetActive(true);
             else
-                Debug.LogError("You have not assigned the no button to the dialogue manager!");
+                Debug.LogError("[DialogueManager] You have not assigned the no button to the dialogue manager!");
         }
     }
 
@@ -131,6 +141,15 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentDialogue.scriptToRun != null)
             currentDialogue.scriptToRun.OnStart();
+
+        if (currentDialogue.typingSoundScript != null)
+        {
+            currentDialogue.typingSoundScript.OnStart();
+        }
+        else
+        {
+            Debug.LogError("[DialogueManager] Typing sound script is null for the current dialogue! Text: " + sentence);
+        }
 
         endOfSentence = false;
         dialogueText.text = "";
@@ -142,11 +161,29 @@ public class DialogueManager : MonoBehaviour
             if (currentDialogue.scriptToRun != null)
                 currentDialogue.scriptToRun.OnCharacterTyped();
 
+            if (currentDialogue.typingSoundScript != null)
+            {
+                currentDialogue.typingSoundScript.OnCharacterTyped();
+            }
+            else
+            {
+                Debug.LogError("[DialogueManager] Typing sound script is null for the current dialogue! Text: " + sentence);
+            }
+
             yield return new WaitForSeconds(secondsPerLetter);
         }
 
         if (currentDialogue.scriptToRun != null)
             currentDialogue.scriptToRun.OnFinish();
+
+        if (currentDialogue.typingSoundScript != null)
+        {
+            currentDialogue.typingSoundScript.OnFinish();
+        }
+        else
+        {
+            Debug.LogError("[DialogueManager] Typing sound script is null for the current dialogue! Text: " + sentence);
+        }
 
         endOfSentence = true;
     }
@@ -156,7 +193,7 @@ public class DialogueManager : MonoBehaviour
         if (currentDialogue.yesResponseTree != null)
             currentDialogue.yesResponseTree.TriggerDialogue();
         else
-            Debug.LogError("You have not assigned a yes response trigger to the current dialogue! Text: " + currentDialogue.sentence);
+            Debug.LogError("[DialogueManager] You have not assigned a yes response trigger to the current dialogue! Text: " + currentDialogue.sentence);
     }
 
     public void OnNoResponse()
@@ -164,7 +201,7 @@ public class DialogueManager : MonoBehaviour
         if (currentDialogue.noResponseTree != null)
             currentDialogue.noResponseTree.TriggerDialogue();
         else
-            Debug.LogError("You have not assigned a no response trigger to the current dialogue! Text: " + currentDialogue.sentence);
+            Debug.LogError("[DialogueManager] You have not assigned a no response trigger to the current dialogue! Text: " + currentDialogue.sentence);
     }
 
     private void EndDialogue()

@@ -1050,6 +1050,7 @@ GameObject:
   - component: {fileID: 545211430}
   - component: {fileID: 545211429}
   - component: {fileID: 545211428}
+  - component: {fileID: 545211431}
   m_Layer: 0
   m_Name: No
   m_TagString: Untagged
@@ -1085,6 +1086,7 @@ MonoBehaviour:
   responseType: 0
   yesResponseTree: {fileID: 0}
   noResponseTree: {fileID: 0}
+  typingSoundScript: {fileID: 0}
   sentence: You pressed no. Why?
 --- !u!114 &545211429
 MonoBehaviour:
@@ -1113,6 +1115,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 545211429}
+--- !u!114 &545211431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 545211426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06d8c1a2f8213945b954c5bb6663eb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typingSound: {fileID: 0}
 --- !u!1 &625450775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,6 +1175,7 @@ GameObject:
   - component: {fileID: 631594687}
   - component: {fileID: 631594686}
   - component: {fileID: 631594690}
+  - component: {fileID: 631594691}
   m_Layer: 5
   m_Name: Tutorial Dialogue
   m_TagString: Untagged
@@ -1183,6 +1198,7 @@ MonoBehaviour:
   responseType: 1
   yesResponseTree: {fileID: 846293533}
   noResponseTree: {fileID: 545211430}
+  typingSoundScript: {fileID: 0}
   sentence: Test
 --- !u!114 &631594687
 MonoBehaviour:
@@ -1199,6 +1215,7 @@ MonoBehaviour:
   responseType: 0
   yesResponseTree: {fileID: 0}
   noResponseTree: {fileID: 0}
+  typingSoundScript: {fileID: 0}
   sentence: Greetings! I am Mr. Man! I am here to teach you the basics of Industria.
 --- !u!114 &631594688
 MonoBehaviour:
@@ -1225,7 +1242,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 698595418}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1245,6 +1263,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12486294ca3129c458fe1b1b4f6ca795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &631594691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 631594685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06d8c1a2f8213945b954c5bb6663eb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typingSound: {fileID: 698595417}
 --- !u!1 &646132160
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,6 +1641,115 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &698595416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 698595418}
+  - component: {fileID: 698595417}
+  m_Layer: 5
+  m_Name: Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &698595417
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 698595416}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 401802f969b961c4fb092485795712cf, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!4 &698595418
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 698595416}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 631594689}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &712869339
@@ -2110,6 +2249,7 @@ GameObject:
   - component: {fileID: 846293533}
   - component: {fileID: 846293532}
   - component: {fileID: 846293531}
+  - component: {fileID: 846293534}
   m_Layer: 0
   m_Name: Yes
   m_TagString: Untagged
@@ -2145,6 +2285,7 @@ MonoBehaviour:
   responseType: 0
   yesResponseTree: {fileID: 0}
   noResponseTree: {fileID: 0}
+  typingSoundScript: {fileID: 0}
   sentence: You pressed yes!
 --- !u!114 &846293532
 MonoBehaviour:
@@ -2173,6 +2314,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 846293532}
+--- !u!114 &846293534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 846293529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06d8c1a2f8213945b954c5bb6663eb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typingSound: {fileID: 0}
 --- !u!1 &867139923
 GameObject:
   m_ObjectHideFlags: 0
