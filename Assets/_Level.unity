@@ -175,7 +175,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Power Plant
+  m_Text: 'Power Plant (E)
 
     (10 Wood, 1 Copper)
 
@@ -2487,7 +2487,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Lumber Mill
+  m_Text: 'Lumber Mill (Q)
 
     (10 Wood 6 Copper)
 
@@ -3051,7 +3051,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Mine
+  m_Text: 'Mine (W)
 
     (5 Wood)
 
@@ -3251,7 +3251,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Lab
+  m_Text: 'Lab (R)
 
     (WIP)
 
@@ -3850,6 +3850,7 @@ MonoBehaviour:
   houses: []
   plants: []
   buildingPanel: {fileID: 712869339}
+  hoverTile: {fileID: 0}
   sprites:
   - {fileID: 21300000, guid: bee6fc3ec0471d746a28db552ba31ccd, type: 3}
 --- !u!1 &1580916999
