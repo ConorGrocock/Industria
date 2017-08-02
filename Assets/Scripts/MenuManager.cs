@@ -18,7 +18,7 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("_Level_w_Lab");
+        SceneManager.LoadScene("_Level");
     }
 
     public void QuitGame()
