@@ -13,6 +13,8 @@ public class DialogueStructEditor : Editor
 
         EditorGUILayout.HelpBox("You MUST create a script which extends the DialogueScript class. The currently supported methods are: OnStart(), OnFinish(), OnCharacterTyped()", MessageType.Info);
 
+        diaStruct.secondsPerLetter = EditorGUILayout.FloatField("Seconds Per Letter", diaStruct.secondsPerLetter);
+
         diaStruct.responseType = (DialogueResponseType)EditorGUILayout.Popup("Response Type", (int)diaStruct.responseType, Enum.GetNames(typeof(DialogueResponseType)));
 
         if (diaStruct.responseType == DialogueResponseType.YES_NO)

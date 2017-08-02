@@ -11,8 +11,6 @@ public class DialogueManager : MonoBehaviour
     public Image speakerImage;
     public Text dialogueText;
 
-    public float secondsPerLetter;
-
     public GameObject dialogueBox;
 
     [Header("Response Buttons")]
@@ -23,7 +21,9 @@ public class DialogueManager : MonoBehaviour
     private DialogueStruct currentDialogue;
     private bool endOfSentence;
 
-	void Start()
+    private float secondsPerLetter;
+
+    void Start()
     {
         dialogueQueue = new Queue<DialogueStruct>();
 	}
@@ -111,6 +111,8 @@ public class DialogueManager : MonoBehaviour
             Debug.LogError("[DialogueManager] You have not assigned a dialogue struct!");
             return;
         }
+
+        secondsPerLetter = currentDialogue.secondsPerLetter;
 
         string sentence = currentDialogue.sentence;
         StopAllCoroutines();

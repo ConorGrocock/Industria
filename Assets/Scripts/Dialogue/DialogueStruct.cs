@@ -13,6 +13,8 @@ public class DialogueStruct : MonoBehaviour
 {
     public DialogueScript scriptToRun;
 
+    public float secondsPerLetter = 0.05f;
+
     public DialogueResponseType responseType;
 
     public DialogueTrigger yesResponseTree;
