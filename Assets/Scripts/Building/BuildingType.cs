@@ -7,6 +7,7 @@ public class BuildingType{
     public Sprite sprite;
     public String name;
     public KeyCode hotkey;
+    public MineType type;
 
     public Dictionary<OreTypes, int> costs;
 
@@ -19,12 +20,13 @@ public class BuildingType{
         }
     }
 
-    public BuildingType(String name, Component script, Sprite sprite, Dictionary<OreTypes, int> costs, KeyCode hotkey) {
+    public BuildingType(String name, Component script, Sprite sprite, Dictionary<OreTypes, int> costs, KeyCode hotkey, MineType type = MineType.None) {
         this.name = name;
         this.script = script;
         this.sprite = sprite;
         this.costs = costs;
         this.hotkey = hotkey;
+        this.type = type;
     }
 }
 

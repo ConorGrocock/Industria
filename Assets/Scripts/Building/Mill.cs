@@ -29,6 +29,8 @@ public class Mill : Building
     {
         base.Start();
         timeSinceLastMine = Time.time;
+
+        if (this.tile.ore == null) Destroy(this.gameObject);
     }
 
     // Update is called once per frame
@@ -49,6 +51,6 @@ public class Mill : Building
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Copper, 6);
         required.Add(OreTypes.Wood, 10);
-        GenWorld._instance.buildings.Add("Mill", new BuildingType("Mill", this, Resources.Load("Sprites/Building/Mill/1", typeof(Sprite)) as Sprite, required, KeyCode.Q));
+        GenWorld._instance.buildings.Add("Mill", new BuildingType("Mill", this, Resources.Load<Sprite>("Sprites/Building/Mill/1"), required, KeyCode.Q, MineType.Mill));
     }
 }

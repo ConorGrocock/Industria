@@ -50,6 +50,6 @@ public class Mine : Building
     {
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Wood, 5);
-        GenWorld._instance.buildings.Add("Mine", new BuildingType("Mine", this, Resources.Load("Sprites/Building/Mine/1", typeof(Sprite)) as Sprite, required, KeyCode.W));
+        GenWorld._instance.buildings.Add("Mine", new BuildingType("Mine", this, Resources.Load("Sprites/Building/Mine/1", typeof(Sprite)) as Sprite, required, KeyCode.W, MineType.Shaft));
     }
 }

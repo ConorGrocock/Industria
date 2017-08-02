@@ -37,11 +37,7 @@ public class Building : MonoBehaviour
 
                 if (buildings.Count <= i + 1) break;
 
-                Debug.Log(buildings[i].transform.position);
-                Debug.Log(buildings[i + 1].transform.position);
-
-
-                DrawLine(buildings[i].transform.position, buildings[i + 1].transform.position, Color.black);// getTileCenter(buildings[i].transform.position), getTileCenter(buildings[i + 1].transform.position));
+                DrawLine(buildings[i].transform.position, buildings[i + 1].transform.position, Color.black);
 
                 i += 1;
             }

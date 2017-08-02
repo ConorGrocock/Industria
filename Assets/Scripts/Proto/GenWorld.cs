@@ -27,7 +27,7 @@ public class GenWorld : MonoBehaviour
         set { PowerSupply = value; }
     }
 
-    float PowerStored = 100f;
+    public float PowerStored = 100f;
 
     public float powerDraw
     {
@@ -303,7 +303,7 @@ public class GenWorld : MonoBehaviour
             if(Input.GetKey(bType.Value.hotkey)) {
                 if (hoverTile != null) {
                     if (hoverTile.building == null) {
-                        if (bType.Value.buildable) {
+                        if (bType.Value.buildable && canBuild(hoverTile, bType.Value)) {
                             GenWorld._instance.buildOnTile(bType.Key);
                         }
                     }
@@ -372,5 +372,15 @@ public class GenWorld : MonoBehaviour
         else if (hoverTile != null) hoverTile.building = buildings[building];
         buildingPanel.SetActive(false);
         BuildTile = null;
+    }
+
+    bool canBuild(Tile tile, BuildingType building) {
+        if (tile.ore == null) {
+            if (building.name == "Lab") return false;
+            else if (building.name == "PowerPlant" && buildings["PowerPlant"].buildable) return true;
+        }
+        if (building.name == "LumberMill" && tile.ore.mine == MineType.Mill && buildings["Mill"].buildable) return true;
+        else if (building.name == "Mine" && tile.ore.mine == MineType.Shaft && buildings["Mine"].buildable) return true;
+        else return false;
     }
 }

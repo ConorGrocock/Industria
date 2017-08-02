@@ -27,7 +27,7 @@ public class House : Building
     List<Villager> occupants = new List<Villager>();
 
     // Use this for initialization
-    protected void Start()
+    protected override void Start()
     {
         base.Start();
         GenWorld._instance.houses.Add(this);
