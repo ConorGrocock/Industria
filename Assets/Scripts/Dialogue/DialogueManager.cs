@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    private Queue<DialogueStruct> dialogueQueue;
+    public static DialogueManager _instance;
+
+    private Queue<DialogueStruct> dStructQueue;
 
     public Text speakerNameText;
     public Image speakerImage;
@@ -18,14 +20,23 @@ public class DialogueManager : MonoBehaviour
     public Button yesButton;
     public Button noButton;
 
-    private DialogueStruct currentDialogue;
+    private Dialogue currentDialogue;
+    private DialogueStruct currentDialogueStruct;
     private bool endOfSentence;
 
     private float secondsPerLetter;
 
+    void Awake()
+    {
+        if (_instance == null)
+            _instance = this;
+        else
+            Debug.LogError("[DialogueManager] There are multiple dialogue managers in the scene!");
+    }
+
     void Start()
     {
-        dialogueQueue = new Queue<DialogueStruct>();
+        dStructQueue = new Queue<DialogueStruct>();
 	}
 
     public void StartDialogue(Dialogue dialogue)
@@ -48,18 +59,26 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        speakerNameText.text = dialogue.speakerName;
+        currentDialogue = dialogue;
+        currentDialogue.isCurrentlyDisplayed = false;
+
+        if (!Manager._instance.isPaused && currentDialogue.pauseGame)
+        {
+            Manager._instance.Pause();
+        }
+
+        speakerNameText.text = currentDialogue.speakerName;
 
         if (speakerImage != null)
-            speakerImage.sprite = dialogue.speakerImage;
+            speakerImage.sprite = currentDialogue.speakerImage;
         else
             Debug.LogError("[DialogueManager] No speaker image assigned to dialogue! Name: " + dialogue.speakerName);
 
-        dialogueQueue.Clear();
+        dStructQueue.Clear();
 
-        foreach (DialogueStruct sentence in dialogue.sentences)
+        foreach (DialogueStruct dStruct in currentDialogue.sentences)
         {
-            dialogueQueue.Enqueue(sentence); // TODO: because yes (needs refactoring)
+            dStructQueue.Enqueue(dStruct);
         }
 
         DisplayNextSentence();
@@ -82,50 +101,50 @@ public class DialogueManager : MonoBehaviour
         else
             Debug.LogError("[DialogueManager] You have not assigned the no button to the dialogue manager!");
 
-        if (dialogueQueue.Count == 0)
+        if (dStructQueue.Count == 0)
         {
             EndDialogue();
             return;
         }
 
-        if (currentDialogue != null)
+        if (currentDialogueStruct != null)
         {
-            if (currentDialogue.scriptToRun != null && !endOfSentence)
-                currentDialogue.scriptToRun.OnFinish();
+            if (currentDialogueStruct.scriptToRun != null && !endOfSentence)
+                currentDialogueStruct.scriptToRun.OnFinish();
 
-            if (currentDialogue.typingSoundScript != null)
+            if (currentDialogueStruct.typingSoundScript != null)
             {
                 if (!endOfSentence)
-                    currentDialogue.typingSoundScript.OnFinish();
+                    currentDialogueStruct.typingSoundScript.OnFinish();
             }
             else
             {
-                Debug.LogError("[DialogueManager] Typing sound script is null for the current dialogue! Text: " + currentDialogue.sentence);
+                Debug.LogError("[DialogueManager] Typing sound script is null for the current dialogue! Text: " + currentDialogueStruct.sentence);
             }
         }
 
-        currentDialogue = dialogueQueue.Dequeue();
+        currentDialogueStruct = dStructQueue.Dequeue();
 
-        if (currentDialogue == null)
+        if (currentDialogueStruct == null)
         {
             Debug.LogError("[DialogueManager] You have not assigned a dialogue struct!");
             return;
         }
 
-        secondsPerLetter = currentDialogue.secondsPerLetter;
+        secondsPerLetter = currentDialogueStruct.secondsPerLetter;
 
-        string sentence = currentDialogue.sentence;
+        string sentence = currentDialogueStruct.sentence;
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
 
-        if (currentDialogue.responseType == DialogueResponseType.CONTINUE)
+        if (currentDialogueStruct.responseType == DialogueResponseType.CONTINUE)
         {
             if (continueButton != null)
                 continueButton.gameObject.SetActive(true);
             else
                 Debug.LogError("[DialogueManager] You have not assigned the continue button to the dialogue manager!");
         }
-        else if (currentDialogue.responseType == DialogueResponseType.YES_NO)
+        else if (currentDialogueStruct.responseType == DialogueResponseType.YES_NO)
         {
             if (yesButton != null)
                 yesButton.gameObject.SetActive(true);
@@ -141,12 +160,12 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeSentence(string sentence)
     {
-        if (currentDialogue.scriptToRun != null)
-            currentDialogue.scriptToRun.OnStart();
+        if (currentDialogueStruct.scriptToRun != null)
+            currentDialogueStruct.scriptToRun.OnStart();
 
-        if (currentDialogue.typingSoundScript != null)
+        if (currentDialogueStruct.typingSoundScript != null)
         {
-            currentDialogue.typingSoundScript.OnStart();
+            currentDialogueStruct.typingSoundScript.OnStart();
         }
         else
         {
@@ -160,12 +179,12 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text += letter;
 
-            if (currentDialogue.scriptToRun != null)
-                currentDialogue.scriptToRun.OnCharacterTyped();
+            if (currentDialogueStruct.scriptToRun != null)
+                currentDialogueStruct.scriptToRun.OnCharacterTyped();
 
-            if (currentDialogue.typingSoundScript != null)
+            if (currentDialogueStruct.typingSoundScript != null)
             {
-                currentDialogue.typingSoundScript.OnCharacterTyped();
+                currentDialogueStruct.typingSoundScript.OnCharacterTyped();
             }
             else
             {
@@ -175,12 +194,12 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitForSeconds(secondsPerLetter);
         }
 
-        if (currentDialogue.scriptToRun != null)
-            currentDialogue.scriptToRun.OnFinish();
+        if (currentDialogueStruct.scriptToRun != null)
+            currentDialogueStruct.scriptToRun.OnFinish();
 
-        if (currentDialogue.typingSoundScript != null)
+        if (currentDialogueStruct.typingSoundScript != null)
         {
-            currentDialogue.typingSoundScript.OnFinish();
+            currentDialogueStruct.typingSoundScript.OnFinish();
         }
         else
         {
@@ -192,22 +211,29 @@ public class DialogueManager : MonoBehaviour
 
     public void OnYesResponse()
     {
-        if (currentDialogue.yesResponseTree != null)
-            currentDialogue.yesResponseTree.TriggerDialogue();
+        if (currentDialogueStruct.yesResponseTree != null)
+            currentDialogueStruct.yesResponseTree.TriggerDialogue();
         else
-            Debug.LogError("[DialogueManager] You have not assigned a yes response trigger to the current dialogue! Text: " + currentDialogue.sentence);
+            Debug.LogError("[DialogueManager] You have not assigned a yes response trigger to the current dialogue! Text: " + currentDialogueStruct.sentence);
     }
 
     public void OnNoResponse()
     {
-        if (currentDialogue.noResponseTree != null)
-            currentDialogue.noResponseTree.TriggerDialogue();
+        if (currentDialogueStruct.noResponseTree != null)
+            currentDialogueStruct.noResponseTree.TriggerDialogue();
         else
-            Debug.LogError("[DialogueManager] You have not assigned a no response trigger to the current dialogue! Text: " + currentDialogue.sentence);
+            Debug.LogError("[DialogueManager] You have not assigned a no response trigger to the current dialogue! Text: " + currentDialogueStruct.sentence);
+    }
+
+    public void ChangeSpeakerImage(Sprite speakerImage)
+    {
+        currentDialogue.speakerImage = speakerImage;
+        this.speakerImage.sprite = speakerImage;
     }
 
     private void EndDialogue()
     {
+        currentDialogue.isCurrentlyDisplayed = false;
         dialogueBox.SetActive(false);
         Manager._instance.Unpause();
     }
