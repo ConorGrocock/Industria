@@ -11,7 +11,7 @@ public class DialogueStructEditor : Editor
 
         diaStruct.scriptToRun = (DialogueScript)EditorGUILayout.ObjectField("Script To Run", diaStruct.scriptToRun, typeof(DialogueScript), true);
 
-        EditorGUILayout.HelpBox("You MUST create a script which extends the DialogueScript class. The currently supported methods are: OnStart(), OnFinish(), OnCharacterTyped()", MessageType.Info);
+        EditorGUILayout.HelpBox("To be able to attach a script, the script MUST extend the DialogueScript class.", MessageType.Info);
 
         diaStruct.secondsPerLetter = EditorGUILayout.FloatField("Seconds Per Letter", diaStruct.secondsPerLetter);
 
