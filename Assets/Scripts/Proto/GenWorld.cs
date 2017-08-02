@@ -1,3 +1,5 @@
+The system cannot find the path specified.
+The system cannot find the path specified.
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -95,6 +97,8 @@ public class GenWorld : MonoBehaviour
         {
             managerScript = gameManager.GetComponent<Manager>();
         }
+
+        if (buildingPanel == null) buildingPanel = GameObject.Find("BuildingPanel");
 
         if (!isMainMenu)
             buildingPanel.SetActive(false);
