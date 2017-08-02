@@ -375,7 +375,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 70, y: 6.085}
+  m_AnchoredPosition: {x: 70, y: 6.084999}
   m_SizeDelta: {x: 130.31, y: 24.43}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &177092269
@@ -882,7 +882,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 1563397762}
           m_MethodName: buildOnTile
           m_Mode: 5
           m_Arguments:
@@ -997,7 +997,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 555.7001, y: -10}
+  m_AnchoredPosition: {x: 555.6992, y: -10}
   m_SizeDelta: {x: 500, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &511875694
@@ -1495,7 +1495,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 1563397762}
           m_MethodName: buildOnTile
           m_Mode: 5
           m_Arguments:
@@ -1632,7 +1632,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -62.068966, y: 25.86208}
+  m_AnchoredPosition: {x: -62.06836, y: 25.86208}
   m_SizeDelta: {x: 647, y: -70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &712869341
@@ -2191,7 +2191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -83.5, y: 6.085}
+  m_AnchoredPosition: {x: -83.5, y: 6.084999}
   m_SizeDelta: {x: 130.31, y: 24.43}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &867139925
@@ -3785,7 +3785,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 1563397762}
           m_MethodName: buildOnTile
           m_Mode: 5
           m_Arguments:
@@ -4313,7 +4313,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 1563397762}
           m_MethodName: buildOnTile
           m_Mode: 5
           m_Arguments:
@@ -4359,7 +4359,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 53.69995, y: -37.700012}
+  m_AnchoredPosition: {x: 53.69922, y: -37.700012}
   m_SizeDelta: {x: 96.599976, y: 96.600006}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1861164141
@@ -4426,7 +4426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 655.1, y: -20}
+  m_AnchoredPosition: {x: 655.0996, y: -20}
   m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1884850817

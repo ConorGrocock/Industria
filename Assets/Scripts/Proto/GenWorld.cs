@@ -62,8 +62,10 @@ public class GenWorld : MonoBehaviour
             buildingPanel.SetActive(true);
             Button[] buttons = buildingPanel.GetComponentsInChildren<Button>();
 
-            foreach (Button b in buttons) {
-                if (value.ore == null) {
+            foreach (Button b in buttons)
+            {
+                if (value.ore == null)
+                {
                     if (b.name == "Lab") b.interactable = false;
                     else if (b.name == "Power plant" && buildings["PowerPlant"].buildable) b.interactable = true;
                     else b.interactable = false;
@@ -137,6 +139,7 @@ public class GenWorld : MonoBehaviour
         }
 
         tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = buildings["House"];
+        tiles[(worldWidth / 2) + Random.Range(1, 3)][(worldHeight / 2) + Random.Range(1, 3)].GetComponent<Tile>().building = buildings["PowerPlant"];
 
 
 
@@ -151,7 +154,9 @@ public class GenWorld : MonoBehaviour
             }
             if (coal == 0)
             {
-                cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Coal, 1000);
+                Tile tile = cTile.GetComponent<Tile>();
+                tile.ore = new Ore(OreTypes.Coal, 1000);
+                tile.building = buildings["Mine"];
                 coal++;
             }
             else if (copper == 0)
@@ -255,8 +260,10 @@ public class GenWorld : MonoBehaviour
             totalPowerWorkers += house.power;
         }
         int maxMineWorkers = 0, maxMillWorkers = 0;
-        foreach (Building building in Building.buildings) {
-            switch (building.tile.building.name) {
+        foreach (Building building in Building.buildings)
+        {
+            switch (building.tile.building.name)
+            {
                 case "Mine":
                     Mine mine = (Mine)building;
                     maxMineWorkers += mine.maxWorkers;
@@ -268,7 +275,7 @@ public class GenWorld : MonoBehaviour
             }
         }
 
-        GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = string.Format("Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}", count,maxPopulation, totalMiners, maxMineWorkers, totalJacks, maxMillWorkers);
+        GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = string.Format("Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}", count, maxPopulation, totalMiners, maxMineWorkers, totalJacks, maxMillWorkers);
         foreach (Building building in Building.buildings)
         {
             switch (building.tile.building.name)
@@ -290,7 +297,7 @@ public class GenWorld : MonoBehaviour
             }
         }
 
-        
+
 
         this.PowerSupply = 0;
         float powerLimitOverall = 0;
@@ -343,8 +350,10 @@ public class GenWorld : MonoBehaviour
         return vector / 1.28f;
     }
 
-    public void buildOnTile(string building) {
-        foreach (KeyValuePair<OreTypes, int> cost in buildings[building].costs) {
+    public void buildOnTile(string building)
+    {
+        foreach (KeyValuePair<OreTypes, int> cost in buildings[building].costs)
+        {
             GenWorld._instance.Resources[cost.Key] -= cost.Value;
         }
         buildTile.building = buildings[building];
