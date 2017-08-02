@@ -21,6 +21,7 @@ public class DialogueManager : MonoBehaviour
     public Button noButton;
 
     private DialogueStruct currentDialogue;
+    private bool endOfSentence;
 
 	void Start()
     {
@@ -87,6 +88,12 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        if (currentDialogue != null)
+        {
+            if (currentDialogue.scriptToRun != null && !endOfSentence)
+                currentDialogue.scriptToRun.OnFinish();
+        }
+
         currentDialogue = dialogueQueue.Dequeue();
 
         if (currentDialogue == null)
@@ -122,14 +129,26 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeSentence(string sentence)
     {
+        if (currentDialogue.scriptToRun != null)
+            currentDialogue.scriptToRun.OnStart();
+
+        endOfSentence = false;
         dialogueText.text = "";
 
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
 
+            if (currentDialogue.scriptToRun != null)
+                currentDialogue.scriptToRun.OnCharacterTyped();
+
             yield return new WaitForSeconds(secondsPerLetter);
         }
+
+        if (currentDialogue.scriptToRun != null)
+            currentDialogue.scriptToRun.OnFinish();
+
+        endOfSentence = true;
     }
 
     public void OnYesResponse()

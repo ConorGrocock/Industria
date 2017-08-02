@@ -10,7 +10,10 @@ public enum DialogueResponseType
 
 public class DialogueStruct : MonoBehaviour
 {
+    public DialogueScript scriptToRun;
+
     public DialogueResponseType responseType;
+
     public DialogueTrigger yesResponseTree;
     public DialogueTrigger noResponseTree;
 

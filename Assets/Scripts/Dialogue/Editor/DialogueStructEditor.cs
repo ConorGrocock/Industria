@@ -9,13 +9,17 @@ public class DialogueStructEditor : Editor
     {
         DialogueStruct diaStruct = (DialogueStruct)target;
 
+        diaStruct.scriptToRun = (DialogueScript)EditorGUILayout.ObjectField("Script To Run", diaStruct.scriptToRun, typeof(DialogueScript), true);
+
+        EditorGUILayout.HelpBox("You MUST create a script which extends the DialogueScript class. The currently supported methods are: OnStart(), OnFinish(), OnCharacterTyped()", MessageType.Info);
+
         diaStruct.responseType = (DialogueResponseType)EditorGUILayout.Popup("Response Type", (int)diaStruct.responseType, Enum.GetNames(typeof(DialogueResponseType)));
 
         if (diaStruct.responseType == DialogueResponseType.YES_NO)
         {
             EditorGUILayout.LabelField("Response Trees", EditorStyles.boldLabel);
-            diaStruct.yesResponseTree = (DialogueTrigger)EditorGUILayout.ObjectField("Yes Reponse Trigger", diaStruct.yesResponseTree, typeof(DialogueTrigger), true);
-            diaStruct.noResponseTree = (DialogueTrigger)EditorGUILayout.ObjectField("No Reponse Trigger", diaStruct.noResponseTree, typeof(DialogueTrigger), true);
+            diaStruct.yesResponseTree = (DialogueTrigger)EditorGUILayout.ObjectField("Yes Response Trigger", diaStruct.yesResponseTree, typeof(DialogueTrigger), true);
+            diaStruct.noResponseTree = (DialogueTrigger)EditorGUILayout.ObjectField("No Response Trigger", diaStruct.noResponseTree, typeof(DialogueTrigger), true);
         }
 
         EditorGUILayout.LabelField("Sentence", EditorStyles.boldLabel);
