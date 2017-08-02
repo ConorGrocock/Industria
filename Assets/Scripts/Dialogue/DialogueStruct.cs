@@ -31,6 +31,9 @@ public class DialogueStruct : MonoBehaviour
 
     void Awake()
     {
+        if (scriptToRun != null)
+            scriptToRun.structAttachedTo = this;
+
         typingSoundScript = GetComponent<TypingSoundScript>();
 
         if (typingSoundScript != null)
