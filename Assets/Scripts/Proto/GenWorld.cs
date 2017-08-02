@@ -1,6 +1,4 @@
-The system cannot find the path specified.
-The system cannot find the path specified.
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -81,6 +79,8 @@ public class GenWorld : MonoBehaviour
         }
     }
 
+    public Tile hoverTile;
+
     public Sprite[] sprites;
 
     public GameObject[][] tiles;
@@ -144,8 +144,6 @@ public class GenWorld : MonoBehaviour
 
         tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = buildings["House"];
         tiles[(worldWidth / 2) + Random.Range(1, 3)][(worldHeight / 2) + Random.Range(1, 3)].GetComponent<Tile>().building = buildings["PowerPlant"];
-
-
 
         int copper = 0, wood = 0, coal = 0;
         for (int ores = 0; ores < Random.Range(6, 10); ores++)
@@ -301,7 +299,17 @@ public class GenWorld : MonoBehaviour
             }
         }
 
-
+        foreach (KeyValuePair<string, BuildingType> bType in buildings) {
+            if(Input.GetKey(bType.Value.hotkey)) {
+                if (hoverTile != null) {
+                    if (hoverTile.building == null) {
+                        if (bType.Value.buildable) {
+                            GenWorld._instance.buildOnTile(bType.Key);
+                        }
+                    }
+                }
+            }
+        }
 
         this.PowerSupply = 0;
         float powerLimitOverall = 0;
@@ -360,7 +368,8 @@ public class GenWorld : MonoBehaviour
         {
             GenWorld._instance.Resources[cost.Key] -= cost.Value;
         }
-        buildTile.building = buildings[building];
+        if (BuildTile != null) buildTile.building = buildings[building];
+        else if (hoverTile != null) hoverTile.building = buildings[building];
         buildingPanel.SetActive(false);
         BuildTile = null;
     }

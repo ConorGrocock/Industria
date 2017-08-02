@@ -83,6 +83,8 @@ public class Tile : MonoBehaviour
     bool menuClose = false;
     public void OnMouseOver()
     {
+        GenWorld._instance.hoverTile = this;
+
         if (EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.gameOver || GenWorld._instance.isMainMenu || Manager._instance.isPaused) { mouseOver = false; return; }
         mouseOver = true;
 
@@ -119,6 +121,7 @@ public class Tile : MonoBehaviour
             }
         }
         hover = true;
+
     }
 
     public void OnMouseExit()

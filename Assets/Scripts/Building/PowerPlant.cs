@@ -40,7 +40,7 @@ public class PowerPlant : Building
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Copper, 1);
         required.Add(OreTypes.Wood, 10);
-        GenWorld._instance.buildings.Add("PowerPlant", new BuildingType("PowerPlant", this, Resources.Load("Sprites/Building/PowerPlant/1", typeof(Sprite)) as Sprite, required));
+        GenWorld._instance.buildings.Add("PowerPlant", new BuildingType("PowerPlant", this, Resources.Load("Sprites/Building/PowerPlant/1", typeof(Sprite)) as Sprite, required, KeyCode.E));
     }
 
     public bool menuDrawn = false;

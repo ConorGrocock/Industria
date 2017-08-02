@@ -6,6 +6,7 @@ public class BuildingType{
     public Component script;
     public Sprite sprite;
     public String name;
+    public KeyCode hotkey;
 
     public Dictionary<OreTypes, int> costs;
 
@@ -18,11 +19,12 @@ public class BuildingType{
         }
     }
 
-    public BuildingType(String name, Component script, Sprite sprite, Dictionary<OreTypes, int> costs) {
+    public BuildingType(String name, Component script, Sprite sprite, Dictionary<OreTypes, int> costs, KeyCode hotkey) {
         this.name = name;
         this.script = script;
         this.sprite = sprite;
         this.costs = costs;
+        this.hotkey = hotkey;
     }
 }
 
