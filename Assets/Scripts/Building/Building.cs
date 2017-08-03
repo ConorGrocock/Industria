@@ -57,7 +57,7 @@ public class Building : MonoBehaviour
 
     }
 
-    private int drawnLines = 0;
+    private int drawnLines = 0;//What lines have been drawn already?
 
     private List<Image> displayedHeads = new List<Image>();
 
