@@ -37,11 +37,24 @@ public class House : Building
         occupants[0].role = VillagerRole.Miner;
         occupants.Add(new Villager());
         occupants[1].role = VillagerRole.None;
+
+        updateHeads();
+
+        lastUpdate = Time.time;
     }
 
     public int miners = 0;
     public int lumberjacks = 0;
     public int power = 0;
+
+    public void updateHeads()
+    {
+        List<Villager> roles = new List<Villager>(occupants);
+        displayHeads(roles);
+    }
+
+    float lastUpdate;
+    bool invShown = false;
 
     // Update is called once per frame
     void Update()
@@ -50,29 +63,42 @@ public class House : Building
 
         if (currentMenu == GenWorld.menu)
         {
-            int i = 0;
-            foreach (KeyValuePair<Dropdown, Image> entry in dropdowns)
+            if (Time.time - lastUpdate > 0.8f || !invShown)
             {
-                if (occupants.Count < i + 1) continue;
-                if (occupants[i] == null) occupants[i] = new Villager();
-                switch (entry.Key.value)
+                lastUpdate = Time.time;
+                int i = 0;
+
+                foreach (KeyValuePair<Dropdown, Image> entry in dropdowns)
                 {
-                    case 0:
-                        occupants[i].role = VillagerRole.None;
-                        entry.Value.sprite = Resources.Load<Sprite>("Sprites/Villager/3");
-                        break;
-                    case 1:
-                        occupants[i].role = VillagerRole.Miner;
-                        entry.Value.sprite = Resources.Load<Sprite>("Sprites/Villager/1");
-                        break;
-                    case 2:
-                        occupants[i].role = VillagerRole.Lumberjack;
-                        entry.Value.sprite = Resources.Load<Sprite>("Sprites/Villager/4");
-                        break;
+                    if (occupants.Count < i + 1) continue;
+                    if (occupants[i] == null) occupants[i] = new Villager();
+
+                    bool set = false;
+
+                    switch (entry.Key.value)
+                    {
+                        case 0:
+                            if (occupants[i].role == VillagerRole.None) set = true;
+                            occupants[i].role = VillagerRole.None;
+                            break;
+                        case 1:
+                            if (occupants[i].role == VillagerRole.Miner) set = true;
+                            occupants[i].role = VillagerRole.Miner;
+                            break;
+                        case 2:
+                            if (occupants[i].role == VillagerRole.Lumberjack) set = true;
+                            occupants[i].role = VillagerRole.Lumberjack;
+                            break;
+                    }
+                    /*if (!set || !invShown) */entry.Value.sprite = occupants[i].getSprite();
+                    i++;
                 }
-                i++;
+
+                updateHeads();
+                invShown = true;
             }
         }
+        else invShown = false;
 
         miners = 0;
         lumberjacks = 0;
@@ -114,7 +140,8 @@ public class House : Building
                         xOffset = Random.Range(-2, 2);
                         yOffset = Random.Range(-2, 2);
                     }
-                    if (GenWorld._instance.tiles.Length-1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length-1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null) {
+                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
+                    {
                         return;
                     }
                     if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
@@ -124,7 +151,7 @@ public class House : Building
                         yOffset = Random.Range(-2, 2);
                     }
 
-                    if (GenWorld._instance.tiles.Length - 1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length - 1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
+                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
                     {
                         return;
                     }
@@ -192,6 +219,8 @@ public class House : Building
             dropdowns.Add(profiles[i].GetComponentInChildren<Dropdown>(), profiles[i].GetComponentInChildren<Image>());
             //profiles[i].GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Villager/" + Random.Range(1, 4));
         }
+
+        lastUpdate = 0;
 
         shown = h.occupants.Count;
     }

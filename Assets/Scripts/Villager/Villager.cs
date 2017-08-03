@@ -12,7 +12,6 @@ public enum VillagerRole {
 public class Villager {
 
     private SpriteRenderer spriteRenderer;
-    public Sprite sprite;
 
     public string Vname;
 
@@ -20,6 +19,36 @@ public class Villager {
 
     public Villager() {
         this.Vname = Villager.randomName();
+    }
+
+    public Sprite getSprite()
+    {
+        switch (role)
+        {
+            case VillagerRole.None:
+                return Resources.Load<Sprite>("Sprites/Villager/3");
+            case VillagerRole.Miner:
+                return Resources.Load<Sprite>("Sprites/Villager/1");
+            case VillagerRole.Lumberjack:
+                return Resources.Load<Sprite>("Sprites/Villager/4");
+            default:
+                return null;
+        }
+    }
+
+    public Sprite getHead()
+    {
+        switch (role)
+        {
+            case VillagerRole.None:
+                return Resources.Load<Sprite>("Sprites/Villager/Heads/3");
+            case VillagerRole.Miner:
+                return Resources.Load<Sprite>("Sprites/Villager/Heads/1");
+            case VillagerRole.Lumberjack:
+                return Resources.Load<Sprite>("Sprites/Villager/Heads/4");
+            default:
+                return null;
+        }
     }
 
     public static string randomName() {

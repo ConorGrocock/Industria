@@ -4,21 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class Building : MonoBehaviour {
+public class Building : MonoBehaviour
+{
     public static List<Building> buildings = new List<Building>();
     public Sprite sprite;
     private SpriteRenderer spriteRenderer;
     public Tile tile;
-    
+
     public float powerLimit = 100f;
     public float powerDraw = 5f;
 
     // if (housePanel != null) Destroy(housePanel);
     // Use this for initialization
-    protected virtual void Start() {
+    protected virtual void Start()
+    {
         buildings.Add(this);
         //this.transform.Translate(new Vector3(this.transform.position.x, this.transform.position.y, -1));
-        if (sprite != null) {
+        if (sprite != null)
+        {
             spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = sprite;
         }
@@ -30,9 +33,12 @@ public class Building : MonoBehaviour {
             if (building.tile.building.name == "PowerPlant")
                 plantExists = true;
 
-        if (plantExists) {
-            foreach (Building building in buildings) {
-                if (drawnLines > i) {
+        if (plantExists)
+        {
+            foreach (Building building in buildings)
+            {
+                if (drawnLines > i)
+                {
                     i++;
                     continue;
                 }
@@ -46,36 +52,55 @@ public class Building : MonoBehaviour {
                 i += 1;
             }
         }
-        displayedHeads = new List<Image>();
+        displayedHeads = new List<GameObject>();
         drawnLines = 0;
     }
 
     private int drawnLines;//What lines have been drawn already?
 
-    private List<Image> displayedHeads;
+    private List<GameObject> displayedHeads;
 
-    private void setAnchor(Image image) {
+    private void setAnchor(Image image)
+    {
         Vector2 pos = gameObject.transform.position;
         Vector2 viewportPoint = Camera.main.WorldToViewportPoint(pos);
         image.GetComponent<RectTransform>().anchorMin = viewportPoint;
         image.GetComponent<RectTransform>().anchorMax = viewportPoint;
     }
 
-    public void displayHeads(List<VillagerRole> roles) {
-        foreach (Image head in displayedHeads) Destroy(head);
+    public void displayHeads(List<Villager> villagers)
+    {
+        foreach (GameObject head in displayedHeads) Destroy(head);
         displayedHeads.Clear();
-
-        foreach (VillagerRole role in roles) {
+        float x = 0;
+        float y = 0;
+        foreach (Villager villager in villagers)
+        {
             GameObject go = new GameObject();
-            Image image = go.AddComponent<Image>();
-            setAnchor(image);
-            go.transform.SetParent(GameObject.Find("Canvas").transform);
+            SpriteRenderer image = go.AddComponent<SpriteRenderer>();
+            //setAnchor(image);
+            go.transform.SetParent(transform);
 
-            displayedHeads.Add(image);
+            //RectTransform rt = go.GetComponent<RectTransform>();
+
+            go.transform.localScale = new Vector3(1.5f, 1.5f);
+
+            image.sprite = villager.getHead();
+            image.transform.localPosition = new Vector3(-0.5f + x, -0.5f + y, -1);
+            x += image.sprite.bounds.size.x + 0.15f;
+
+            if (x > 0.9)
+            {
+                x = 0;
+                y += image.sprite.bounds.size.y + 0.15f;
+            }
+
+            displayedHeads.Add(go);
         }
     }
 
-    void DrawLine(Vector3 start, Vector3 end, Color color) {
+    void DrawLine(Vector3 start, Vector3 end, Color color)
+    {
         return;
         GameObject myLine = new GameObject();
         myLine.transform.position = start;
@@ -92,7 +117,8 @@ public class Building : MonoBehaviour {
         lr.SetPosition(1, end);
     }
 
-    Vector3 getTileCenter(Vector3 pos) {
+    Vector3 getTileCenter(Vector3 pos)
+    {
         int x = (int)pos.x;
         int y = (int)pos.y;
 
@@ -103,15 +129,18 @@ public class Building : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
     }
 
-    public virtual void clickMenu(GameObject top, GameObject panel) {
+    public virtual void clickMenu(GameObject top, GameObject panel)
+    {
 
     }
 
-    public virtual void closeMenu() {
+    public virtual void closeMenu()
+    {
 
     }
 }
