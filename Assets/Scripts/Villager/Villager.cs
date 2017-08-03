@@ -17,8 +17,9 @@ public class Villager {
 
     public VillagerRole role;
 
-    public Villager() {
+    public Villager(VillagerRole role = VillagerRole.None) {
         this.Vname = Villager.randomName();
+        this.role = role;
     }
 
     public Sprite getSprite()

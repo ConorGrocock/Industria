@@ -162,7 +162,7 @@ public class House : Building
             }
             else
             {
-                occupants.Add(new Villager());
+                occupants.Add(new Villager((VillagerRole)Random.Range(0,3)));
             }
         }
         timeToNextBaby -= Time.deltaTime;
