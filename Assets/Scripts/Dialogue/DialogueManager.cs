@@ -24,7 +24,7 @@ public class DialogueManager : MonoBehaviour
     private DialogueStruct currentDialogueStruct;
     private bool endOfSentence;
 
-    private float secondsPerLetter;
+    private float secondsPerCharacter;
 
     void Awake()
     {
@@ -138,7 +138,7 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        secondsPerLetter = currentDialogueStruct.secondsPerLetter;
+        secondsPerCharacter = currentDialogueStruct.secondsPerCharacter;
 
         string sentence = currentDialogueStruct.sentence;
         StopAllCoroutines();
@@ -198,7 +198,7 @@ public class DialogueManager : MonoBehaviour
                 Debug.LogError("[DialogueManager] Typing sound script is null for the current dialogue! Text: " + sentence);
             }
 
-            yield return new WaitForSeconds(secondsPerLetter);
+            yield return new WaitForSeconds(secondsPerCharacter);
         }
 
         if (currentDialogueStruct.scriptToRun != null)

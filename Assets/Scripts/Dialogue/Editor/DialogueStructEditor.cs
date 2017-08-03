@@ -13,7 +13,7 @@ public class DialogueStructEditor : Editor
 
         EditorGUILayout.HelpBox("To be able to attach a script, the script MUST extend the DialogueScript class.", MessageType.Info);
 
-        diaStruct.secondsPerLetter = EditorGUILayout.FloatField("Seconds Per Letter", diaStruct.secondsPerLetter);
+        diaStruct.secondsPerCharacter = EditorGUILayout.FloatField("Seconds Per Character", diaStruct.secondsPerCharacter);
 
         diaStruct.responseType = (DialogueResponseType)EditorGUILayout.Popup("Response Type", (int)diaStruct.responseType, Enum.GetNames(typeof(DialogueResponseType)));
 

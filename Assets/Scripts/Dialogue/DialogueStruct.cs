@@ -16,7 +16,7 @@ public class DialogueStruct : MonoBehaviour
 
     public DialogueScript scriptToRun;
 
-    public float secondsPerLetter = 0.05f;
+    public float secondsPerCharacter = 0.05f;
 
     public DialogueResponseType responseType;
 
