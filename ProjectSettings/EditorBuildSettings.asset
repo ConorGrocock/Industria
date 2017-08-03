@@ -8,6 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Menu.unity
     guid: 464846e744fb1864299c8e864332fe87
-  - enabled: 0
-    path: 
+  - enabled: 1
+    path: Assets/_Level.unity
     guid: 5a5bb27730f615540afb0e300fe45f35
