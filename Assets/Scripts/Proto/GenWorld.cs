@@ -76,7 +76,7 @@ public class GenWorld : MonoBehaviour {
     public GameObject[][] tiles;
 
     // Use this for initialization
-    void Start() {
+    void Awake() {
         if (_instance == null) _instance = this;
         else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class");
 

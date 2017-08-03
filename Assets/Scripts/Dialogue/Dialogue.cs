@@ -22,7 +22,7 @@ public class Dialogue : MonoBehaviour
             if (dStruct != null)
                 dStruct.dialogueAttachedTo = this;
             else
-                Debug.LogError("[Dialogue] Element " + i + " is null!");
+                Debug.LogError("[Dialogue] Element " + i + " is null! On: " + transform.name);
 
             i++;
         }
@@ -49,7 +49,7 @@ public class Dialogue : MonoBehaviour
             if (dStruct != null)
                 dStruct.OnDialogueChange(this);
             else
-                Debug.LogError("[Dialogue] Element " + i + " is null!");
+                Debug.LogError("[Dialogue] Element " + i + " is null! On: " + transform.name);
 
             i++;
         }

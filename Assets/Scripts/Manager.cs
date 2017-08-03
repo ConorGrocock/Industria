@@ -33,12 +33,18 @@ public class Manager : MonoBehaviour
         yesButton.onClick.AddListener(ShowTutorial);
         noButton.onClick.AddListener(NoTutorial);
 
+        if (GenWorld._instance == null)
+        {
+            Debug.LogError("GenWorld instance is null");
+        }
+
         if (isPaused)
         {
             Pause();
         }
         else
         {
+            GenWorld._instance.isPaused = false;
             pauseBorder.gameObject.SetActive(false);
             remotePause = false;
         }
@@ -52,11 +58,13 @@ public class Manager : MonoBehaviour
 
             if (isPaused)
             {
+                GenWorld._instance.isPaused = true;
                 pauseBorder.gameObject.SetActive(true);
                 Time.timeScale = 0;
             }
             else
             {
+                GenWorld._instance.isPaused = false;
                 pauseBorder.gameObject.SetActive(false);
                 Time.timeScale = 1;
             }
@@ -77,6 +85,7 @@ public class Manager : MonoBehaviour
 
     public void Pause()
     {
+        GenWorld._instance.isPaused = true;
         isPaused = true;
         remotePause = true;
         pauseBorder.gameObject.SetActive(true);
@@ -84,6 +93,7 @@ public class Manager : MonoBehaviour
 
     public void Unpause()
     {
+        GenWorld._instance.isPaused = false;
         isPaused = false;
         remotePause = false;
         pauseBorder.gameObject.SetActive(false);
