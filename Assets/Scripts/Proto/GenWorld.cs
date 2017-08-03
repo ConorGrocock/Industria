@@ -280,6 +280,14 @@ public class GenWorld : MonoBehaviour
         return bounds;
     }
 
+    public int cPop = 0;
+    public int totalMiners = 0;
+    public int totalJacks = 0;
+    public int totalPowerWorkers = 0;
+    public int maxPopulation = 0;
+    public int maxMineWorkers = 0;
+    public int maxMillWorkers = 0;
+
     void Update()
     {
         if (isMainMenu || Manager._instance.isPaused) return;
@@ -309,16 +317,15 @@ public class GenWorld : MonoBehaviour
             gameOver = true;
         }
 
-        int count = 0;
-
-        int totalMiners = 0;
-        int totalJacks = 0;
-        int totalPowerWorkers = 0;
-        int maxPopulation = 0;
+        cPop = 0;
+        totalMiners = 0;
+        totalJacks = 0;
+        totalPowerWorkers = 0;
+        maxPopulation = 0;
 
         foreach (House house in houses)
         {
-            count += house.occupancy;
+            cPop += house.occupancy;
             maxPopulation += house.maxCapacity;
 
             totalMiners += house.miners;
@@ -341,7 +348,7 @@ public class GenWorld : MonoBehaviour
             }
         }
 
-        GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = string.Format("Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}", count, maxPopulation, totalMiners, maxMineWorkers, totalJacks, maxMillWorkers);
+        GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = string.Format("Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}", cPop, maxPopulation, totalMiners, maxMineWorkers, totalJacks, maxMillWorkers);
         foreach (Building building in Building.buildings)
         {
             switch (building.tile.building.name)
