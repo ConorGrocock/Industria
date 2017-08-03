@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GenWorld : MonoBehaviour {
     public static GenWorld _instance;
-    public float minOrthoSize = 0.0f;
+    public float minOrthoSize = 1.0f;
     public float maxOrthoSize = 16.0f;
     public float zoomSpeed = 0.5f;
     public GameObject gameManager;

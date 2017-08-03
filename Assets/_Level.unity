@@ -3992,7 +3992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ab4086f19f3d445ba2fd22301f7608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minOrthoSize: 0
+  minOrthoSize: 1
   maxOrthoSize: 16
   zoomSpeed: 0.5
   gameManager: {fileID: 1580916999}
