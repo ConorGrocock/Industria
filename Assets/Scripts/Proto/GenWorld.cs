@@ -17,10 +17,9 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
     public GameObject Tile;
     public GameObject Parent;
 
-    public bool gameOver;
-
-    public bool isMainMenu;
-    public bool isPaused;
+    [HideInInspector] public bool gameOver;
+    [HideInInspector] public bool isMainMenu;
+    [HideInInspector] public bool isPaused;
 
     float PowerSupply;
     public float powerSupply {
@@ -28,7 +27,7 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
         set { PowerSupply = value; }
     }
 
-    public float PowerStored = 100f;
+    [HideInInspector] public float PowerStored = 100f;
 
     public float powerDraw {
         get {
@@ -40,11 +39,11 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
         }
     }
 
-    public Dictionary<string, BuildingType> buildings;
-    public Dictionary<OreTypes, int> Resources;
+    [HideInInspector] public Dictionary<string, BuildingType> buildings;
+    [HideInInspector] public Dictionary<OreTypes, int> Resources;
 
-    public List<House> houses = new List<House>();
-    public List<PowerPlant> plants = new List<PowerPlant>();
+    [HideInInspector] public List<House> houses = new List<House>();
+    [HideInInspector] public List<PowerPlant> plants = new List<PowerPlant>();
     public GameObject buildingPanel;
     Tile BuildTile;
     public Tile buildTile {
