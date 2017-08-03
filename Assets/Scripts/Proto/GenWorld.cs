@@ -18,9 +18,12 @@ public class GenWorld : MonoBehaviour
     public GameObject Tile;
     public GameObject Parent;
 
-    [HideInInspector] public bool gameOver;
-    [HideInInspector] public bool isMainMenu;
-    [HideInInspector] public bool isPaused;
+    [HideInInspector]
+    public bool gameOver;
+    [HideInInspector]
+    public bool isMainMenu;
+    [HideInInspector]
+    public bool isPaused;
 
     float PowerSupply;
     public float powerSupply
@@ -29,7 +32,8 @@ public class GenWorld : MonoBehaviour
         set { PowerSupply = value; }
     }
 
-    [HideInInspector] public float PowerStored = 100f;
+    [HideInInspector]
+    public float PowerStored = 100f;
 
     public float powerDraw
     {
@@ -44,11 +48,15 @@ public class GenWorld : MonoBehaviour
         }
     }
 
-    [HideInInspector] public Dictionary<string, BuildingType> buildings;
-    [HideInInspector] public Dictionary<OreTypes, int> Resources;
+    [HideInInspector]
+    public Dictionary<string, BuildingType> buildings;
+    [HideInInspector]
+    public Dictionary<OreTypes, int> Resources;
 
-    [HideInInspector] public List<House> houses = new List<House>();
-    [HideInInspector] public List<PowerPlant> plants = new List<PowerPlant>();
+    [HideInInspector]
+    public List<House> houses = new List<House>();
+    [HideInInspector]
+    public List<PowerPlant> plants = new List<PowerPlant>();
     public GameObject buildingPanel;
     Tile BuildTile;
     public Tile buildTile
@@ -362,9 +370,9 @@ public class GenWorld : MonoBehaviour
         PowerForground.transform.localScale = new Vector3(Mathf.Min(/*(GenWorld._instance.powerSupply / GenWorld._instance.powerDraw)*/this.PowerStored / powerLimitOverall, 1), 1, 1);
 
         if (Input.GetKey(KeyCode.UpArrow)) if (OrthographicBounds().max.y < worldHeight * 1.28) Camera.main.transform.Translate(new Vector3(0, 1));
-        if (Input.GetKey(KeyCode.DownArrow)) if (OrthographicBounds().min.y > -0.8) Camera.main.transform.Translate(new Vector3(0, -1));
-        if (Input.GetKey(KeyCode.LeftArrow)) if (OrthographicBounds().min.x > 0) Camera.main.transform.Translate(new Vector3(-1, 0));
-        if (Input.GetKey(KeyCode.RightArrow)) if (OrthographicBounds().max.x < worldWidth * 1.2) Camera.main.transform.Translate(new Vector3(1, 0));
+        if (Input.GetKey(KeyCode.DownArrow)) if (OrthographicBounds().min.y > -1) Camera.main.transform.Translate(new Vector3(0, -1));
+        if (Input.GetKey(KeyCode.LeftArrow)) if (OrthographicBounds().min.x > -.2) Camera.main.transform.Translate(new Vector3(-1, 0));
+        if (Input.GetKey(KeyCode.RightArrow)) if (OrthographicBounds().max.x < worldWidth * 1.28) Camera.main.transform.Translate(new Vector3(1, 0));
         if (Input.GetKey(KeyCode.PageDown)) Camera.main.orthographicSize += zoomSpeed;
         if (Input.GetKey(KeyCode.PageUp)) Camera.main.orthographicSize -= zoomSpeed;
 
