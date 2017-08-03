@@ -79,6 +79,7 @@ public class Building : MonoBehaviour
 
     void DrawLine(Vector3 start, Vector3 end, Color color)
     {
+        return;
         GameObject myLine = new GameObject();
         myLine.transform.position = start;
         myLine.AddComponent<LineRenderer>();
