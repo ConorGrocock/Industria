@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public class ResourceArray
+{
+    public OreTypes type;
+    public int amount;
+}
+
 public class GenWorld : MonoBehaviour
 {
     public static GenWorld _instance;
@@ -51,6 +58,9 @@ public class GenWorld : MonoBehaviour
     public Dictionary<string, BuildingType> buildings;
     [HideInInspector]
     public Dictionary<OreTypes, int> Resources;
+
+    public bool applyInspectorValsForResources = true;
+    public ResourceArray[] resourcesInspector;
 
     [HideInInspector]
     public List<House> houses = new List<House>();
@@ -116,10 +126,27 @@ public class GenWorld : MonoBehaviour
         registerBuildings();
 
         Resources = new Dictionary<OreTypes, int>();
-        Resources.Add(OreTypes.Coal, 0);
-        Resources.Add(OreTypes.Copper, 10);
-        //Resources.Add(OreTypes.Iron, 0);
-        Resources.Add(OreTypes.Wood, 100);
+
+        resourcesInspector = new ResourceArray[3];
+
+        for (int i = 0; i < resourcesInspector.Length; i++)
+        {
+            resourcesInspector[i] = new ResourceArray();
+        }
+
+        resourcesInspector[0].type = OreTypes.Coal;
+        resourcesInspector[0].amount = 0;
+
+        resourcesInspector[1].type = OreTypes.Copper;
+        resourcesInspector[1].amount = 10;
+
+        resourcesInspector[2].type = OreTypes.Wood;
+        resourcesInspector[2].amount = 100;
+
+        for (int i = 0; i < resourcesInspector.Length; i++)
+        {
+            Resources.Add(resourcesInspector[i].type, resourcesInspector[i].amount);
+        }
 
 
         Camera.main.transform.Translate(new Vector3((worldWidth / 2) * 1.28f, ((worldHeight / 2) * 1.28f) - 0.5f));
@@ -256,6 +283,18 @@ public class GenWorld : MonoBehaviour
     void Update()
     {
         if (isMainMenu || Manager._instance.isPaused) return;
+
+        int j = 0;
+
+        if (applyInspectorValsForResources)
+        {
+            Resources.Clear();
+
+            for (int i = 0; i < resourcesInspector.Length; i++)
+            {
+                Resources.Add(resourcesInspector[i].type, resourcesInspector[i].amount);
+            }
+        }
 
         if (PowerStored < 0)
         {

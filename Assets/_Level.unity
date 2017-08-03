@@ -4004,6 +4004,7 @@ MonoBehaviour:
   isMainMenu: 0
   isPaused: 0
   PowerStored: 100
+  resourcesInspector: []
   houses: []
   plants: []
   buildingPanel: {fileID: 712869339}
