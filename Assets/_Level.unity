@@ -3885,13 +3885,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702e62de9ddd33146b25a7e64147717f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialPanel: {fileID: 0}
-  yesButton: {fileID: 0}
-  noButton: {fileID: 0}
-  pauseBorder: {fileID: 0}
+  tutorialPanel: {fileID: 177092269}
+  yesButton: {fileID: 867139927}
+  noButton: {fileID: 99152849}
+  pauseBorder: {fileID: 774988203}
   isPaused: 1
-  gameOverObject: {fileID: 0}
-  retryButton: {fileID: 0}
+  gameOverObject: {fileID: 625450775}
+  retryButton: {fileID: 936811890}
 --- !u!4 &1580917001
 Transform:
   m_ObjectHideFlags: 0
