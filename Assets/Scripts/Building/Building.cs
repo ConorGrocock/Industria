@@ -9,10 +9,9 @@ public class Building : MonoBehaviour {
     public Sprite sprite;
     private SpriteRenderer spriteRenderer;
     public Tile tile;
-
+    
     public float powerLimit = 100f;
     public float powerDraw = 5f;
-
 
     // if (housePanel != null) Destroy(housePanel);
     // Use this for initialization
@@ -47,13 +46,13 @@ public class Building : MonoBehaviour {
                 i += 1;
             }
         }
-
-
+        displayedHeads = new List<Image>();
+        drawnLines = 0;
     }
 
-    private int drawnLines = 0;//What lines have been drawn already?
+    private int drawnLines;//What lines have been drawn already?
 
-    private List<Image> displayedHeads = new List<Image>();
+    private List<Image> displayedHeads;
 
     private void setAnchor(Image image) {
         Vector2 pos = gameObject.transform.position;
@@ -77,6 +76,7 @@ public class Building : MonoBehaviour {
     }
 
     void DrawLine(Vector3 start, Vector3 end, Color color) {
+        return;
         GameObject myLine = new GameObject();
         myLine.transform.position = start;
         myLine.AddComponent<LineRenderer>();

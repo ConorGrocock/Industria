@@ -12,7 +12,7 @@ public class MonoBehaviourSingleton<TSelfType> : MonoBehaviour where TSelfType :
                 m_Instance = (TSelfType)FindObjectOfType(typeof(TSelfType));
                 if (m_Instance == null)
                     m_Instance = (new GameObject(typeof(TSelfType).Name)).AddComponent<TSelfType>();
-                DontDestroyOnLoad(m_Instance.gameObject);
+                //DontDestroyOnLoad(m_Instance.gameObject);
             }
             return m_Instance;
         }
