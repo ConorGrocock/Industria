@@ -18,6 +18,7 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame()
     {
+        Building.buildings.Clear();
         SceneManager.LoadScene("_Level");
     }
 
