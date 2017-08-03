@@ -33,6 +33,8 @@ public class Mill : Building
         if (this.tile.ore == null) Destroy(this.gameObject);
     }
 
+    int lastWorkers = 0;
+
     // Update is called once per frame
     void Update()
     {
@@ -44,6 +46,19 @@ public class Mill : Building
                 tile.ore.amount -= (int)miningSpeed;
                 GenWorld._instance.Resources[tile.ore.type] += (int)miningSpeed * workers;
             }
+        }
+
+        if (workers != lastWorkers)
+        {
+            lastWorkers = workers;
+            List<Villager> villagers = new List<Villager>();
+            for (int i = 0; i < workers; i++)
+            {
+                Villager villager = new Villager();
+                villager.role = VillagerRole.Lumberjack;
+                villagers.Add(villager);
+            }
+            displayHeads(villagers);
         }
     }
 

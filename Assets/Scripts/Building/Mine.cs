@@ -33,6 +33,7 @@ public class Mine : Building
 
     // Update is called once per frame
     int i = 0;
+    int lastWorkers = 0;
     void Update()
     {
         if (Time.time - timeSinceLastMine >= 1f / miningSpeed)
@@ -44,6 +45,19 @@ public class Mine : Building
             if (tile.ore == null) return;
             GenWorld._instance.Resources[tile.ore.type] += (int)workers;
             //}
+        }
+
+        if (workers != lastWorkers)
+        {
+            lastWorkers = workers;
+            List<Villager> villagers = new List<Villager>();
+            for (int i = 0; i < workers; i++)
+            {
+                Villager villager = new Villager();
+                villager.role = VillagerRole.Miner;
+                villagers.Add(villager);
+            }
+            displayHeads(villagers);
         }
     }
 
