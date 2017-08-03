@@ -306,8 +306,17 @@ public class GenWorld : MonoBehaviour {
         GameObject PowerForground = GameObject.Find("PowerForground");
         PowerForground.transform.localScale = new Vector3(Mathf.Min(/*(GenWorld._instance.powerSupply / GenWorld._instance.powerDraw)*/this.PowerStored / powerLimitOverall, 1), 1, 1);
 
-        if (houses.Count % 3 == 0) expandMap(5);
+        if (Input.GetKey(KeyCode.UpArrow)) Camera.main.transform.Translate(new Vector3(0, 1));
+        if (Input.GetKey(KeyCode.DownArrow)) Camera.main.transform.Translate(new Vector3(0, -1));
+        if (Input.GetKey(KeyCode.LeftArrow)) Camera.main.transform.Translate(new Vector3(-1, 0));
+        if (Input.GetKey(KeyCode.RightArrow)) Camera.main.transform.Translate(new Vector3(1, 0));
+
+        if (houses.Count % 3 == 0 && houses.Count != lastExpand) {
+            expandMap(5);
+            lastExpand = houses.Count;
+        }
     }
+    int lastExpand = 0;
 
     public static GameObject menu;
 
