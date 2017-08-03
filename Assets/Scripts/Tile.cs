@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-[System.Serializable]
 public class Tile : MonoBehaviour
 {
     public Ore ore;
@@ -138,9 +138,15 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((hover && !EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.buildTile == this))
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
-        else gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        try
+        {
+            if ((hover && !EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.buildTile == this)) this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
+            else gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+        catch (Exception e)
+        {
+            Debug.Log(hover + ":" + EventSystem.current.IsPointerOverGameObject() + ":" + GenWorld._instance);
+        }
         if (Input.GetKeyDown(KeyCode.Escape) && menuOpen && panel != null)
         {
             Destroy(panel);

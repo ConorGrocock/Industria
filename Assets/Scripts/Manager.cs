@@ -22,10 +22,13 @@ public class Manager : MonoBehaviour
     public GameObject gameOverObject;
     public Button retryButton;
 
-    void Awake()
+    void Start()
     {
         _instance = this;
+    }
 
+    void Awake()
+    {
         retryButton.onClick.AddListener(RestartScene);
         yesButton.onClick.AddListener(ShowTutorial);
         noButton.onClick.AddListener(NoTutorial);

@@ -41,6 +41,7 @@ public class Mine : Building
             //if (tile.ore.amount >= (int)miningSpeed)
             //{
             //tile.ore.amount -= (int)miningSpeed;
+            if (tile.ore == null) return;
             GenWorld._instance.Resources[tile.ore.type] += (int)workers;
             //}
         }
