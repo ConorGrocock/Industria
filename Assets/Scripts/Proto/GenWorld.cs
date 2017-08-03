@@ -368,10 +368,10 @@ public class GenWorld : MonoBehaviour
         GameObject PowerForground = GameObject.Find("PowerForground");
         PowerForground.transform.localScale = new Vector3(Mathf.Min(/*(GenWorld._instance.powerSupply / GenWorld._instance.powerDraw)*/this.PowerStored / powerLimitOverall, 1), 1, 1);
 
-        if (Input.GetKey(KeyCode.UpArrow)) if (OrthographicBounds().max.y < worldHeight * 1.28) Camera.main.transform.Translate(new Vector3(0, 1));
-        if (Input.GetKey(KeyCode.DownArrow)) if (OrthographicBounds().min.y > -1) Camera.main.transform.Translate(new Vector3(0, -1));
-        if (Input.GetKey(KeyCode.LeftArrow)) if (OrthographicBounds().min.x > -.2) Camera.main.transform.Translate(new Vector3(-1, 0));
-        if (Input.GetKey(KeyCode.RightArrow)) if (OrthographicBounds().max.x < worldWidth * 1.28) Camera.main.transform.Translate(new Vector3(1, 0));
+        if (Input.GetKey(KeyCode.UpArrow)) if (OrthographicBounds().max.y < (worldHeight + 2) * 1.28) Camera.main.transform.Translate(new Vector3(0, 1));
+        if (Input.GetKey(KeyCode.DownArrow)) if (OrthographicBounds().min.y > -2 * 1.28) Camera.main.transform.Translate(new Vector3(0, -1));
+        if (Input.GetKey(KeyCode.LeftArrow)) if (OrthographicBounds().min.x > -2 * 1.28) Camera.main.transform.Translate(new Vector3(-1, 0));
+        if (Input.GetKey(KeyCode.RightArrow)) if (OrthographicBounds().max.x < (worldWidth + 2) * 1.28) Camera.main.transform.Translate(new Vector3(1, 0));
         if (Input.GetKey(KeyCode.PageDown)) Camera.main.orthographicSize += zoomSpeed;
         if (Input.GetKey(KeyCode.PageUp)) Camera.main.orthographicSize -= zoomSpeed;
 
