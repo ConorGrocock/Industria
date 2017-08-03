@@ -103,12 +103,26 @@ public class DialogueManager : MonoBehaviour
 
         if (currentDialogueStruct != null)
         {
-            if (currentDialogueStruct.scriptToRun != null)
+            if (currentDialogueStruct.scriptsToRun != null)
             {
                 if (!endOfSentence)
-                    currentDialogueStruct.scriptToRun.OnFinish();
+                {
+                    for (int i = 0; i < currentDialogueStruct.scriptsToRun.Length; i++)
+                    {
+                        if (currentDialogueStruct.scriptsToRun[i] != null)
+                            currentDialogueStruct.scriptsToRun[i].OnFinish();
+                        else
+                            Debug.LogError("[DialogueManager] [Scripts] Element " + i + " of current dialogue is null!");
+                    }
+                }
 
-                currentDialogueStruct.scriptToRun.OnEndOfStruct();
+                for (int i = 0; i < currentDialogueStruct.scriptsToRun.Length; i++)
+                {
+                    if (currentDialogueStruct.scriptsToRun[i] != null)
+                        currentDialogueStruct.scriptsToRun[i].OnEndOfStruct();
+                    else
+                        Debug.LogError("[DialogueManager] [Scripts] Element " + i + " of current dialogue is null!");
+                }
             }
 
             if (currentDialogueStruct.typingSoundScript != null)
@@ -167,8 +181,16 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeSentence(string sentence)
     {
-        if (currentDialogueStruct.scriptToRun != null)
-            currentDialogueStruct.scriptToRun.OnStart();
+        if (currentDialogueStruct.scriptsToRun != null)
+        {
+            for (int i = 0; i < currentDialogueStruct.scriptsToRun.Length; i++)
+            {
+                if (currentDialogueStruct.scriptsToRun[i] != null)
+                    currentDialogueStruct.scriptsToRun[i].OnStart();
+                else
+                    Debug.LogError("[DialogueManager] [Scripts] Element " + i + " of current dialogue is null!");
+            }
+        }
 
         if (currentDialogueStruct.typingSoundScript != null)
         {
@@ -186,8 +208,16 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text += letter;
 
-            if (currentDialogueStruct.scriptToRun != null)
-                currentDialogueStruct.scriptToRun.OnCharacterTyped();
+            if (currentDialogueStruct.scriptsToRun != null)
+            {
+                for (int i = 0; i < currentDialogueStruct.scriptsToRun.Length; i++)
+                {
+                    if (currentDialogueStruct.scriptsToRun[i] != null)
+                        currentDialogueStruct.scriptsToRun[i].OnCharacterTyped();
+                    else
+                        Debug.LogError("[DialogueManager] [Scripts] Element " + i + " of current dialogue is null!");
+                }
+            }
 
             if (currentDialogueStruct.typingSoundScript != null)
             {
@@ -201,8 +231,16 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitForSeconds(secondsPerCharacter);
         }
 
-        if (currentDialogueStruct.scriptToRun != null)
-            currentDialogueStruct.scriptToRun.OnFinish();
+        if (currentDialogueStruct.scriptsToRun != null)
+        {
+            for (int i = 0; i < currentDialogueStruct.scriptsToRun.Length; i++)
+            {
+                if (currentDialogueStruct.scriptsToRun[i] != null)
+                    currentDialogueStruct.scriptsToRun[i].OnFinish();
+                else
+                    Debug.LogError("[DialogueManager] [Scripts] Element " + i + " of current dialogue is null!");
+            }
+        }
 
         if (currentDialogueStruct.typingSoundScript != null)
         {

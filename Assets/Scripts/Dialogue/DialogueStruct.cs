@@ -14,7 +14,7 @@ public class DialogueStruct : MonoBehaviour
     [HideInInspector]
     public Dialogue dialogueAttachedTo;
 
-    public DialogueScript scriptToRun;
+    public DialogueScript[] scriptsToRun;
 
     public float secondsPerCharacter = 0.05f;
 
@@ -31,8 +31,16 @@ public class DialogueStruct : MonoBehaviour
 
     void Awake()
     {
-        if (scriptToRun != null)
-            scriptToRun.structAttachedTo = this;
+        if (scriptsToRun != null)
+        {
+            for (int i = 0; i < scriptsToRun.Length; i++)
+            {
+                if (scriptsToRun[i] != null)
+                    scriptsToRun[i].structAttachedTo = this;
+                else
+                    Debug.LogError("[DialogueStruct] [Scripts] Element " + i + " is null!");
+            }
+        }
 
         typingSoundScript = GetComponent<TypingSoundScript>();
 
@@ -62,8 +70,16 @@ public class DialogueStruct : MonoBehaviour
     {
         dialogueAttachedTo = dialogue;
 
-        if (scriptToRun != null)
-            scriptToRun.structAttachedTo = this;
+        if (scriptsToRun != null)
+        {
+            for (int i = 0; i < scriptsToRun.Length; i++)
+            {
+                if (scriptsToRun[i] != null)
+                    scriptsToRun[i].structAttachedTo = this;
+                else
+                    Debug.LogError("[DialogueStruct] [Scripts] Element " + i + " is null!");
+            }
+        }
 
         if (typingSoundScript != null)
         {
