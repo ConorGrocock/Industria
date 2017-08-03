@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GenWorld : MonoBehaviour {
     public static GenWorld _instance;
-    public float minOrthoSize = 1.0f;
-    public float maxOrthoSize = 16.0f;
-    public float zoomSpeed = 0.5f;
     public GameObject gameManager;
     private Manager managerScript;
 
@@ -64,7 +61,7 @@ public class GenWorld : MonoBehaviour {
                     else b.interactable = false;
                     continue;
                 }
-                if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill && buildings["Mill"].buildable) b.interactable = true;
+                if (b.name == "Mill" && value.ore.mine == MineType.Mill && buildings["Mill"].buildable) b.interactable = true;
                 else if (b.name == "Mine" && value.ore.mine == MineType.Shaft && buildings["Mine"].buildable) b.interactable = true;
                 else b.interactable = false;
                 if (b.name == "Lab") b.interactable = false;
@@ -313,18 +310,8 @@ public class GenWorld : MonoBehaviour {
         if (Input.GetKey(KeyCode.DownArrow)) Camera.main.transform.Translate(new Vector3(0, -1));
         if (Input.GetKey(KeyCode.LeftArrow)) Camera.main.transform.Translate(new Vector3(-1, 0));
         if (Input.GetKey(KeyCode.RightArrow)) Camera.main.transform.Translate(new Vector3(1, 0));
-        if (Input.GetKey(KeyCode.PageDown)) Camera.main.orthographicSize += zoomSpeed;
-        if (Input.GetKey(KeyCode.PageUp)) Camera.main.orthographicSize -= zoomSpeed;
-
-        if (Camera.main.orthographicSize < minOrthoSize)
-        {
-            Camera.main.orthographicSize = minOrthoSize;
-        }
-
-        if (Camera.main.orthographicSize > maxOrthoSize)
-        {
-            Camera.main.orthographicSize = maxOrthoSize;
-        }
+        if (Input.GetKey(KeyCode.PageUp)) Camera.main.orthographicSize += 0.5f;
+        if (Input.GetKey(KeyCode.PageDown)) Camera.main.orthographicSize -= 0.5f;
 
         if (houses.Count % 3 == 0 && houses.Count != lastExpand) {
             expandMap(5);

@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class Building : MonoBehaviour
-{
+public class Building : MonoBehaviour {
     public static List<Building> buildings = new List<Building>();
     public Sprite sprite;
     private SpriteRenderer spriteRenderer;
@@ -17,12 +16,10 @@ public class Building : MonoBehaviour
 
     // if (housePanel != null) Destroy(housePanel);
     // Use this for initialization
-    protected virtual void Start()
-    {
+    protected virtual void Start() {
         buildings.Add(this);
         //this.transform.Translate(new Vector3(this.transform.position.x, this.transform.position.y, -1));
-        if (sprite != null)
-        {
+        if (sprite != null) {
             spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = sprite;
         }
@@ -34,12 +31,9 @@ public class Building : MonoBehaviour
             if (building.tile.building.name == "PowerPlant")
                 plantExists = true;
 
-        if (plantExists)
-        {
-            foreach (Building building in buildings)
-            {
-                if (drawnLines > i)
-                {
+        if (plantExists) {
+            foreach (Building building in buildings) {
+                if (drawnLines > i) {
                     i++;
                     continue;
                 }
@@ -61,21 +55,18 @@ public class Building : MonoBehaviour
 
     private List<Image> displayedHeads = new List<Image>();
 
-    private void setAnchor(Image image)
-    {
+    private void setAnchor(Image image) {
         Vector2 pos = gameObject.transform.position;
         Vector2 viewportPoint = Camera.main.WorldToViewportPoint(pos);
         image.GetComponent<RectTransform>().anchorMin = viewportPoint;
         image.GetComponent<RectTransform>().anchorMax = viewportPoint;
     }
 
-    public void displayHeads(List<VillagerRole> roles)
-    {
+    public void displayHeads(List<VillagerRole> roles) {
         foreach (Image head in displayedHeads) Destroy(head);
         displayedHeads.Clear();
 
-        foreach (VillagerRole role in roles)
-        {
+        foreach (VillagerRole role in roles) {
             GameObject go = new GameObject();
             Image image = go.AddComponent<Image>();
             setAnchor(image);
@@ -85,9 +76,7 @@ public class Building : MonoBehaviour
         }
     }
 
-    void DrawLine(Vector3 start, Vector3 end, Color color)
-    {
-        return;
+    void DrawLine(Vector3 start, Vector3 end, Color color) {
         GameObject myLine = new GameObject();
         myLine.transform.position = start;
         myLine.AddComponent<LineRenderer>();
@@ -103,8 +92,7 @@ public class Building : MonoBehaviour
         lr.SetPosition(1, end);
     }
 
-    Vector3 getTileCenter(Vector3 pos)
-    {
+    Vector3 getTileCenter(Vector3 pos) {
         int x = (int)pos.x;
         int y = (int)pos.y;
 
@@ -115,18 +103,15 @@ public class Building : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
 
     }
 
-    public virtual void clickMenu(GameObject top, GameObject panel)
-    {
+    public virtual void clickMenu(GameObject top, GameObject panel) {
 
     }
 
-    public virtual void closeMenu()
-    {
+    public virtual void closeMenu() {
 
     }
 }
