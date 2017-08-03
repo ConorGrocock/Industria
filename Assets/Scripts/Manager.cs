@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Manager : MonoBehaviour
-{
-    public static Manager _instance;
+public class Manager : MonoBehaviourSingleton<Manager> {
+    //public static Manager _instance;
 
     [Header("Tutorial")]
     public GameObject tutorialPanel;
@@ -24,7 +23,7 @@ public class Manager : MonoBehaviour
 
     void Start()
     {
-        _instance = this;
+        //_instance = this;
     }
 
     void Awake()

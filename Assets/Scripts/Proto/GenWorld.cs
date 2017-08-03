@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GenWorld : MonoBehaviour {
-    public static GenWorld _instance;
+public class GenWorld : MonoBehaviourSingleton<GenWorld> {
+    //public static GenWorld _instance;
     public float minOrthoSize = 1.0f;
     public float maxOrthoSize = 16.0f;
     public float zoomSpeed = 0.5f;
@@ -80,8 +80,8 @@ public class GenWorld : MonoBehaviour {
 
     // Use this for initialization
     void Awake() {
-        if (_instance == null) _instance = this;
-        else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class");
+        //if (_instance == null) _instance = this;
+        //else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class");
 
         isMainMenu = SceneManager.GetActiveScene().name == "_Menu";
 
@@ -432,6 +432,7 @@ public class GenWorld : MonoBehaviour {
         if (tile.ore == null) {
             if (building.name == "Lab") return false;
             else if (building.name == "PowerPlant" && buildings["PowerPlant"].buildable) return true;
+            else return false;
         }
         if (building.name == "Mill" && tile.ore.mine == MineType.Mill && buildings["Mill"].buildable) return true;
         else if (building.name == "Mine" && tile.ore.mine == MineType.Shaft && buildings["Mine"].buildable) return true;
