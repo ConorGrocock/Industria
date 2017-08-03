@@ -306,7 +306,7 @@ public class GenWorld : MonoBehaviour {
         GameObject PowerForground = GameObject.Find("PowerForground");
         PowerForground.transform.localScale = new Vector3(Mathf.Min(/*(GenWorld._instance.powerSupply / GenWorld._instance.powerDraw)*/this.PowerStored / powerLimitOverall, 1), 1, 1);
 
-        if (houses.Count > 3) expandMap(5);
+        if (houses.Count % 3 == 0) expandMap(5);
     }
 
     public static GameObject menu;
