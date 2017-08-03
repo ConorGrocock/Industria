@@ -38,7 +38,7 @@ public class GenWorld : MonoBehaviour
         get { return PowerSupply; }
         set { PowerSupply = value; }
     }
-    
+
     public float PowerStored = 100f;
 
     public float powerDraw
@@ -317,21 +317,13 @@ public class GenWorld : MonoBehaviour
             gameOver = true;
         }
 
+
         cPop = 0;
         totalMiners = 0;
         totalJacks = 0;
         totalPowerWorkers = 0;
         maxPopulation = 0;
 
-        foreach (House house in houses)
-        {
-            cPop += house.occupancy;
-            maxPopulation += house.maxCapacity;
-
-            totalMiners += house.miners;
-            totalJacks += house.lumberjacks;
-            totalPowerWorkers += house.power;
-        }
         maxMineWorkers = 0;
         maxMillWorkers = 0;
         foreach (Building building in Building.buildings)
@@ -347,6 +339,22 @@ public class GenWorld : MonoBehaviour
                     maxMillWorkers += mill.maxWorkers;
                     break;
             }
+        }
+
+        foreach (House house in houses)
+        {
+            cPop += house.occupancy;
+            maxPopulation += house.maxCapacity;
+
+            int mi = totalMiners;
+            int jo = totalJacks;
+
+            totalMiners = Mathf.Min(maxMineWorkers, totalMiners + house.miners);
+            totalJacks += Mathf.Min(maxMillWorkers, totalJacks + house.lumberjacks);
+
+            house.lumberProvided = totalJacks - jo;
+            house.minerProvided = totalMiners - mi;
+            //totalPowerWorkers += house.power;
         }
 
         GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = string.Format("Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}", cPop, maxPopulation, totalMiners, maxMineWorkers, totalJacks, maxMillWorkers);

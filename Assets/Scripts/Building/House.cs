@@ -24,6 +24,9 @@ public class House : Building
     public int maxCapacity = 5;
     public bool full;
 
+    public int lumberProvided = 0;
+    public int minerProvided = 0;
+
     List<Villager> occupants = new List<Villager>();
 
     // Use this for initialization
@@ -40,7 +43,6 @@ public class House : Building
 
         updateHeads();
 
-        lastUpdate = Time.time;
     }
 
     public int miners = 0;
@@ -50,12 +52,12 @@ public class House : Building
     public void updateHeads()
     {
         List<Villager> roles = new List<Villager>();
-        foreach (Villager oc in occupants) if (oc.role == VillagerRole.None) roles.Add(oc);
+        int miners = 0;
+        int lumber = 0;
+        foreach (Villager oc in occupants)
+            if (oc.role == VillagerRole.None || (oc.role == VillagerRole.Miner && minerProvided < ++miners) || (oc.role == VillagerRole.Lumberjack && lumberProvided < ++lumber)) roles.Add(oc);
         displayHeads(roles);
     }
-
-    float lastUpdate;
-    bool invShown = false;
 
     int lastPopulation = 0;
 
@@ -64,55 +66,16 @@ public class House : Building
     {
         if (GenWorld._instance.isMainMenu || Manager._instance.isPaused) return;
 
-        if (currentMenu == GenWorld.menu)
+        if (currentMenu == GenWorld.menu && currentMenu != null)
         {
-            if (lastPopulation != occupants.Count)
-            {
-                GenWorld._instance.closeMenu();
-                guiUpdate = true;
-                clickMenu(gameObject, tile.createMenu());
-                lastPopulation = occupants.Count;
-                invShown = false;
-                return;
-            }
-
-            if (Time.time - lastUpdate > 0.8f || !invShown)
-            {
-                lastUpdate = Time.time;
-                int i = 0;
-
-                foreach (KeyValuePair<Dropdown, Image> entry in dropdowns)
-                {
-                    if (occupants.Count < i + 1) continue;
-                    if (occupants[i] == null) occupants[i] = new Villager();
-
-                    bool set = false;
-
-                    switch (entry.Key.value)
-                    {
-                        case 0:
-                            if (occupants[i].role == VillagerRole.None) set = true;
-                            occupants[i].role = VillagerRole.None;
-                            break;
-                        case 1:
-                            if (occupants[i].role == VillagerRole.Miner) set = true;
-                            occupants[i].role = VillagerRole.Miner;
-                            break;
-                        case 2:
-                            if (occupants[i].role == VillagerRole.Lumberjack) set = true;
-                            occupants[i].role = VillagerRole.Lumberjack;
-                            break;
-                    }
-                    /*if (!set || !invShown) */
-                    if (entry.Value != null && !entry.Value.IsDestroyed()) entry.Value.sprite = occupants[i].getSprite();
-                    i++;
-                }
-
-                updateHeads();
-                invShown = true;
-            }
+            //if (lastPopulation != occupants.Count)
+            //{
+            //    GenWorld._instance.closeMenu();
+            //    guiUpdate = true;
+            //    clickMenu(gameObject, tile.createMenu());
+            //    lastPopulation = occupants.Count;
+            //}
         }
-        else invShown = false;
 
         miners = 0;
         lumberjacks = 0;
@@ -201,6 +164,40 @@ public class House : Building
 
     bool guiUpdate = false;
 
+    public void dropDownChange()
+    {
+        int i = 0;
+
+        foreach (KeyValuePair<Dropdown, Image> entry in dropdowns)
+        {
+            if (occupants.Count < i + 1) continue;
+            if (occupants[i] == null) occupants[i] = new Villager();
+
+            bool set = false;
+
+            switch (entry.Key.value)
+            {
+                case 0:
+                    if (occupants[i].role == VillagerRole.None) set = true;
+                    occupants[i].role = VillagerRole.None;
+                    break;
+                case 1:
+                    if (occupants[i].role == VillagerRole.Miner) set = true;
+                    occupants[i].role = VillagerRole.Miner;
+                    break;
+                case 2:
+                    if (occupants[i].role == VillagerRole.Lumberjack) set = true;
+                    occupants[i].role = VillagerRole.Lumberjack;
+                    break;
+            }
+            /*if (!set || !invShown) */
+            if (entry.Value != null && !entry.Value.IsDestroyed()) entry.Value.sprite = occupants[i].getSprite();
+            i++;
+        }
+
+        updateHeads();
+    }
+
     public override void clickMenu(GameObject top, GameObject panel)
     {
         if (GenWorld.menu != panel)
@@ -233,11 +230,12 @@ public class House : Building
             profiles[i].transform.localPosition = new Vector3((i * 170) - 260, -100, 1);
             profiles[i].GetComponentInChildren<Text>().text = occupants[i].Vname;
             profiles[i].GetComponentInChildren<Dropdown>().value = (int)occupants[i].role;
+            profiles[i].GetComponentInChildren<Dropdown>().onValueChanged.AddListener((action) => { dropDownChange(); });
             dropdowns.Add(profiles[i].GetComponentInChildren<Dropdown>(), profiles[i].GetComponentInChildren<Image>());
             //profiles[i].GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Villager/" + Random.Range(1, 4));
         }
 
-        lastUpdate = 0;
+        dropDownChange();
 
         shown = occupants.Count;
     }
