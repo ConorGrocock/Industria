@@ -23,14 +23,18 @@ public class Tile : MonoBehaviour
         {
             top = Instantiate(tile);
             top.GetComponent<SpriteRenderer>().sprite = value.sprite;
-            ((Building)top.AddComponent(value.script.GetType())).tile = this;
+            topBuilding = ((Building)top.AddComponent(value.script.GetType()));
+            topBuilding.tile = this;
+            if(value.name == "House") if (GenWorld._instance.houses.Count <= 1) topBuilding.powerDraw = 1;
             Destroy(top.GetComponent<BoxCollider>());
             top.transform.parent = transform;
             top.transform.localPosition = new Vector3(0, 0, -10);
             Building = value;
         }
     }
+
     public GameObject top;
+    public Building topBuilding;
 
     public GameObject tile;
     public bool hover = false;

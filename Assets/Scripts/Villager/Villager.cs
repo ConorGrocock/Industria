@@ -20,20 +20,7 @@ public class Villager {
 
     public Villager() {
         this.Vname = Villager.randomName();
-        Debug.Log(Vname);
     }
-
-	// Use this for initialization
-	void Start () {
-        //this.transform.Translate(new Vector3(this.transform.position.x, this.transform.position.y, -2));
-        //spriteRenderer = GetComponent<SpriteRenderer>();
-        //spriteRenderer.sprite = sprite;
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        //otransform.Translate(new Vector3(Random.Range(-1, 2) * Time.deltaTime, Random.Range(-1, 2) * Time.deltaTime));
-	}
 
     public static string randomName() {
         return names[Random.Range(0,names.Length-1)];

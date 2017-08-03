@@ -1,11 +1,10 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GenWorld : MonoBehaviour
-{
+public class GenWorld : MonoBehaviour {
     public static GenWorld _instance;
     public GameObject gameManager;
     private Manager managerScript;
@@ -21,21 +20,17 @@ public class GenWorld : MonoBehaviour
     public bool isPaused;
 
     float PowerSupply;
-    public float powerSupply
-    {
+    public float powerSupply {
         get { return PowerSupply; }
         set { PowerSupply = value; }
     }
 
     public float PowerStored = 100f;
 
-    public float powerDraw
-    {
-        get
-        {
+    public float powerDraw {
+        get {
             float p = 0f;
-            foreach (Building building in Building.buildings)
-            {
+            foreach (Building building in Building.buildings) {
                 p += building.powerDraw;
             }
             return p;
@@ -49,23 +44,18 @@ public class GenWorld : MonoBehaviour
     public List<PowerPlant> plants = new List<PowerPlant>();
     public GameObject buildingPanel;
     Tile BuildTile;
-    public Tile buildTile
-    {
-        get
-        {
+    public Tile buildTile {
+        get {
             return BuildTile;
         }
-        set
-        {
+        set {
             BuildTile = value;
             if (value == null) { buildingPanel.SetActive(false); return; }
             buildingPanel.SetActive(true);
             Button[] buttons = buildingPanel.GetComponentsInChildren<Button>();
 
-            foreach (Button b in buttons)
-            {
-                if (value.ore == null)
-                {
+            foreach (Button b in buttons) {
+                if (value.ore == null) {
                     if (b.name == "Lab") b.interactable = false;
                     else if (b.name == "Power plant" && buildings["PowerPlant"].buildable) b.interactable = true;
                     else b.interactable = false;
@@ -86,15 +76,13 @@ public class GenWorld : MonoBehaviour
     public GameObject[][] tiles;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
         if (_instance == null) _instance = this;
         else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class");
 
         isMainMenu = SceneManager.GetActiveScene().name == "_Menu";
 
-        if (managerScript == null && !isMainMenu)
-        {
+        if (managerScript == null && !isMainMenu) {
             managerScript = gameManager.GetComponent<Manager>();
         }
 
@@ -116,11 +104,9 @@ public class GenWorld : MonoBehaviour
         Camera.main.transform.Translate(new Vector3((worldWidth / 2) * 1.28f, ((worldHeight / 2) * 1.28f) - 0.5f));
 
         tiles = new GameObject[worldWidth][];
-        for (int x = 0; x < worldWidth; x++)
-        {
+        for (int x = 0; x < worldWidth; x++) {
             tiles[x] = new GameObject[worldHeight];
-            for (int y = 0; y < worldHeight; y++)
-            {
+            for (int y = 0; y < worldHeight; y++) {
                 Sprite cSprite = sprites[Random.Range(0, sprites.Length - 1)];
 
                 GameObject cTile = Instantiate(Tile);
@@ -143,26 +129,23 @@ public class GenWorld : MonoBehaviour
         }
 
         tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = buildings["House"];
+        tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().topBuilding.powerDraw = 1f;
         tiles[(worldWidth / 2) + Random.Range(1, 3)][(worldHeight / 2) + Random.Range(1, 3)].GetComponent<Tile>().building = buildings["PowerPlant"];
 
         int copper = 0, wood = 0, coal = 0;
-        for (int ores = 0; ores < Random.Range(6, 10); ores++)
-        {
+        for (int ores = 0; ores < Random.Range(6, 10); ores++) {
             GameObject cTile = null;
 
-            while (cTile == null || cTile.GetComponent<Tile>().building != null || cTile.GetComponent<Tile>().ore != null)
-            {
+            while (cTile == null || cTile.GetComponent<Tile>().building != null || cTile.GetComponent<Tile>().ore != null) {
                 cTile = tiles[Random.Range(2, worldWidth - 2)][Random.Range(2, worldHeight - 2)];
             }
-            if (coal == 0)
-            {
+            if (coal == 0) {
                 Tile tile = cTile.GetComponent<Tile>();
                 tile.ore = new Ore(OreTypes.Coal, 1000);
                 tile.building = buildings["Mine"];
                 coal++;
             }
-            else if (copper == 0)
-            {
+            else if (copper == 0) {
                 cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
                 copper++;
             }
@@ -171,24 +154,19 @@ public class GenWorld : MonoBehaviour
             //    cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
             //    iron++;
             //}
-            else if (wood == 0)
-            {
+            else if (wood == 0) {
                 cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
                 wood++;
             }
-            else
-            {
-                switch (Random.Range(0, 4))
-                {
-                    case (0):
-                        {
+            else {
+                switch (Random.Range(0, 4)) {
+                    case (0): {
                             cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Coal, 1000);
                             coal++;
                             break;
                         }
                     case (1):
-                    case 2:
-                        {
+                    case 2: {
                             cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
                             copper++;
                             break;
@@ -199,8 +177,7 @@ public class GenWorld : MonoBehaviour
                     //        iron++;
                     //        break;
                     //    }
-                    case (3):
-                        {
+                    case (3): {
                             cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
                             wood++;
                             break;
@@ -208,7 +185,7 @@ public class GenWorld : MonoBehaviour
                 }
             }
         }
-        if(!isMainMenu)
+        if (!isMainMenu)
             updateInfomationBar();
     }
 
@@ -230,14 +207,11 @@ public class GenWorld : MonoBehaviour
         GameObject.Find("UIBarPower").GetComponent<Text>().text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(this.PowerStored), Mathf.Round(this.powerSupply), Mathf.Round(this.powerDraw));
     }
 
-    void Update()
-    {
+    void Update() {
         if (isMainMenu || Manager._instance.isPaused) return;
 
-        if (PowerStored < 0)
-        {
-            if (managerScript == null)
-            {
+        if (PowerStored < 0) {
+            if (managerScript == null) {
                 managerScript = gameManager.GetComponent<Manager>();
             }
 
@@ -254,8 +228,7 @@ public class GenWorld : MonoBehaviour
         int totalPowerWorkers = 0;
         int maxPopulation = 0;
 
-        foreach (House house in houses)
-        {
+        foreach (House house in houses) {
             count += house.occupancy;
             maxPopulation += house.maxCapacity;
 
@@ -264,10 +237,8 @@ public class GenWorld : MonoBehaviour
             totalPowerWorkers += house.power;
         }
         int maxMineWorkers = 0, maxMillWorkers = 0;
-        foreach (Building building in Building.buildings)
-        {
-            switch (building.tile.building.name)
-            {
+        foreach (Building building in Building.buildings) {
+            switch (building.tile.building.name) {
                 case "Mine":
                     Mine mine = (Mine)building;
                     maxMineWorkers += mine.maxWorkers;
@@ -280,10 +251,8 @@ public class GenWorld : MonoBehaviour
         }
 
         GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = string.Format("Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}", count, maxPopulation, totalMiners, maxMineWorkers, totalJacks, maxMillWorkers);
-        foreach (Building building in Building.buildings)
-        {
-            switch (building.tile.building.name)
-            {
+        foreach (Building building in Building.buildings) {
+            switch (building.tile.building.name) {
                 case "Mine":
                     Mine mine = (Mine)building;
                     if (mine.workers >= mine.maxWorkers) continue;
@@ -302,7 +271,7 @@ public class GenWorld : MonoBehaviour
         }
 
         foreach (KeyValuePair<string, BuildingType> bType in buildings) {
-            if(Input.GetKey(bType.Value.hotkey)) {
+            if (Input.GetKey(bType.Value.hotkey)) {
                 if (hoverTile != null) {
                     if (hoverTile.building == null) {
                         if (bType.Value.buildable && canBuild(hoverTile, bType.Value)) {
@@ -316,21 +285,18 @@ public class GenWorld : MonoBehaviour
         this.PowerSupply = 0;
         float powerLimitOverall = 0;
 
-        foreach (Building building in Building.buildings)
-        {
+        foreach (Building building in Building.buildings) {
             if (building.tile.building.name != "PowerPlant")
                 powerLimitOverall += building.powerLimit;
         }
 
-        foreach (PowerPlant building in plants)
-        {
+        foreach (PowerPlant building in plants) {
             this.PowerSupply += building.powerStored;
             building.powerStored = 0;
         }
 
         string resource = "";
-        foreach (KeyValuePair<OreTypes, int> entry in Resources)
-        {
+        foreach (KeyValuePair<OreTypes, int> entry in Resources) {
             resource += entry.Key.ToString() + ": " + entry.Value + " ";
         }
         GameObject.Find("ResourceCount").GetComponent<UnityEngine.UI.Text>().text = resource;
@@ -339,18 +305,18 @@ public class GenWorld : MonoBehaviour
 
         GameObject PowerForground = GameObject.Find("PowerForground");
         PowerForground.transform.localScale = new Vector3(Mathf.Min(/*(GenWorld._instance.powerSupply / GenWorld._instance.powerDraw)*/this.PowerStored / powerLimitOverall, 1), 1, 1);
+
+        if (houses.Count > 3) expandMap(5);
     }
 
     public static GameObject menu;
 
-    public void closeMenu()
-    {
+    public void closeMenu() {
         Destroy(menu);
         menu = null;
     }
 
-    void registerBuildings()
-    {
+    void registerBuildings() {
         new House().register();
         new Mine().register();
         new Mill().register();
@@ -358,15 +324,78 @@ public class GenWorld : MonoBehaviour
         new PowerPlant().register();
     }
 
-    public Vector3 getTileCoord(Vector3 vector)
-    {
+    public void expandMap(int amount) {
+        GameObject[][] oldTiles = tiles;
+        worldWidth += amount;
+        worldHeight += amount;
+        tiles = new GameObject[worldWidth][];
+        for (int x = 0; x < worldWidth; x++) {
+            tiles[x] = new GameObject[worldHeight];
+            for (int y = 0; y < worldHeight; y++) {
+                if (oldTiles.Length - 1 >= x && oldTiles[x] != null) {
+                    if (oldTiles[x].Length - 1 >= y && oldTiles[x][y] != null) {
+                        tiles[x][y] = oldTiles[x][y];
+                        continue;
+                    }
+                }
+
+                Sprite cSprite = sprites[Random.Range(0, sprites.Length - 1)];
+
+                GameObject cTile = Instantiate(Tile);
+                Vector3 cTrans = cTile.transform.position;
+
+                cTrans.x = x * 1.28f;
+                cTrans.y = y * 1.28f;
+                cTrans.z = 100;
+
+                cTile.transform.position = cTrans;
+                cTile.transform.parent = Parent.transform;
+
+                cTile.AddComponent<Tile>();
+                cTile.GetComponent<SpriteRenderer>().sprite = cSprite;
+
+
+                cTile.GetComponent<Tile>().tile = Tile;
+                tiles[x][y] = cTile;
+            }
+        }
+
+        for (int ores = 0; ores < Random.Range(6, 10); ores++) {
+            GameObject cTile = null;
+
+            while (cTile == null || cTile.GetComponent<Tile>().building != null || cTile.GetComponent<Tile>().ore != null) {
+                cTile = tiles[Random.Range(2, worldWidth - 2)][Random.Range(2, worldHeight - 2)];
+            }
+            switch (Random.Range(0, 4)) {
+                case (0):
+                case (2): {
+                        cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Coal, 1000);
+                        break;
+                    }
+                case (1):{
+                        cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
+                        break;
+                    }
+                //case (2):
+                //    {
+                //        cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
+                //        iron++;
+                //        break;
+                //    }
+                case (3): {
+                        cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
+                        break;
+                    }
+            }
+        }
+    }
+
+    public Vector3 getTileCoord(Vector3 vector) {
         return vector / 1.28f;
     }
 
-    public void buildOnTile(string building)
-    {
-        foreach (KeyValuePair<OreTypes, int> cost in buildings[building].costs)
-        {
+    public void buildOnTile(string building) {
+        foreach (KeyValuePair<OreTypes, int> cost in buildings[building].costs) {
             GenWorld._instance.Resources[cost.Key] -= cost.Value;
         }
         if (BuildTile != null) buildTile.building = buildings[building];
