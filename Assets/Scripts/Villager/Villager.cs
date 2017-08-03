@@ -9,7 +9,7 @@ public enum VillagerRole {
 }
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class Villager : MonoBehaviour {
+public class Villager {
 
     private SpriteRenderer spriteRenderer;
     public Sprite sprite;
@@ -25,9 +25,9 @@ public class Villager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        this.transform.Translate(new Vector3(this.transform.position.x, this.transform.position.y, -2));
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = sprite;
+        //this.transform.Translate(new Vector3(this.transform.position.x, this.transform.position.y, -2));
+        //spriteRenderer = GetComponent<SpriteRenderer>();
+        //spriteRenderer.sprite = sprite;
     }
 	
 	// Update is called once per frame
