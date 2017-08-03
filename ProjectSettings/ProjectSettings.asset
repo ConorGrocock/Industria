@@ -140,7 +140,7 @@ PlayerSettings:
   targetPixelDensity: 200
   resolutionScalingMode: 0
   applicationIdentifier:
-    Android: com.ProjectFocus.Industry
+    Android: com.projectFocus.industry
   buildNumber: {}
   AndroidBundleVersionCode: 2
   AndroidMinSdkVersion: 21
