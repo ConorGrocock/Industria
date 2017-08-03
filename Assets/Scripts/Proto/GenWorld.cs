@@ -31,8 +31,7 @@ public class GenWorld : MonoBehaviour
         get { return PowerSupply; }
         set { PowerSupply = value; }
     }
-
-    [HideInInspector]
+    
     public float PowerStored = 100f;
 
     public float powerDraw
