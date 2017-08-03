@@ -9,7 +9,7 @@ public class Mine : Building
     /// Mining speed
     /// amount of ore to mine per second.
     /// </summary>
-    float miningSpeed = 2f;
+    public float miningSpeed = 2.0f;
     float timeSinceLastMine;
     public int workers = 0;
     public int maxWorkers = 5;

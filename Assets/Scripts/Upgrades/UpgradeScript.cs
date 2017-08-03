@@ -4,9 +4,13 @@ using UnityEngine;
 
 public abstract class UpgradeScript : MonoBehaviour
 {
+    //[HideInInspector]
     public bool unlocked = false;
 
+    private bool appliedEffect = false;
+
     public abstract void ApplyUpgradeEffect();
+    public abstract void OnUpgradeUpdate();
 
     void Start()
     {
@@ -15,7 +19,14 @@ public abstract class UpgradeScript : MonoBehaviour
 
 	public void OnUpdate()
     {
-        if (unlocked)
+        if (unlocked && !appliedEffect)
+        {
             ApplyUpgradeEffect();
+            appliedEffect = true;
+        }
+        else if (unlocked && appliedEffect)
+        {
+            OnUpgradeUpdate();
+        }
 	}
 }
