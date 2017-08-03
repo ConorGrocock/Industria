@@ -42,7 +42,7 @@ public class DialogueStruct : MonoBehaviour
         }
         else
         {
-            Debug.LogError("[DialogueStruct] Could not find typing sound script!");
+            Debug.LogError("[DialogueStruct] Could not find typing sound script! On: " + transform.name);
         }
     }
 
@@ -54,7 +54,7 @@ public class DialogueStruct : MonoBehaviour
         }
         else
         {
-            Debug.LogError("[DialogueStruct] [ChangeSpeakerImage] Dialogue struct is not attached to any dialogue! Are you calling this from Awake? Text: " + sentence);
+            Debug.LogError("[DialogueStruct] [ChangeSpeakerImage] Dialogue struct is not attached to any dialogue! Are you calling this from Awake? Text: " + sentence + " On: " + transform.name);
         }
     }
 
@@ -71,7 +71,7 @@ public class DialogueStruct : MonoBehaviour
         }
         else
         {
-            Debug.LogError("[DialogueStruct] Could not find typing sound script!");
+            Debug.LogError("[DialogueStruct] Could not find typing sound script! On: " + transform.name);
         }
     }
 }
