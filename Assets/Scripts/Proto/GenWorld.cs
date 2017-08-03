@@ -313,8 +313,8 @@ public class GenWorld : MonoBehaviour {
         if (Input.GetKey(KeyCode.DownArrow)) Camera.main.transform.Translate(new Vector3(0, -1));
         if (Input.GetKey(KeyCode.LeftArrow)) Camera.main.transform.Translate(new Vector3(-1, 0));
         if (Input.GetKey(KeyCode.RightArrow)) Camera.main.transform.Translate(new Vector3(1, 0));
-        if (Input.GetKey(KeyCode.PageUp)) Camera.main.orthographicSize += zoomSpeed;
-        if (Input.GetKey(KeyCode.PageDown)) Camera.main.orthographicSize -= zoomSpeed;
+        if (Input.GetKey(KeyCode.PageDown)) Camera.main.orthographicSize += zoomSpeed;
+        if (Input.GetKey(KeyCode.PageUp)) Camera.main.orthographicSize -= zoomSpeed;
 
         if (Camera.main.orthographicSize < minOrthoSize)
         {
