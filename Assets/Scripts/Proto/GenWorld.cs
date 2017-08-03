@@ -59,7 +59,7 @@ public class GenWorld : MonoBehaviour
     [HideInInspector]
     public Dictionary<OreTypes, int> Resources;
 
-    public bool applyInspectorValsForResources = true;
+    public bool applyInspectorValsForResources = false;
     public ResourceArray[] resourcesInspector;
 
     [HideInInspector]
