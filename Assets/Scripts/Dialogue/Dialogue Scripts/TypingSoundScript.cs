@@ -10,6 +10,10 @@ public class TypingSoundScript : DialogueScript
     {
 	}
 
+    public override void OnUpdate()
+    {
+    }
+
     public override void OnCharacterTyped()
     {
         if (typingSound != null)
@@ -17,6 +21,10 @@ public class TypingSoundScript : DialogueScript
     }
 
     public override void OnFinish()
+    {
+    }
+
+    public override void OnEndOfStruct()
     {
     }
 }

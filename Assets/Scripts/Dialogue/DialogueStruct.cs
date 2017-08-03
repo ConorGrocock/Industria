@@ -57,4 +57,21 @@ public class DialogueStruct : MonoBehaviour
             Debug.LogError("[DialogueStruct] [ChangeSpeakerImage] Dialogue struct is not attached to any dialogue! Are you calling this from Awake? Text: " + sentence);
         }
     }
+
+    public void OnDialogueChange(Dialogue dialogue)
+    {
+        dialogueAttachedTo = dialogue;
+
+        if (scriptToRun != null)
+            scriptToRun.structAttachedTo = this;
+
+        if (typingSoundScript != null)
+        {
+            typingSoundScript.structAttachedTo = this;
+        }
+        else
+        {
+            Debug.LogError("[DialogueStruct] Could not find typing sound script!");
+        }
+    }
 }

@@ -325,7 +325,6 @@ public class GenWorld : MonoBehaviour
         foreach (PowerPlant building in plants)
         {
             this.PowerSupply += building.powerStored;
-            Debug.Log(powerSupply);
             building.powerStored = 0;
         }
 

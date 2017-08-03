@@ -37,4 +37,21 @@ public class Dialogue : MonoBehaviour
             DialogueManager._instance.ChangeSpeakerImage(speakerImage);
         }
     }
+
+    public void SetCurrentDisplayed(bool value)
+    {
+        isCurrentlyDisplayed = value;
+
+        int i = 0;
+
+        foreach (DialogueStruct dStruct in sentences)
+        {
+            if (dStruct != null)
+                dStruct.OnDialogueChange(this);
+            else
+                Debug.LogError("[Dialogue] Element " + i + " is null!");
+
+            i++;
+        }
+    }
 }

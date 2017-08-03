@@ -60,7 +60,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         currentDialogue = dialogue;
-        currentDialogue.isCurrentlyDisplayed = false;
+        currentDialogue.SetCurrentDisplayed(true);
 
         if (!Manager._instance.isPaused && currentDialogue.pauseGame)
         {
@@ -101,26 +101,33 @@ public class DialogueManager : MonoBehaviour
         else
             Debug.LogError("[DialogueManager] You have not assigned the no button to the dialogue manager!");
 
-        if (dStructQueue.Count == 0)
-        {
-            EndDialogue();
-            return;
-        }
-
         if (currentDialogueStruct != null)
         {
-            if (currentDialogueStruct.scriptToRun != null && !endOfSentence)
-                currentDialogueStruct.scriptToRun.OnFinish();
+            if (currentDialogueStruct.scriptToRun != null)
+            {
+                if (!endOfSentence)
+                    currentDialogueStruct.scriptToRun.OnFinish();
+
+                currentDialogueStruct.scriptToRun.OnEndOfStruct();
+            }
 
             if (currentDialogueStruct.typingSoundScript != null)
             {
                 if (!endOfSentence)
                     currentDialogueStruct.typingSoundScript.OnFinish();
+
+                currentDialogueStruct.typingSoundScript.OnEndOfStruct();
             }
             else
             {
                 Debug.LogError("[DialogueManager] Typing sound script is null for the current dialogue! Text: " + currentDialogueStruct.sentence);
             }
+        }
+
+        if (dStructQueue.Count == 0)
+        {
+            EndDialogue();
+            return;
         }
 
         currentDialogueStruct = dStructQueue.Dequeue();
@@ -233,7 +240,7 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
-        currentDialogue.isCurrentlyDisplayed = false;
+        currentDialogue.SetCurrentDisplayed(false);
         dialogueBox.SetActive(false);
         Manager._instance.Unpause();
     }
