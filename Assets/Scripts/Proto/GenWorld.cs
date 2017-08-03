@@ -332,7 +332,8 @@ public class GenWorld : MonoBehaviour
             totalJacks += house.lumberjacks;
             totalPowerWorkers += house.power;
         }
-        int maxMineWorkers = 0, maxMillWorkers = 0;
+        maxMineWorkers = 0;
+        maxMillWorkers = 0;
         foreach (Building building in Building.buildings)
         {
             switch (building.tile.building.name)
