@@ -68,9 +68,12 @@ public class House : Building
         {
             if (lastPopulation != occupants.Count)
             {
-                clickMenu(null, currentMenu);
+                GenWorld._instance.closeMenu();
                 guiUpdate = true;
+                clickMenu(gameObject, tile.createMenu());
                 lastPopulation = occupants.Count;
+                invShown = false;
+                return;
             }
 
             if (Time.time - lastUpdate > 0.8f || !invShown)
@@ -101,7 +104,7 @@ public class House : Building
                             break;
                     }
                     /*if (!set || !invShown) */
-                    entry.Value.sprite = occupants[i].getSprite();
+                    if (entry.Value != null && !entry.Value.IsDestroyed()) entry.Value.sprite = occupants[i].getSprite();
                     i++;
                 }
 
@@ -205,7 +208,9 @@ public class House : Building
             shown = 0;
             GenWorld.menu = panel;
         }
-        else if (guiUpdate) { guiUpdate = false; return; }
+        else if (!guiUpdate) return;
+
+        guiUpdate = false;
 
         dropdowns.Clear();
 

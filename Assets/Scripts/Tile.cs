@@ -105,28 +105,31 @@ public class Tile : MonoBehaviour
             //building = GenWorld._instance.buildings["House"];
             if (building != null)
             {
-                GenWorld._instance.buildTile = null;
-                GameObject sprite = Resources.Load<GameObject>("Prefabs/UI/" + building.name + "Panel");
-                if (sprite != null)
-                {
-                    panel = Instantiate(sprite);
-                    panel.transform.SetParent(GameObject.Find("Canvas").transform);
-                    //panel.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
-                    panel.transform.localPosition = new Vector3(0, 0, 0);
-
-                    menuOpen = true;
-
-                    Text[] t = panel.GetComponentsInChildren<Text>();
-                    foreach (Text text in t)
-                    {
-                        if (text.gameObject.name == "Power") text.text = "POWER";
-                        top.GetComponent<Building>().clickMenu(top, panel);
-                    }
-                }
+                top.GetComponent<Building>().clickMenu(top, createMenu()); 
             }
         }
         hover = true;
 
+    }
+
+    public GameObject createMenu()
+    {
+        GenWorld._instance.buildTile = null;
+        GameObject sprite = Resources.Load<GameObject>("Prefabs/UI/" + building.name + "Panel");
+        if (sprite != null)
+        {
+            panel = Instantiate(sprite);
+            panel.transform.SetParent(GameObject.Find("Canvas").transform);
+            //panel.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+            panel.transform.localPosition = new Vector3(0, 0, 0);
+
+            menuOpen = true;
+
+            Text[] t = panel.GetComponentsInChildren<Text>();
+            foreach (Text text in t) if (text.gameObject.name == "Power") text.text = "POWER";
+            return panel;
+        }
+        return null;
     }
 
     public void OnMouseExit()
