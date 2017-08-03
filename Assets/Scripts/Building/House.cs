@@ -49,7 +49,8 @@ public class House : Building
 
     public void updateHeads()
     {
-        List<Villager> roles = new List<Villager>(occupants);
+        List<Villager> roles = new List<Villager>();
+        foreach (Villager oc in occupants) if (oc.role == VillagerRole.None) roles.Add(oc);
         displayHeads(roles);
     }
 
