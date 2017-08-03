@@ -24,6 +24,14 @@ public class Menu : MonoBehaviour
         //}
     }
 
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
 
     void OnDisable()
     {
@@ -46,7 +54,7 @@ public class Menu : MonoBehaviour
                 return;
             }
 
-            if (!EventSystem.current.IsPointerOverGameObject())
+            if (!IsPointerOverUIObject())
             {
                 gameObject.SetActive(false);
                 GenWorld._instance.buildTile = null;

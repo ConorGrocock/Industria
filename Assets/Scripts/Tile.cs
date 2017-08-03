@@ -25,7 +25,7 @@ public class Tile : MonoBehaviour
             top.GetComponent<SpriteRenderer>().sprite = value.sprite;
             topBuilding = ((Building)top.AddComponent(value.script.GetType()));
             topBuilding.tile = this;
-            if(value.name == "House") if (GenWorld._instance.houses.Count <= 1) topBuilding.powerDraw = 1;
+            if (value.name == "House") if (GenWorld._instance.houses.Count <= 1) topBuilding.powerDraw = 1;
             Destroy(top.GetComponent<BoxCollider>());
             top.transform.parent = transform;
             top.transform.localPosition = new Vector3(0, 0, -10);
@@ -74,7 +74,7 @@ public class Tile : MonoBehaviour
     public void OnMouseUp()
     {
         if (menuClose) { menuClose = false; return; }
-        if (EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.gameOver) { mouseOver = false; return; }
+        if (!IsPointerOverUIObject() || GenWorld._instance.gameOver) { mouseOver = false; return; }
         if (building != null) return;
         if (GenWorld._instance.buildTile != null) { GenWorld._instance.buildTile = null; return; }
         if (mouseOver && GenWorld.menu == null)
@@ -90,7 +90,7 @@ public class Tile : MonoBehaviour
     {
         GenWorld._instance.hoverTile = this;
 
-        if (EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.gameOver || GenWorld._instance.isMainMenu || Manager._instance.isPaused) { mouseOver = false; return; }
+        if (!IsPointerOverUIObject() || GenWorld._instance.gameOver || GenWorld._instance.isMainMenu || Manager._instance.isPaused) { mouseOver = false; return; }
         mouseOver = true;
 
         if (Input.GetMouseButtonDown(0))
@@ -135,17 +135,26 @@ public class Tile : MonoBehaviour
         hover = false;
     }
 
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
+
     // Update is called once per frame
     void Update()
     {
         try
         {
-            if ((hover && !EventSystem.current.IsPointerOverGameObject() || GenWorld._instance.buildTile == this)) this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
+            if ((hover && !IsPointerOverUIObject() || GenWorld._instance.buildTile == this)) this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
             else gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         }
         catch (Exception e)
         {
-            Debug.Log(hover + ":" + EventSystem.current.IsPointerOverGameObject() + ":" + GenWorld._instance);
+            Debug.Log(hover + ":" + !IsPointerOverUIObject() + ":" + GenWorld._instance);
         }
         if (Input.GetKeyDown(KeyCode.Escape) && menuOpen && panel != null)
         {
