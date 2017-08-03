@@ -440,13 +440,13 @@ public class GenWorld : MonoBehaviour
             Camera.main.orthographicSize = maxOrthoSize;
         }
 
-        if (houses.Count % 3 == 0 && houses.Count != lastExpand)
+        if (houses.Count % Mathf.Pow(3, expandCount) == 0)
         {
             expandMap(5);
-            lastExpand = houses.Count;
+            expandCount++;
         }
     }
-    int lastExpand = 0;
+    [SerializeField]int expandCount = 0;
 
     public static GameObject menu;
 
