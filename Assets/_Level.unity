@@ -767,7 +767,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &313202760
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1191,10 +1191,14 @@ GameObject:
   m_Component:
   - component: {fileID: 631594689}
   - component: {fileID: 631594688}
+  - component: {fileID: 631594691}
   - component: {fileID: 631594687}
   - component: {fileID: 631594686}
-  - component: {fileID: 631594691}
   - component: {fileID: 631594690}
+  - component: {fileID: 631594693}
+  - component: {fileID: 631594692}
+  - component: {fileID: 631594694}
+  - component: {fileID: 631594695}
   m_Layer: 5
   m_Name: Tutorial Dialogue
   m_TagString: Untagged
@@ -1220,7 +1224,8 @@ MonoBehaviour:
   yesResponseTree: {fileID: 846293533}
   noResponseTree: {fileID: 545211430}
   typingSoundScript: {fileID: 0}
-  sentence: This is your power.
+  sentence: This is your power. If you run out of power, it's game over, no matter
+    how far you get!
 --- !u!114 &631594687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1258,6 +1263,9 @@ MonoBehaviour:
   sentences:
   - {fileID: 631594687}
   - {fileID: 631594686}
+  - {fileID: 631594693}
+  - {fileID: 631594694}
+  - {fileID: 631594695}
 --- !u!224 &631594689
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1289,7 +1297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   structAttachedTo: {fileID: 0}
   arrowContainer: {fileID: 313202759}
-  arrowContainerPosition: {x: 300, y: 120}
+  arrowContainerPosition: {x: 300, y: 125}
   arrowContainerRotation: 0
 --- !u!114 &631594691
 MonoBehaviour:
@@ -1304,6 +1312,80 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   structAttachedTo: {fileID: 0}
   typingSound: {fileID: 0}
+--- !u!114 &631594692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 631594685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 900a03f0841cb454e81301413dfd24ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  structAttachedTo: {fileID: 0}
+  arrowContainer: {fileID: 313202759}
+  arrowContainerPosition: {x: 670, y: 410}
+  arrowContainerRotation: 90
+--- !u!114 &631594693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 631594685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4d820714bf04640b4079c824c1454e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueAttachedTo: {fileID: 0}
+  scriptToRun: {fileID: 631594692}
+  secondsPerCharacter: 0.05
+  responseType: 0
+  yesResponseTree: {fileID: 0}
+  noResponseTree: {fileID: 0}
+  typingSoundScript: {fileID: 0}
+  sentence: This is your house. A maximum of five workers can live here. You can assign
+    their roles here as well.
+--- !u!114 &631594694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 631594685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4d820714bf04640b4079c824c1454e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueAttachedTo: {fileID: 0}
+  scriptToRun: {fileID: 0}
+  secondsPerCharacter: 0.05
+  responseType: 0
+  yesResponseTree: {fileID: 0}
+  noResponseTree: {fileID: 0}
+  typingSoundScript: {fileID: 0}
+  sentence: If you don't assign their roles, no resources will be generated!
+--- !u!114 &631594695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 631594685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4d820714bf04640b4079c824c1454e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueAttachedTo: {fileID: 0}
+  scriptToRun: {fileID: 0}
+  secondsPerCharacter: 0.05
+  responseType: 0
+  yesResponseTree: {fileID: 0}
+  noResponseTree: {fileID: 0}
+  typingSoundScript: {fileID: 0}
+  sentence: You can assign your workers to be either miners or lumberjacks. Once assigned,
+    they will do their respective jobs.
 --- !u!1 &646132160
 GameObject:
   m_ObjectHideFlags: 0
