@@ -38,18 +38,26 @@ public class Building : MonoBehaviour
         {
             foreach (Building building in buildings)
             {
+                if (drawnLines > i)
+                {
+                    i++;
+                    continue;
+                }
+
                 Vector3 pos = GenWorld._instance.getTileCoord(building.transform.position);
 
                 if (buildings.Count <= i + 1) break;
 
                 DrawLine(buildings[i].transform.position, buildings[i + 1].transform.position, Color.black);
-
+                drawnLines = i;
                 i += 1;
             }
         }
 
 
     }
+
+    private int drawnLines = 0;
 
     private List<Image> displayedHeads = new List<Image>();
 
