@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GenWorld : MonoBehaviourSingleton<GenWorld> {
-    //public static GenWorld _instance;
+public class GenWorld : MonoBehaviour
+{
+    public static GenWorld _instance;
     public float minOrthoSize = 1.0f;
     public float maxOrthoSize = 16.0f;
     public float zoomSpeed = 0.5f;
@@ -22,17 +23,21 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
     [HideInInspector] public bool isPaused;
 
     float PowerSupply;
-    public float powerSupply {
+    public float powerSupply
+    {
         get { return PowerSupply; }
         set { PowerSupply = value; }
     }
 
     [HideInInspector] public float PowerStored = 100f;
 
-    public float powerDraw {
-        get {
+    public float powerDraw
+    {
+        get
+        {
             float p = 0f;
-            foreach (Building building in Building.buildings) {
+            foreach (Building building in Building.buildings)
+            {
                 p += building.powerDraw;
             }
             return p;
@@ -46,18 +51,23 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
     [HideInInspector] public List<PowerPlant> plants = new List<PowerPlant>();
     public GameObject buildingPanel;
     Tile BuildTile;
-    public Tile buildTile {
-        get {
+    public Tile buildTile
+    {
+        get
+        {
             return BuildTile;
         }
-        set {
+        set
+        {
             BuildTile = value;
             if (value == null) { buildingPanel.SetActive(false); return; }
             buildingPanel.SetActive(true);
             Button[] buttons = buildingPanel.GetComponentsInChildren<Button>();
 
-            foreach (Button b in buttons) {
-                if (value.ore == null) {
+            foreach (Button b in buttons)
+            {
+                if (value.ore == null)
+                {
                     if (b.name == "Lab") b.interactable = false;
                     else if (b.name == "Power plant" && buildings["PowerPlant"].buildable) b.interactable = true;
                     else b.interactable = false;
@@ -78,13 +88,15 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
     public GameObject[][] tiles;
 
     // Use this for initialization
-    void Awake() {
-        //if (_instance == null) _instance = this;
-        //else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class");
+    void Awake()
+    {
+        if (_instance == null) _instance = this;
+        else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class");
 
         isMainMenu = SceneManager.GetActiveScene().name == "_Menu";
 
-        if (managerScript == null && !isMainMenu) {
+        if (managerScript == null && !isMainMenu)
+        {
             managerScript = gameManager.GetComponent<Manager>();
         }
 
@@ -106,9 +118,11 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
         Camera.main.transform.Translate(new Vector3((worldWidth / 2) * 1.28f, ((worldHeight / 2) * 1.28f) - 0.5f));
 
         tiles = new GameObject[worldWidth][];
-        for (int x = 0; x < worldWidth; x++) {
+        for (int x = 0; x < worldWidth; x++)
+        {
             tiles[x] = new GameObject[worldHeight];
-            for (int y = 0; y < worldHeight; y++) {
+            for (int y = 0; y < worldHeight; y++)
+            {
                 Sprite cSprite = sprites[Random.Range(0, sprites.Length - 1)];
 
                 GameObject cTile = Instantiate(Tile);
@@ -135,19 +149,23 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
         tiles[(worldWidth / 2) + Random.Range(1, 3)][(worldHeight / 2) + Random.Range(1, 3)].GetComponent<Tile>().building = buildings["PowerPlant"];
 
         int copper = 0, wood = 0, coal = 0;
-        for (int ores = 0; ores < Random.Range(6, 10); ores++) {
+        for (int ores = 0; ores < Random.Range(6, 10); ores++)
+        {
             GameObject cTile = null;
 
-            while (cTile == null || cTile.GetComponent<Tile>().building != null || cTile.GetComponent<Tile>().ore != null) {
+            while (cTile == null || cTile.GetComponent<Tile>().building != null || cTile.GetComponent<Tile>().ore != null)
+            {
                 cTile = tiles[Random.Range(2, worldWidth - 2)][Random.Range(2, worldHeight - 2)];
             }
-            if (coal == 0) {
+            if (coal == 0)
+            {
                 Tile tile = cTile.GetComponent<Tile>();
                 tile.ore = new Ore(OreTypes.Coal, 1000);
                 tile.building = buildings["Mine"];
                 coal++;
             }
-            else if (copper == 0) {
+            else if (copper == 0)
+            {
                 cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
                 copper++;
             }
@@ -156,19 +174,24 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
             //    cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
             //    iron++;
             //}
-            else if (wood == 0) {
+            else if (wood == 0)
+            {
                 cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
                 wood++;
             }
-            else {
-                switch (Random.Range(0, 4)) {
-                    case (0): {
+            else
+            {
+                switch (Random.Range(0, 4))
+                {
+                    case (0):
+                        {
                             cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Coal, 1000);
                             coal++;
                             break;
                         }
                     case (1):
-                    case 2: {
+                    case 2:
+                        {
                             cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
                             copper++;
                             break;
@@ -179,7 +202,8 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
                     //        iron++;
                     //        break;
                     //    }
-                    case (3): {
+                    case (3):
+                        {
                             cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
                             wood++;
                             break;
@@ -191,17 +215,20 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
             updateInfomationBar();
     }
 
-    void updateInfomationBar() {
+    void updateInfomationBar()
+    {
         int count = 0;
 
-        foreach (House house in houses) {
+        foreach (House house in houses)
+        {
             count += house.occupancy;
         }
 
         GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = "Normal: " + count;
 
         string resource = "";
-        foreach (KeyValuePair<OreTypes, int> entry in Resources) {
+        foreach (KeyValuePair<OreTypes, int> entry in Resources)
+        {
             resource += entry.Key.ToString() + ": " + entry.Value + " ";
         }
 
@@ -209,11 +236,24 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
         GameObject.Find("UIBarPower").GetComponent<Text>().text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(this.PowerStored), Mathf.Round(this.powerSupply), Mathf.Round(this.powerDraw));
     }
 
-    void Update() {
+    private Bounds OrthographicBounds()
+    {
+        float screenAspect = (float)Screen.width / (float)Screen.height;
+        float cameraHeight = Camera.main.orthographicSize * 2;
+        Bounds bounds = new Bounds(
+            Camera.main.transform.position,
+            new Vector3(cameraHeight * screenAspect, cameraHeight, 0));
+        return bounds;
+    }
+
+    void Update()
+    {
         if (isMainMenu || Manager._instance.isPaused) return;
 
-        if (PowerStored < 0) {
-            if (managerScript == null) {
+        if (PowerStored < 0)
+        {
+            if (managerScript == null)
+            {
                 managerScript = gameManager.GetComponent<Manager>();
             }
 
@@ -230,7 +270,8 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
         int totalPowerWorkers = 0;
         int maxPopulation = 0;
 
-        foreach (House house in houses) {
+        foreach (House house in houses)
+        {
             count += house.occupancy;
             maxPopulation += house.maxCapacity;
 
@@ -239,8 +280,10 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
             totalPowerWorkers += house.power;
         }
         int maxMineWorkers = 0, maxMillWorkers = 0;
-        foreach (Building building in Building.buildings) {
-            switch (building.tile.building.name) {
+        foreach (Building building in Building.buildings)
+        {
+            switch (building.tile.building.name)
+            {
                 case "Mine":
                     Mine mine = (Mine)building;
                     maxMineWorkers += mine.maxWorkers;
@@ -253,8 +296,10 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
         }
 
         GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = string.Format("Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}", count, maxPopulation, totalMiners, maxMineWorkers, totalJacks, maxMillWorkers);
-        foreach (Building building in Building.buildings) {
-            switch (building.tile.building.name) {
+        foreach (Building building in Building.buildings)
+        {
+            switch (building.tile.building.name)
+            {
                 case "Mine":
                     Mine mine = (Mine)building;
                     if (mine.workers >= mine.maxWorkers) continue;
@@ -272,11 +317,16 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
             }
         }
 
-        foreach (KeyValuePair<string, BuildingType> bType in buildings) {
-            if (Input.GetKey(bType.Value.hotkey)) {
-                if (hoverTile != null) {
-                    if (hoverTile.building == null) {
-                        if (bType.Value.buildable && canBuild(hoverTile, bType.Value)) {
+        foreach (KeyValuePair<string, BuildingType> bType in buildings)
+        {
+            if (Input.GetKey(bType.Value.hotkey))
+            {
+                if (hoverTile != null)
+                {
+                    if (hoverTile.building == null)
+                    {
+                        if (bType.Value.buildable && canBuild(hoverTile, bType.Value))
+                        {
                             GenWorld._instance.buildOnTile(bType.Key);
                         }
                     }
@@ -287,18 +337,21 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
         this.PowerSupply = 0;
         float powerLimitOverall = 0;
 
-        foreach (Building building in Building.buildings) {
+        foreach (Building building in Building.buildings)
+        {
             if (building.tile.building.name != "PowerPlant")
                 powerLimitOverall += building.powerLimit;
         }
 
-        foreach (PowerPlant building in plants) {
+        foreach (PowerPlant building in plants)
+        {
             this.PowerSupply += building.powerStored;
             building.powerStored = 0;
         }
 
         string resource = "";
-        foreach (KeyValuePair<OreTypes, int> entry in Resources) {
+        foreach (KeyValuePair<OreTypes, int> entry in Resources)
+        {
             resource += entry.Key.ToString() + ": " + entry.Value + " ";
         }
         GameObject.Find("ResourceCount").GetComponent<UnityEngine.UI.Text>().text = resource;
@@ -308,10 +361,10 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
         GameObject PowerForground = GameObject.Find("PowerForground");
         PowerForground.transform.localScale = new Vector3(Mathf.Min(/*(GenWorld._instance.powerSupply / GenWorld._instance.powerDraw)*/this.PowerStored / powerLimitOverall, 1), 1, 1);
 
-        if (Input.GetKey(KeyCode.UpArrow)) Camera.main.transform.Translate(new Vector3(0, 1));
-        if (Input.GetKey(KeyCode.DownArrow)) Camera.main.transform.Translate(new Vector3(0, -1));
-        if (Input.GetKey(KeyCode.LeftArrow)) Camera.main.transform.Translate(new Vector3(-1, 0));
-        if (Input.GetKey(KeyCode.RightArrow)) Camera.main.transform.Translate(new Vector3(1, 0));
+        if (Input.GetKey(KeyCode.UpArrow)) if (OrthographicBounds().max.y < worldHeight * 1.28) Camera.main.transform.Translate(new Vector3(0, 1));
+        if (Input.GetKey(KeyCode.DownArrow)) if (OrthographicBounds().min.y > -0.8) Camera.main.transform.Translate(new Vector3(0, -1));
+        if (Input.GetKey(KeyCode.LeftArrow)) if (OrthographicBounds().min.x > 0) Camera.main.transform.Translate(new Vector3(-1, 0));
+        if (Input.GetKey(KeyCode.RightArrow)) if (OrthographicBounds().max.x < worldWidth * 1.2) Camera.main.transform.Translate(new Vector3(1, 0));
         if (Input.GetKey(KeyCode.PageDown)) Camera.main.orthographicSize += zoomSpeed;
         if (Input.GetKey(KeyCode.PageUp)) Camera.main.orthographicSize -= zoomSpeed;
 
@@ -325,7 +378,8 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
             Camera.main.orthographicSize = maxOrthoSize;
         }
 
-        if (houses.Count % 3 == 0 && houses.Count != lastExpand) {
+        if (houses.Count % 3 == 0 && houses.Count != lastExpand)
+        {
             expandMap(5);
             lastExpand = houses.Count;
         }
@@ -334,12 +388,14 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
 
     public static GameObject menu;
 
-    public void closeMenu() {
+    public void closeMenu()
+    {
         Destroy(menu);
         menu = null;
     }
 
-    void registerBuildings() {
+    void registerBuildings()
+    {
         new House().register();
         new Mine().register();
         new Mill().register();
@@ -347,16 +403,21 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
         new PowerPlant().register();
     }
 
-    public void expandMap(int amount) {
+    public void expandMap(int amount)
+    {
         GameObject[][] oldTiles = tiles;
         worldWidth += amount;
         worldHeight += amount;
         tiles = new GameObject[worldWidth][];
-        for (int x = 0; x < worldWidth; x++) {
+        for (int x = 0; x < worldWidth; x++)
+        {
             tiles[x] = new GameObject[worldHeight];
-            for (int y = 0; y < worldHeight; y++) {
-                if (oldTiles.Length - 1 >= x && oldTiles[x] != null) {
-                    if (oldTiles[x].Length - 1 >= y && oldTiles[x][y] != null) {
+            for (int y = 0; y < worldHeight; y++)
+            {
+                if (oldTiles.Length - 1 >= x && oldTiles[x] != null)
+                {
+                    if (oldTiles[x].Length - 1 >= y && oldTiles[x][y] != null)
+                    {
                         tiles[x][y] = oldTiles[x][y];
                         continue;
                     }
@@ -383,19 +444,24 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
             }
         }
 
-        for (int ores = 0; ores < Random.Range(6, 10); ores++) {
+        for (int ores = 0; ores < Random.Range(6, 10); ores++)
+        {
             GameObject cTile = null;
 
-            while (cTile == null || cTile.GetComponent<Tile>().building != null || cTile.GetComponent<Tile>().ore != null) {
+            while (cTile == null || cTile.GetComponent<Tile>().building != null || cTile.GetComponent<Tile>().ore != null)
+            {
                 cTile = tiles[Random.Range(2, worldWidth - 2)][Random.Range(2, worldHeight - 2)];
             }
-            switch (Random.Range(0, 4)) {
+            switch (Random.Range(0, 4))
+            {
                 case (0):
-                case (2): {
+                case (2):
+                    {
                         cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Coal, 1000);
                         break;
                     }
-                case (1):{
+                case (1):
+                    {
                         cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
                         break;
                     }
@@ -405,7 +471,8 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
                 //        iron++;
                 //        break;
                 //    }
-                case (3): {
+                case (3):
+                    {
                         cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
                         break;
                     }
@@ -413,12 +480,15 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
         }
     }
 
-    public Vector3 getTileCoord(Vector3 vector) {
+    public Vector3 getTileCoord(Vector3 vector)
+    {
         return vector / 1.28f;
     }
 
-    public void buildOnTile(string building) {
-        foreach (KeyValuePair<OreTypes, int> cost in buildings[building].costs) {
+    public void buildOnTile(string building)
+    {
+        foreach (KeyValuePair<OreTypes, int> cost in buildings[building].costs)
+        {
             GenWorld._instance.Resources[cost.Key] -= cost.Value;
         }
         if (BuildTile != null) buildTile.building = buildings[building];
@@ -427,11 +497,12 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld> {
         BuildTile = null;
     }
 
-    bool canBuild(Tile tile, BuildingType building) {
-        if (tile.ore == null) {
+    bool canBuild(Tile tile, BuildingType building)
+    {
+        if (tile.ore == null)
+        {
             if (building.name == "Lab") return false;
             else if (building.name == "PowerPlant" && buildings["PowerPlant"].buildable) return true;
-            else return false;
         }
         if (building.name == "Mill" && tile.ore.mine == MineType.Mill && buildings["Mill"].buildable) return true;
         else if (building.name == "Mine" && tile.ore.mine == MineType.Shaft && buildings["Mine"].buildable) return true;
