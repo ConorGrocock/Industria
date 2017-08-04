@@ -27,7 +27,7 @@ public class House : Building
     public int lumberProvided = 0;
     public int minerProvided = 0;
 
-    List<Villager> occupants = new List<Villager>();
+    public List<Villager> occupants = new List<Villager>();
 
     // Use this for initialization
     protected override void Start()
@@ -37,9 +37,7 @@ public class House : Building
         timeToNextBaby = babyTime;
 
         occupants.Add(new Villager());
-        occupants[0].role = VillagerRole.Miner;
         occupants.Add(new Villager());
-        occupants[1].role = VillagerRole.None;
 
         updateHeads();
 
@@ -109,7 +107,7 @@ public class House : Building
 
                 Vector3 cPos = GenWorld._instance.getTileCoord(transform.position);
 
-                if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)] != null)
+                if (GenWorld._instance.tiles.Length -1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length -1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)] != null)
                 {
                     if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
                     {
@@ -117,7 +115,7 @@ public class House : Building
                         xOffset = Random.Range(-2, 2);
                         yOffset = Random.Range(-2, 2);
                     }
-                    if (GenWorld._instance.tiles.Length - 1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length - 1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
+                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
                     {
                         return;
                     }
@@ -128,7 +126,7 @@ public class House : Building
                         yOffset = Random.Range(-2, 2);
                     }
 
-                    if (GenWorld._instance.tiles.Length - 1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length - 1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
+                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
                     {
                         return;
                     }

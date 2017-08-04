@@ -350,8 +350,8 @@ public class GenWorld : MonoBehaviour
             int jo = totalJacks;
 
             totalMiners = Mathf.Min(maxMineWorkers, totalMiners + house.miners);
-            totalJacks += Mathf.Min(maxMillWorkers, totalJacks + house.lumberjacks);
-
+            totalJacks  = Mathf.Min(maxMillWorkers, totalJacks + house.lumberjacks);
+            
             house.lumberProvided = totalJacks - jo;
             house.minerProvided = totalMiners - mi;
             //totalPowerWorkers += house.power;
@@ -440,7 +440,7 @@ public class GenWorld : MonoBehaviour
             Camera.main.orthographicSize = maxOrthoSize;
         }
 
-        if (houses.Count % Mathf.Pow(3, expandCount) == 0)
+        if (houses.Count % Mathf.Pow(3, expandCount + 1) == 0)
         {
             expandMap(5);
             expandCount++;

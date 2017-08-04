@@ -8,22 +8,24 @@ public enum VillagerRole {
     Lumberjack
 }
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class Villager {
 
     private SpriteRenderer spriteRenderer;
 
     public string Vname;
+    public House house;
 
     public VillagerRole role;
 
-    public Villager(VillagerRole role = VillagerRole.None) {
+    public Villager() {
         this.Vname = Villager.randomName();
         if (GenWorld._instance.maxMineWorkers > GenWorld._instance.totalMiners)
             this.role = VillagerRole.Miner;
         else if (GenWorld._instance.maxMillWorkers > GenWorld._instance.totalJacks)
             this.role = VillagerRole.Lumberjack;
-        else this.role = (VillagerRole)Random.Range(0, 3);
+        else {
+            this.role = (VillagerRole)Random.Range(0, 3);
+        }
     }
 
     public Sprite getSprite()
@@ -58,6 +60,10 @@ public class Villager {
 
     public static string randomName() {
         return names[Random.Range(0,names.Length-1)];
+    }
+
+    public void assigned() {
+        house.updateHeads();
     }
 
     static string[] names = new string[]{
