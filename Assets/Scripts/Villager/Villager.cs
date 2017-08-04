@@ -28,6 +28,15 @@ public class Villager {
         }
     }
 
+    public void Update() {
+        if(this.role == VillagerRole.None) {
+            if (GenWorld._instance.maxMineWorkers > GenWorld._instance.totalMiners)
+                this.role = VillagerRole.Miner;
+            else if (GenWorld._instance.maxMillWorkers > GenWorld._instance.totalJacks)
+                this.role = VillagerRole.Lumberjack;
+        }
+    }
+
     public Sprite getSprite()
     {
         switch (role)

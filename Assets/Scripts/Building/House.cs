@@ -35,9 +35,12 @@ public class House : Building
         base.Start();
         GenWorld._instance.houses.Add(this);
         timeToNextBaby = babyTime;
+        babyTime = (1/Mathf.Max(1,(GenWorld._instance.houses.Count/10))) * babyTime;
 
         occupants.Add(new Villager());
+        occupants[0].role = VillagerRole.Miner;
         occupants.Add(new Villager());
+        occupants[1].role = VillagerRole.Miner;
 
         updateHeads();
 
@@ -73,6 +76,10 @@ public class House : Building
             //    clickMenu(gameObject, tile.createMenu());
             //    lastPopulation = occupants.Count;
             //}
+        }
+        if(occupancy != occupants.Count) {
+            updateHeads();
+            occupancy = occupants.Count;
         }
 
         miners = 0;
@@ -115,7 +122,7 @@ public class House : Building
                         xOffset = Random.Range(-2, 2);
                         yOffset = Random.Range(-2, 2);
                     }
-                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
+                    if (GenWorld._instance.tiles.Length - 1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length - 1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
                     {
                         return;
                     }
@@ -126,7 +133,7 @@ public class House : Building
                         yOffset = Random.Range(-2, 2);
                     }
 
-                    if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
+                    if (GenWorld._instance.tiles.Length - 1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length - 1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
                     {
                         return;
                     }
@@ -145,6 +152,10 @@ public class House : Building
         }
         timeToNextBaby -= Time.deltaTime;
         this.powerDraw = basePowerDraw * (occupants.Count);
+
+        foreach (Villager villager in occupants) {
+            villager.Update();
+        }
     }
 
     public void register()
