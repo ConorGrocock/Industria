@@ -506,7 +506,7 @@ public class GenWorld : MonoBehaviour
             }
         }
 
-        for (int ores = 0; ores < Random.Range(6, 10); ores++)
+        for (int ores = 0; ores < Random.Range(6, 20); ores++)
         {
             GameObject cTile = null;
 
@@ -514,26 +514,21 @@ public class GenWorld : MonoBehaviour
             {
                 cTile = tiles[Random.Range(2, worldWidth - 2)][Random.Range(2, worldHeight - 2)];
             }
-            switch (Random.Range(0, 4))
+            switch (Random.Range(0, 7))
             {
                 case (0):
+                case (1):
                 case (2):
-                    {
+                case (4): {
                         cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Coal, 1000);
                         break;
                     }
-                case (1):
+                case (5):
                     {
                         cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
                         break;
                     }
-                //case (2):
-                //    {
-                //        cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
-                //        iron++;
-                //        break;
-                //    }
-                case (3):
+                case (6):
                     {
                         cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
                         break;

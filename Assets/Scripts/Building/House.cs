@@ -37,9 +37,9 @@ public class House : Building
         timeToNextBaby = babyTime;
         babyTime = (1/Mathf.Max(1,(GenWorld._instance.houses.Count/10))) * babyTime;
 
-        occupants.Add(new Villager());
+        occupants.Add(new Villager(this));
         occupants[0].role = VillagerRole.Miner;
-        occupants.Add(new Villager());
+        occupants.Add(new Villager(this));
         occupants[1].role = VillagerRole.Miner;
 
         updateHeads();
@@ -77,29 +77,31 @@ public class House : Building
             //    lastPopulation = occupants.Count;
             //}
         }
-        if(occupancy != occupants.Count) {
-            updateHeads();
-            occupancy = occupants.Count;
-        }
 
-        miners = 0;
-        lumberjacks = 0;
-        power = 0;
+        int nminers = 0;
+        int nlumberjacks = 0;
+        int npower = 0;
         for (int i = 0; i < occupants.Count; i++)
         {
             switch (occupants[i].role)
             {
                 case VillagerRole.None:
-                    power++;
+                    npower++;
                     break;
                 case VillagerRole.Miner:
-                    miners++;
+                    nminers++;
                     break;
                 case VillagerRole.Lumberjack:
-                    lumberjacks++;
+                    nlumberjacks++;
                     break;
             }
         }
+        if (npower != power)             updateHeads();
+        if (nlumberjacks != lumberjacks) updateHeads();
+        if (nminers != miners)           updateHeads();
+        miners = nminers;
+        lumberjacks = nlumberjacks;
+        power = npower;
 
         if (timeToNextBaby <= 0)
         {
@@ -147,7 +149,7 @@ public class House : Building
             }
             else
             {
-                occupants.Add(new Villager());
+                occupants.Add(new Villager(this));
             }
         }
         timeToNextBaby -= Time.deltaTime;

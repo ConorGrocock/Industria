@@ -17,23 +17,22 @@ public class Villager {
 
     public VillagerRole role;
 
-    public Villager() {
+    public Villager(House house = null) {
         this.Vname = Villager.randomName();
-        if (GenWorld._instance.maxMineWorkers > GenWorld._instance.totalMiners)
-            this.role = VillagerRole.Miner;
-        else if (GenWorld._instance.maxMillWorkers > GenWorld._instance.totalJacks)
-            this.role = VillagerRole.Lumberjack;
-        else {
-            this.role = (VillagerRole)Random.Range(0, 3);
-        }
+        this.house = house;
+        this.role = VillagerRole.None;
     }
 
     public void Update() {
         if(this.role == VillagerRole.None) {
-            if (GenWorld._instance.maxMineWorkers > GenWorld._instance.totalMiners)
+            if (GenWorld._instance.maxMineWorkers > GenWorld._instance.totalMiners) {
                 this.role = VillagerRole.Miner;
-            else if (GenWorld._instance.maxMillWorkers > GenWorld._instance.totalJacks)
+                this.house.updateHeads();
+            }
+            else if (GenWorld._instance.maxMillWorkers > GenWorld._instance.totalJacks) {
                 this.role = VillagerRole.Lumberjack;
+                this.house.updateHeads();
+            }
         }
     }
 
