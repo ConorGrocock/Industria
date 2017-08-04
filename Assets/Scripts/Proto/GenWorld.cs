@@ -567,9 +567,10 @@ public class GenWorld : MonoBehaviour
         {
             if (building.name == "Lab") return false;
             else if (building.name == "PowerPlant" && buildings["PowerPlant"].buildable) return true;
+            else return false;
         }
-        if (building.name == "Mill" && tile.ore.mine == MineType.Mill && buildings["Mill"].buildable) return true;
-        else if (building.name == "Mine" && tile.ore.mine == MineType.Shaft && buildings["Mine"].buildable) return true;
+        else if (building.name == "Mill" && (tile.ore != null || tile.ore.mine == MineType.Mill)  && buildings["Mill"].buildable) return true;
+        else if (building.name == "Mine" && (tile.ore != null || tile.ore.mine == MineType.Shaft) && buildings["Mine"].buildable) return true;
         else return false;
     }
 }
