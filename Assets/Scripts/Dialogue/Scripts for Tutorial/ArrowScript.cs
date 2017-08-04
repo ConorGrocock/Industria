@@ -18,14 +18,7 @@ public class ArrowScript : DialogueScript
     {
         if (arrowContainer != null)
         {
-            Debug.Log(arrowX);
-            Debug.Log(arrowX / 100);
-            Debug.Log((arrowX / 100) * (Screen.width));
             arrowX = (arrowX / 100) * (Screen.width);
-            Debug.Log("-----");
-            Debug.Log(arrowY);
-            Debug.Log(arrowY / 100);
-            Debug.Log((arrowY / 100) * (Screen.height));
             arrowY = (arrowY / 100) * (Screen.height);
             Vector3 arrowPos = new Vector3(arrowX, arrowY);
 
