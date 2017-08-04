@@ -1428,7 +1428,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   structAttachedTo: {fileID: 0}
   arrowContainer: {fileID: 313202759}
-  arrowContainerPosition: {x: 300, y: 125}
+  arrowX: 20
+  arrowY: 18
   arrowContainerRotation: 0
 --- !u!114 &631594691
 MonoBehaviour:
@@ -1456,7 +1457,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   structAttachedTo: {fileID: 0}
   arrowContainer: {fileID: 313202759}
-  arrowContainerPosition: {x: 570, y: 410}
+  arrowX: 40
+  arrowY: 55
   arrowContainerRotation: 90
 --- !u!114 &631594693
 MonoBehaviour:

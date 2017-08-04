@@ -5,7 +5,11 @@ using UnityEngine;
 public class ArrowScript : DialogueScript
 {
     public GameObject arrowContainer;
-    public Vector2 arrowContainerPosition;
+
+    [Range(0, 100)]
+    public float arrowX;
+    [Range(0, 100)]
+    public float arrowY;
 
     [Range(0.0f, 360.0f)]
     public float arrowContainerRotation;
@@ -14,8 +18,19 @@ public class ArrowScript : DialogueScript
     {
         if (arrowContainer != null)
         {
+            Debug.Log(arrowX);
+            Debug.Log(arrowX / 100);
+            Debug.Log((arrowX / 100) * (Screen.width));
+            arrowX = (arrowX / 100) * (Screen.width);
+            Debug.Log("-----");
+            Debug.Log(arrowY);
+            Debug.Log(arrowY / 100);
+            Debug.Log((arrowY / 100) * (Screen.height));
+            arrowY = (arrowY / 100) * (Screen.height);
+            Vector3 arrowPos = new Vector3(arrowX, arrowY);
+
             arrowContainer.SetActive(true);
-            arrowContainer.transform.position = new Vector3(arrowContainerPosition.x, arrowContainerPosition.y, 0);
+            arrowContainer.transform.position = arrowPos;
             arrowContainer.transform.rotation = Quaternion.Euler(0, 0, arrowContainerRotation);
         }
         else
