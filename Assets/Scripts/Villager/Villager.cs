@@ -19,7 +19,11 @@ public class Villager {
 
     public Villager(VillagerRole role = VillagerRole.None) {
         this.Vname = Villager.randomName();
-        this.role = role;
+        if (GenWorld._instance.maxMineWorkers > GenWorld._instance.totalMiners)
+            this.role = VillagerRole.Miner;
+        else if (GenWorld._instance.maxMillWorkers > GenWorld._instance.totalJacks)
+            this.role = VillagerRole.Lumberjack;
+        else this.role = (VillagerRole)Random.Range(0, 3);
     }
 
     public Sprite getSprite()
