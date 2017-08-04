@@ -1457,7 +1457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   structAttachedTo: {fileID: 0}
   arrowContainer: {fileID: 313202759}
-  arrowX: 40
+  arrowX: 42.5
   arrowY: 55
   arrowContainerRotation: 90
 --- !u!114 &631594693
