@@ -4385,7 +4385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minOrthoSize: 1
-  maxOrthoSize: 16
+  maxOrthoSize: 8
   zoomSpeed: 0.5
   gameManager: {fileID: 1580916999}
   worldHeight: 8

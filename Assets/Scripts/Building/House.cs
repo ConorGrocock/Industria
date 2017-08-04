@@ -142,9 +142,9 @@ public class House : Building
             }
             else
             {
-                if (GenWorld._instance.maxMineWorkers < GenWorld._instance.totalMiners)
+                if (GenWorld._instance.maxMineWorkers > GenWorld._instance.totalMiners)
                     occupants.Add(new Villager(VillagerRole.Miner));
-                else if (GenWorld._instance.maxMillWorkers < GenWorld._instance.totalJacks)
+                else if (GenWorld._instance.maxMillWorkers > GenWorld._instance.totalJacks)
                     occupants.Add(new Villager(VillagerRole.Lumberjack));
                 else occupants.Add(new Villager((VillagerRole)Random.Range(0, 3)));
             }
