@@ -433,6 +433,8 @@ public class GenWorld : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow)) if (OrthographicBounds().max.x < (worldWidth + 2) * 1.28) Camera.main.transform.Translate(new Vector3(1, 0));
         if (Input.GetKey(KeyCode.PageDown)) Camera.main.orthographicSize += zoomSpeed;
         if (Input.GetKey(KeyCode.PageUp)) Camera.main.orthographicSize -= zoomSpeed;
+        if (Input.GetKey(KeyCode.KeypadPlus)) Time.timeScale += 0.5f;
+        if (Input.GetKey(KeyCode.KeypadMinus)) Time.timeScale -= 0.5f;
 
         if (Camera.main.orthographicSize < minOrthoSize)
         {
@@ -444,7 +446,7 @@ public class GenWorld : MonoBehaviour
             Camera.main.orthographicSize = maxOrthoSize;
         }
 
-        if (houses.Count > Mathf.Max(10,Mathf.Pow(2f, expandCount)))
+        if (houses.Count > Mathf.Min(10,Mathf.Pow(2f, expandCount)))
         {
             expandMap(5);
             expandCount++;

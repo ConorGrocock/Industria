@@ -36,7 +36,7 @@ public class House : Building
         base.Start();
         GenWorld._instance.houses.Add(this);
         timeToNextBaby = babyTime;
-        babyTime = (1 / Mathf.Max(1, (GenWorld._instance.houses.Count / 10))) * babyTime;
+        babyTime = Mathf.Min((1 / Mathf.Max(1, (GenWorld._instance.houses.Count / 10))) * babyTime,120);
 
         occupants.Add(new Villager(this));
         occupants[0].role = VillagerRole.Miner;
@@ -173,7 +173,7 @@ public class House : Building
         required.Add(OreTypes.Wood, 5);
         GenWorld._instance.buildings.Add("House", new BuildingType("House", this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite, required, KeyCode.None));
     }
-
+    
     int shown = 0;
 
     Dictionary<Dropdown, Image> dropdowns = new Dictionary<Dropdown, Image>();
