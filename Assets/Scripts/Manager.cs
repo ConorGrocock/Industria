@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Manager : MonoBehaviourSingleton<Manager> {
-    //public static Manager _instance;
+public class Manager : MonoBehaviour
+{
+    public static Manager _instance;
 
     [Header("Tutorial")]
     public GameObject tutorialPanel;
@@ -28,6 +29,8 @@ public class Manager : MonoBehaviourSingleton<Manager> {
 
     void Awake()
     {
+        _instance = this;
+
         retryButton.onClick.AddListener(RestartScene);
         yesButton.onClick.AddListener(ShowTutorial);
         noButton.onClick.AddListener(NoTutorial);
@@ -51,6 +54,8 @@ public class Manager : MonoBehaviourSingleton<Manager> {
 
     void Update()
     {
+        _instance = this;
+
         if (Input.GetKeyDown(KeyCode.Escape) && !remotePause)
         {
             isPaused = !isPaused;
@@ -105,8 +110,8 @@ public class Manager : MonoBehaviourSingleton<Manager> {
         GenWorld._instance.buildingPanel.SetActive(false);
         gameOverObject.SetActive(true);
     }
-	
-	public void RestartScene()
+
+    public void RestartScene()
     {
         Building.buildings.Clear();
         GenWorld._instance.buildingPanel.SetActive(false);

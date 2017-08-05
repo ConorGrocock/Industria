@@ -36,7 +36,7 @@ public class House : Building
         base.Start();
         GenWorld._instance.houses.Add(this);
         timeToNextBaby = babyTime;
-        babyTime = Mathf.Min((1/Mathf.Max(1,(GenWorld._instance.houses.Count/10))) * babyTime, 1);
+        babyTime = (1 / Mathf.Max(1, (GenWorld._instance.houses.Count / 10))) * babyTime;
 
         occupants.Add(new Villager(this));
         occupants[0].role = VillagerRole.Miner;
@@ -97,10 +97,9 @@ public class House : Building
                     break;
             }
         }
-        if (npower != power)             updateHeads();
+        if (npower != power) updateHeads();
         if (nlumberjacks != lumberjacks) updateHeads();
-        if (nminers != miners)           updateHeads();
-
+        if (nminers != miners) updateHeads();
         miners = nminers;
         lumberjacks = nlumberjacks;
         power = npower;
@@ -108,7 +107,7 @@ public class House : Building
         if (timeToNextBaby <= 0)
         {
             timeToNextBaby = babyTime;
-            babyTime =Mathf.Max(120, babyTime * 1.5f);
+            babyTime *= 1.5f;
             full = occupants.Count >= maxCapacity;
 
             if (occupants.Count >= maxCapacity)
@@ -118,9 +117,7 @@ public class House : Building
 
                 Vector3 cPos = GenWorld._instance.getTileCoord(transform.position);
 
-
-
-                if (GenWorld._instance.tiles.Length -1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length -1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)] != null)
+                if (GenWorld._instance.tiles.Length - 1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length - 1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)] != null)
                 {
                     if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
                     {
@@ -128,8 +125,9 @@ public class House : Building
                         xOffset = Random.Range(-2, 2);
                         yOffset = Random.Range(-2, 2);
                     }
-                    if (GenWorld._instance.tiles.Length - 1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length - 1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
+                    if (GenWorld._instance.tiles.Length > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
                     {
+                        newHouseRadius++;
                         return;
                     }
                     if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
@@ -141,6 +139,7 @@ public class House : Building
 
                     if (GenWorld._instance.tiles.Length - 1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length - 1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
                     {
+                        newHouseRadius++;
                         return;
                     }
                     if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building == null)
@@ -154,12 +153,15 @@ public class House : Building
             else
             {
                 occupants.Add(new Villager(this));
+                //updateMenu();
             }
         }
         timeToNextBaby -= Time.deltaTime;
+        updateMenu();
         this.powerDraw = basePowerDraw * (occupants.Count);
 
-        foreach (Villager villager in occupants) {
+        foreach (Villager villager in occupants)
+        {
             villager.Update();
         }
     }
@@ -209,8 +211,39 @@ public class House : Building
             if (entry.Value != null && !entry.Value.IsDestroyed()) entry.Value.sprite = occupants[i].getSprite();
             i++;
         }
-        
+
         updateHeads();
+    }
+
+    public void updateMenu()
+    {
+        if (GameObject.Find("Occupants") == null || this.currentMenu == null) return;
+        GameObject.Find("Occupants").GetComponent<UnityEngine.UI.Text>().text = occupants.Count + "";
+        GameObject.Find("VillagerTime").GetComponent<UnityEngine.UI.Text>().text = Mathf.RoundToInt(timeToNextBaby) + "";
+
+        GameObject person = Resources.Load<GameObject>("Prefabs/UI/UIPerson");
+        GameObject[] profiles = new GameObject[occupants.Count];
+        for (int i = 0; i < occupants.Count; i++)
+        {
+            if (i < shown) continue;
+            profiles[i] = Instantiate(person);
+            profiles[i].transform.SetParent(this.currentMenu.transform);
+            RectTransform rt = (RectTransform)profiles[i].transform;
+            rt.pivot = new Vector2(1f, 0f);
+            rt.anchorMin = new Vector2(0, 0);
+            rt.anchorMax = new Vector2(0, 0);
+
+            profiles[i].transform.localPosition = new Vector3((i * 170) - 260, -100, 1);
+            profiles[i].GetComponentInChildren<Text>().text = occupants[i].Vname;
+            profiles[i].GetComponentInChildren<Dropdown>().value = (int)occupants[i].role;
+            profiles[i].GetComponentInChildren<Dropdown>().onValueChanged.AddListener((action) => { dropDownChange(); });
+            dropdowns.Add(profiles[i].GetComponentInChildren<Dropdown>(), profiles[i].GetComponentInChildren<Image>());
+            //profiles[i].GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Villager/" + Random.Range(1, 4));
+        }
+
+        dropDownChange();
+
+        shown = occupants.Count;
     }
 
     public override void clickMenu(GameObject top, GameObject panel)
@@ -228,32 +261,6 @@ public class House : Building
 
         currentMenu = panel;
 
-        GameObject.Find("Occupants").GetComponent<UnityEngine.UI.Text>().text = occupants.Count + "";
-        GameObject.Find("VillagerTime").GetComponent<UnityEngine.UI.Text>().text = Mathf.RoundToInt(timeToNextBaby) + "";
-        
-        GameObject person = Resources.Load<GameObject>("Prefabs/UI/UIPerson");
-        GameObject[] profiles = new GameObject[occupants.Count];
-        for (int i = 0; i < occupants.Count; i++)
-        {
-            if (i < shown) continue;
-            //profiles[i] = Instantiate(Resources.Load<GameObject>("Prefabs/UI/UIPerson"));
-            profiles[i] = Instantiate(person);
-            profiles[i].transform.SetParent(panel.transform);
-            RectTransform rt = (RectTransform)profiles[i].transform;
-            rt.pivot = new Vector2(1f, 0f);
-            rt.anchorMin = new Vector2(0, 0);
-            rt.anchorMax = new Vector2(0, 0);
-
-            profiles[i].transform.localPosition = new Vector3((i * 170) - 260, -100, 1);
-            profiles[i].GetComponentInChildren<Text>().text = occupants[i].Vname;
-            profiles[i].GetComponentInChildren<Dropdown>().value = (int)occupants[i].role;
-            profiles[i].GetComponentInChildren<Dropdown>().onValueChanged.AddListener((action) => { dropDownChange(); });
-            dropdowns.Add(profiles[i].GetComponentInChildren<Dropdown>(), profiles[i].GetComponentInChildren<Image>());
-            //profiles[i].GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("Sprites/Villager/" + Random.Range(1, 4));
-        }
-
-        dropDownChange();
-
-        shown = occupants.Count;
+        updateMenu();
     }
 }

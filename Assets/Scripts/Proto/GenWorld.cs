@@ -292,6 +292,8 @@ public class GenWorld : MonoBehaviour
 
     void Update()
     {
+        _instance = this;
+
         if (isMainMenu || Manager._instance.isPaused) return;
 
         int j = 0;

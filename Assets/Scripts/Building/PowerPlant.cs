@@ -24,7 +24,7 @@ public class PowerPlant : Building
         if (GenWorld._instance.isMainMenu) return;
         if (Manager._instance.isPaused) return;
 
-        cBurnTime -= Time.deltaTime;
+        cBurnTime -= Time.deltaTime;//s
         if (cBurnTime <= 0)
         {
             if (GenWorld._instance.Resources[OreTypes.Coal] >= 1)
