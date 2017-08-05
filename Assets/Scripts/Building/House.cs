@@ -26,6 +26,7 @@ public class House : Building
 
     public int lumberProvided = 0;
     public int minerProvided = 0;
+    public int newHouseRadius = 5;
 
     public List<Villager> occupants = new List<Villager>();
 
@@ -111,8 +112,8 @@ public class House : Building
 
             if (occupants.Count >= maxCapacity)
             {
-                float xOffset = Random.Range(-2, 2);
-                float yOffset = Random.Range(-2, 2);
+                float xOffset = Random.Range(-newHouseRadius, newHouseRadius);
+                float yOffset = Random.Range(-newHouseRadius, newHouseRadius);
 
                 Vector3 cPos = GenWorld._instance.getTileCoord(transform.position);
 
@@ -131,8 +132,8 @@ public class House : Building
                     if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
                     {
                         cPos = GenWorld._instance.getTileCoord(new Vector3((cPos.x + xOffset), (cPos.y + yOffset)));
-                        xOffset = Random.Range(-2, 2);
-                        yOffset = Random.Range(-2, 2);
+                        xOffset = Random.Range(-newHouseRadius, newHouseRadius);
+                        yOffset = Random.Range(-newHouseRadius, newHouseRadius);
                     }
 
                     if (GenWorld._instance.tiles.Length - 1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length - 1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
