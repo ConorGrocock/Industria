@@ -36,7 +36,7 @@ public class House : Building
         base.Start();
         GenWorld._instance.houses.Add(this);
         timeToNextBaby = babyTime;
-        babyTime = (1/Mathf.Max(1,(GenWorld._instance.houses.Count/10))) * babyTime;
+        babyTime = Mathf.Min((1/Mathf.Max(1,(GenWorld._instance.houses.Count/10))) * babyTime, 1);
 
         occupants.Add(new Villager(this));
         occupants[0].role = VillagerRole.Miner;
@@ -108,7 +108,7 @@ public class House : Building
         if (timeToNextBaby <= 0)
         {
             timeToNextBaby = babyTime;
-            babyTime *= 1.5f;
+            babyTime =Mathf.Max(120, babyTime * 1.5f);
             full = occupants.Count >= maxCapacity;
 
             if (occupants.Count >= maxCapacity)
@@ -117,6 +117,8 @@ public class House : Building
                 float yOffset = Random.Range(-newHouseRadius, newHouseRadius);
 
                 Vector3 cPos = GenWorld._instance.getTileCoord(transform.position);
+
+
 
                 if (GenWorld._instance.tiles.Length -1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length -1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)] != null)
                 {
@@ -128,7 +130,6 @@ public class House : Building
                     }
                     if (GenWorld._instance.tiles.Length - 1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length - 1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
                     {
-                        newHouseRadius++;
                         return;
                     }
                     if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
@@ -140,7 +141,6 @@ public class House : Building
 
                     if (GenWorld._instance.tiles.Length - 1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length - 1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
                     {
-                        newHouseRadius++;
                         return;
                     }
                     if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building == null)

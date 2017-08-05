@@ -110,6 +110,8 @@ public class GenWorld : MonoBehaviour
         if (_instance == null) _instance = this;
         else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class");
 
+        if (!Application.isEditor) applyInspectorValsForResources = false;
+
         isMainMenu = SceneManager.GetActiveScene().name == "_Menu";
 
         if (managerScript == null && !isMainMenu)
