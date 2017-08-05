@@ -440,7 +440,7 @@ public class GenWorld : MonoBehaviour
             Camera.main.orthographicSize = maxOrthoSize;
         }
 
-        if (houses.Count > Mathf.Pow(2f, expandCount))
+        if (houses.Count > Mathf.Max(10,Mathf.Pow(2f, expandCount)))
         {
             expandMap(5);
             expandCount++;
@@ -536,7 +536,7 @@ public class GenWorld : MonoBehaviour
             }
         }
 
-        maxOrthoSize += Mathf.Pow(4,expandCount);
+        maxOrthoSize += Mathf.Pow(2,expandCount);
     }
 
     public Vector3 getTileCoord(Vector3 vector)

@@ -100,6 +100,7 @@ public class House : Building
         if (npower != power)             updateHeads();
         if (nlumberjacks != lumberjacks) updateHeads();
         if (nminers != miners)           updateHeads();
+
         miners = nminers;
         lumberjacks = nlumberjacks;
         power = npower;
