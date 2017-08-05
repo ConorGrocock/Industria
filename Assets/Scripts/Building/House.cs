@@ -206,7 +206,7 @@ public class House : Building
             if (entry.Value != null && !entry.Value.IsDestroyed()) entry.Value.sprite = occupants[i].getSprite();
             i++;
         }
-
+        
         updateHeads();
     }
 
@@ -226,6 +226,8 @@ public class House : Building
         currentMenu = panel;
 
         GameObject.Find("Occupants").GetComponent<UnityEngine.UI.Text>().text = occupants.Count + "";
+        GameObject.Find("VillagerTime").GetComponent<UnityEngine.UI.Text>().text = Mathf.RoundToInt(timeToNextBaby) + "";
+        
         GameObject person = Resources.Load<GameObject>("Prefabs/UI/UIPerson");
         GameObject[] profiles = new GameObject[occupants.Count];
         for (int i = 0; i < occupants.Count; i++)

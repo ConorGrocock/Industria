@@ -536,7 +536,7 @@ public class GenWorld : MonoBehaviour
             }
         }
 
-        maxOrthoSize += 2;
+        maxOrthoSize += Mathf.Pow(4,expandCount);
     }
 
     public Vector3 getTileCoord(Vector3 vector)
