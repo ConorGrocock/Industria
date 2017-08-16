@@ -17,11 +17,6 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
     public Text ResourceCount;
     public Text UIBarPower;
     public GameObject PowerForground;
-
-    void Start()
-    {
-		
-	}
 	
 	void Update()
     {
