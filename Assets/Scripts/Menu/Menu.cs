@@ -43,21 +43,21 @@ public class Menu : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (GenWorld._instance.buildTile == null && clicksRequired == 0)
+            if (BuildingManager._instance.buildTile == null && clicksRequired == 0)
             {
                 gameObject.SetActive(false);
                 return;
             }
             if (clicksRequired != 0)
             {
-                if (GenWorld._instance.buildTile != null) clicksRequired--;
+                if (BuildingManager._instance.buildTile != null) clicksRequired--;
                 return;
             }
 
             if (!IsPointerOverUIObject())
             {
                 gameObject.SetActive(false);
-                GenWorld._instance.buildTile = null;
+                BuildingManager._instance.buildTile = null;
             }
         }
     }

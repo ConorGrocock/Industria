@@ -144,12 +144,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 30163577}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 669.49994, y: 347.5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 660.4902, y: 351.72458, z: -1188.1445}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 1665249343}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &63064234
 GameObject:
@@ -262,6 +262,61 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 63064234}
+--- !u!1 &385180976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 385180977}
+  - component: {fileID: 385180978}
+  m_Layer: 0
+  m_Name: Building Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &385180977
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 385180976}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1665249343}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &385180978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 385180976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2261b99154d4c8b49810deb2e3d1785b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cPop: 0
+  totalMiners: 0
+  totalJacks: 0
+  totalPowerWorkers: 0
+  maxPopulation: 0
+  maxMineWorkers: 0
+  maxMillWorkers: 0
+  PeopleCount: {fileID: 0}
+  ResourceCount: {fileID: 0}
+  UIBarPower: {fileID: 0}
+  PowerForground: {fileID: 0}
+  hoverTile: {fileID: 0}
+  buildingPanel: {fileID: 0}
+  houses: []
+  plants: []
 --- !u!1 &427624621
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,6 +1001,46 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1036039749}
+--- !u!1 &1529958561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1529958562}
+  - component: {fileID: 1529958563}
+  m_Layer: 0
+  m_Name: Utility Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1529958562
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1529958561}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1665249343}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1529958563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1529958561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f1d5aa7c5e3d134b9000e9e9486ace7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1563397760
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,29 +1081,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ab4086f19f3d445ba2fd22301f7608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
   worldHeight: 8
   worldWidth: 17
   Tile: {fileID: 1497144371436650, guid: ca21afeb6d86ee54fa0d7aea9eacf31e, type: 2}
   Parent: {fileID: 1563397760}
-  isMainMenu: 0
-  PowerStored: 100
-  applyInspectorValsForResources: 0
-  resourcesInspector: []
-  houses: []
-  plants: []
-  buildingPanel: {fileID: 0}
-  hoverTile: {fileID: 0}
   sprites:
   - {fileID: 21300000, guid: bee6fc3ec0471d746a28db552ba31ccd, type: 3}
-  cPop: 0
-  totalMiners: 0
-  totalJacks: 0
-  totalPowerWorkers: 0
-  maxPopulation: 0
-  maxMineWorkers: 0
-  maxMillWorkers: 0
   expandCount: 1
+  menu: {fileID: 0}
+--- !u!1 &1665249342
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1665249343}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1665249343
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1665249342}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.009738, y: -4.224592, z: 1188.1445}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 30163579}
+  - {fileID: 1774158991}
+  - {fileID: 385180977}
+  - {fileID: 1529958562}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1774158989
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,6 +1148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702e62de9ddd33146b25a7e64147717f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMainMenu: 0
   tutorialPanel: {fileID: 0}
   yesButton: {fileID: 0}
   noButton: {fileID: 0}
@@ -1050,12 +1163,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1774158989}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 720.6616, y: 469.35916, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 711.65186, y: 473.58374, z: -1188.1445}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 1665249343}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1884850817
 GameObject:

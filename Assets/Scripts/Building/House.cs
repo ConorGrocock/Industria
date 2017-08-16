@@ -34,9 +34,9 @@ public class House : Building
     protected override void Start()
     {
         base.Start();
-        GenWorld._instance.houses.Add(this);
+        BuildingManager._instance.houses.Add(this);
         timeToNextBaby = babyTime;
-        babyTime = Mathf.Min((1 / Mathf.Max(1, (GenWorld._instance.houses.Count / 10))) * babyTime,120);
+        babyTime = Mathf.Min((1 / Mathf.Max(1, (BuildingManager._instance.houses.Count / 10))) * babyTime,120);
 
         occupants.Add(new Villager(this));
         occupants[0].role = VillagerRole.Miner;
@@ -68,7 +68,7 @@ public class House : Building
     {
         if (Manager._instance.isMainMenu || Manager._instance.isPaused) return;
 
-        if (currentMenu == GenWorld.menu && currentMenu != null)
+        if (currentMenu == GenWorld._instance.menu && currentMenu != null)
         {
             //if (lastPopulation != occupants.Count)
             //{
@@ -143,7 +143,7 @@ public class House : Building
                         return;
                     }
                     if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building == null)
-                        GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building = GenWorld._instance.buildings["House"];
+                        GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building = BuildingManager._instance.buildings["House"];
                 }
                 //Spawn new house
                 //Where?
@@ -171,7 +171,7 @@ public class House : Building
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Copper, 0);
         required.Add(OreTypes.Wood, 5);
-        GenWorld._instance.buildings.Add("House", new BuildingType("House", this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite, required, KeyCode.None));
+        BuildingManager._instance.buildings.Add("House", new BuildingType("House", this, Resources.Load("Sprites/Building/House/1", typeof(Sprite)) as Sprite, required, KeyCode.None));
     }
     
     int shown = 0;
@@ -248,10 +248,10 @@ public class House : Building
 
     public override void clickMenu(GameObject top, GameObject panel)
     {
-        if (GenWorld.menu != panel)
+        if (GenWorld._instance.menu != panel)
         {
             shown = 0;
-            GenWorld.menu = panel;
+            GenWorld._instance.menu = panel;
         }
         else if (!guiUpdate) return;
 

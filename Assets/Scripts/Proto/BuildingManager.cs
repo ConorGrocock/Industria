@@ -14,11 +14,73 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
     public int maxMillWorkers = 0;
 
     [Header("UI")]
+    public Text PeopleCount;
     public Text ResourceCount;
     public Text UIBarPower;
     public GameObject PowerForground;
-	
-	void Update()
+
+    [Header("Building")]
+    public Tile hoverTile;
+    public GameObject buildingPanel;
+
+    [HideInInspector]
+    public Dictionary<string, BuildingType> buildings;
+
+    [HideInInspector]
+    public List<House> houses = new List<House>();
+
+    [HideInInspector]
+    public List<PowerPlant> plants = new List<PowerPlant>();
+
+    Tile BuildTile;
+    public Tile buildTile
+    {
+        get
+        {
+            return BuildTile;
+        }
+        set
+        {
+            BuildTile = value;
+            if (value == null) { buildingPanel.SetActive(false); return; }
+            buildingPanel.SetActive(true);
+            Button[] buttons = buildingPanel.GetComponentsInChildren<Button>();
+
+            foreach (Button b in buttons)
+            {
+                if (value.ore == null)
+                {
+                    if (b.name == "Lab") b.interactable = false;
+                    else if (b.name == "Power plant" && buildings["PowerPlant"].buildable) b.interactable = true;
+                    else b.interactable = false;
+                    continue;
+                }
+
+                if (b.name == "Lumber Mill" && value.ore.mine == MineType.Mill && buildings["Mill"].buildable) b.interactable = true;
+                else if (b.name == "Mine" && value.ore.mine == MineType.Shaft && buildings["Mine"].buildable) b.interactable = true;
+                else b.interactable = false;
+                if (b.name == "Lab") b.interactable = false;
+            }
+        }
+    }
+
+    void Awake()
+    {
+        buildings = new Dictionary<string, BuildingType>();
+        registerBuildings();
+    }
+
+    void registerBuildings()
+    {
+        // TODO: Get rid of "new" keyword
+        new House().register();
+        new Mine().register();
+        new Mill().register();
+        //new Lab().register();
+        new PowerPlant().register();
+    }
+
+    void Update()
     {
         if (Manager._instance.isMainMenu || Manager._instance.isPaused) return;
 
@@ -45,7 +107,7 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
             }
         }
 
-        foreach (House house in GenWorld._instance.houses)
+        foreach (House house in houses)
         {
             cPop += house.occupancy;
             maxPopulation += house.maxCapacity;
@@ -83,24 +145,24 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
             }
         }
 
-        foreach (KeyValuePair<string, BuildingType> bType in GenWorld._instance.buildings)
+        foreach (KeyValuePair<string, BuildingType> bType in buildings)
         {
             if (Input.GetKey(bType.Value.hotkey))
             {
-                if (GenWorld._instance.hoverTile != null)
+                if (hoverTile != null)
                 {
-                    if (GenWorld._instance.hoverTile.building == null)
+                    if (hoverTile.building == null)
                     {
-                        if (bType.Value.buildable && UtilityManager._instance.canBuild(GenWorld._instance.hoverTile, bType.Value))
+                        if (bType.Value.buildable && UtilityManager._instance.canBuild(hoverTile, bType.Value))
                         {
-                            GenWorld._instance.buildOnTile(bType.Key);
+                            buildOnTile(bType.Key);
                         }
                     }
                 }
             }
         }
 
-        GenWorld._instance.powerSupply = 0;
+        PowerManager._instance.powerSupply = 0;
         float powerLimitOverall = 0;
 
         foreach (Building building in Building.buildings)
@@ -109,9 +171,9 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
                 powerLimitOverall += building.powerLimit;
         }
 
-        foreach (PowerPlant building in GenWorld._instance.plants)
+        foreach (PowerPlant building in plants)
         {
-            GenWorld._instance.powerSupply += building.powerStored;
+            PowerManager._instance.powerSupply += building.powerStored;
             building.powerStored = 0;
         }
 
@@ -122,15 +184,51 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
         }
 
         ResourceCount.text = resource;
-        GenWorld._instance.PowerStored += (Mathf.Round(GenWorld._instance.powerSupply) * Time.deltaTime) - (Mathf.Round(GenWorld._instance.powerDraw) * Time.deltaTime);
-        UIBarPower.text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(GenWorld._instance.PowerStored), Mathf.Round(GenWorld._instance.powerSupply), Mathf.Round(GenWorld._instance.powerDraw));
+        PowerManager._instance.powerStored += (Mathf.Round(PowerManager._instance.powerSupply) * Time.deltaTime) - (Mathf.Round(PowerManager._instance.powerDraw) * Time.deltaTime);
+        UIBarPower.text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(PowerManager._instance.powerStored), Mathf.Round(PowerManager._instance.powerSupply), Mathf.Round(PowerManager._instance.powerDraw));
 
-        PowerForground.transform.localScale = new Vector3(Mathf.Min(/*(GenWorld._instance.powerSupply / GenWorld._instance.powerDraw)*/GenWorld._instance.PowerStored / powerLimitOverall, 1), 1, 1);
+        PowerForground.transform.localScale = new Vector3(Mathf.Min(/*(GenWorld._instance.powerSupply / GenWorld._instance.powerDraw)*/PowerManager._instance.powerStored / powerLimitOverall, 1), 1, 1);
 
-        if (GenWorld._instance.houses.Count > Mathf.Min(10, Mathf.Pow(2f, GenWorld._instance.expandCount)))
+        if (houses.Count > Mathf.Min(10, Mathf.Pow(2f, GenWorld._instance.expandCount)))
         {
             GenWorld._instance.expandMap(5);
             GenWorld._instance.expandCount++;
         }
+    }
+
+    public void updateInformationBar()
+    {
+        if (Manager._instance.isMainMenu) return;
+
+        int count = 0;
+
+        foreach (House house in houses)
+        {
+            count += house.occupancy;
+        }
+
+        PeopleCount.text = "Normal: " + count;
+
+        string resource = "";
+        foreach (KeyValuePair<OreTypes, int> entry in GenWorld._instance.Resources)
+        {
+            resource += entry.Key.ToString() + ": " + entry.Value + " ";
+        }
+
+        ResourceCount.text = resource;
+        UIBarPower.text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(PowerManager._instance.powerStored), Mathf.Round(PowerManager._instance.powerSupply), Mathf.Round(PowerManager._instance.powerDraw));
+    }
+
+    public void buildOnTile(string building)
+    {
+        foreach (KeyValuePair<OreTypes, int> cost in buildings[building].costs)
+        {
+            GenWorld._instance.Resources[cost.Key] -= cost.Value;
+        }
+
+        if (buildTile != null) buildTile.building = buildings[building];
+        else if (hoverTile != null) hoverTile.building = buildings[building];
+        buildingPanel.SetActive(false);
+        buildTile = null;
     }
 }

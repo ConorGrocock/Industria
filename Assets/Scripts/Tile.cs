@@ -25,7 +25,7 @@ public class Tile : MonoBehaviour
             top.GetComponent<SpriteRenderer>().sprite = value.sprite;
             topBuilding = ((Building)top.AddComponent(value.script.GetType()));
             topBuilding.tile = this;
-            if (value.name == "House") if (GenWorld._instance.houses.Count <= 1) topBuilding.powerDraw = 1;
+            if (value.name == "House") if (BuildingManager._instance.houses.Count <= 1) topBuilding.powerDraw = 1;
             Destroy(top.GetComponent<BoxCollider>());
             top.transform.parent = transform;
             top.transform.localPosition = new Vector3(0, 0, -10);
@@ -76,10 +76,10 @@ public class Tile : MonoBehaviour
         if (menuClose) { menuClose = false; return; }
         if (IsPointerOverUIObject() || Manager._instance.isGameOver) { mouseOver = false; return; }
         if (building != null) return;
-        if (GenWorld._instance.buildTile != null) { GenWorld._instance.buildTile = null; return; }
-        if (mouseOver && GenWorld.menu == null)
-            GenWorld._instance.buildTile = this;
-        else if (GenWorld._instance.buildTile == this) GenWorld._instance.buildTile = null;
+        if (BuildingManager._instance.buildTile != null) { BuildingManager._instance.buildTile = null; return; }
+        if (mouseOver && GenWorld._instance.menu == null)
+            BuildingManager._instance.buildTile = this;
+        else if (BuildingManager._instance.buildTile == this) BuildingManager._instance.buildTile = null;
     }
 
     private bool menuOpen = false;
@@ -88,14 +88,14 @@ public class Tile : MonoBehaviour
     bool menuClose = false;
     public void OnMouseOver()
     {
-        GenWorld._instance.hoverTile = this;
+        BuildingManager._instance.hoverTile = this;
 
         if (IsPointerOverUIObject() || Manager._instance.isGameOver || Manager._instance.isMainMenu || Manager._instance.isPaused) { mouseOver = false; return; }
         mouseOver = true;
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (GenWorld.menu != null)
+            if (GenWorld._instance.menu != null)
             {
                 menuClose = true;
                 GenWorld._instance.closeMenu();
@@ -114,7 +114,7 @@ public class Tile : MonoBehaviour
 
     public GameObject createMenu()
     {
-        GenWorld._instance.buildTile = null;
+        BuildingManager._instance.buildTile = null;
         GameObject sprite = Resources.Load<GameObject>("Prefabs/UI/" + building.name + "Panel");
         if (sprite != null)
         {
@@ -152,7 +152,7 @@ public class Tile : MonoBehaviour
     {
         try
         {
-            if ((hover && !IsPointerOverUIObject() || GenWorld._instance.buildTile == this)) this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
+            if ((hover && !IsPointerOverUIObject() || BuildingManager._instance.buildTile == this)) this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
             else gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         }
         catch (Exception e)

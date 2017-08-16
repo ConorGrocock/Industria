@@ -67,6 +67,6 @@ public class Mill : Building
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Copper, 6);
         required.Add(OreTypes.Wood, 10);
-        GenWorld._instance.buildings.Add("Mill", new BuildingType("Mill", this, Resources.Load<Sprite>("Sprites/Building/Mill/1"), required, KeyCode.Q, MineType.Mill));
+        BuildingManager._instance.buildings.Add("Mill", new BuildingType("Mill", this, Resources.Load<Sprite>("Sprites/Building/Mill/1"), required, KeyCode.Q, MineType.Mill));
     }
 }

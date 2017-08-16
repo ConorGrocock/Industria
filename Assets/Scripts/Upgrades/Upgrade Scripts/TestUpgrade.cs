@@ -10,8 +10,8 @@ public class TestUpgrade : UpgradeScript
     public override void ApplyUpgradeEffect()
     {
         Debug.Log("Unlocked mine upgrade!");
-        ((Mine)GenWorld._instance.buildings["Mine"].script).miningSpeed = newMiningSpeed;
-        Debug.Log(((Mine)GenWorld._instance.buildings["Mine"].script).miningSpeed);
+        ((Mine)BuildingManager._instance.buildings["Mine"].script).miningSpeed = newMiningSpeed;
+        Debug.Log(((Mine)BuildingManager._instance.buildings["Mine"].script).miningSpeed);
     }
 
     public override void OnUpgradeUpdate()

@@ -22,11 +22,11 @@ public class UtilityManager : MonoBehaviourSingleton<UtilityManager>
         if (tile.ore == null)
         {
             if (building.name == "Lab") return false;
-            else if (building.name == "PowerPlant" && GenWorld._instance.buildings["PowerPlant"].buildable) return true;
+            else if (building.name == "PowerPlant" && BuildingManager._instance.buildings["PowerPlant"].buildable) return true;
             else return false;
         }
-        else if (building.name == "Mill" && (tile.ore != null || tile.ore.mine == MineType.Mill) && GenWorld._instance.buildings["Mill"].buildable) return true;
-        else if (building.name == "Mine" && (tile.ore != null || tile.ore.mine == MineType.Shaft) && GenWorld._instance.buildings["Mine"].buildable) return true;
+        else if (building.name == "Mill" && (tile.ore != null || tile.ore.mine == MineType.Mill) && BuildingManager._instance.buildings["Mill"].buildable) return true;
+        else if (building.name == "Mine" && (tile.ore != null || tile.ore.mine == MineType.Shaft) && BuildingManager._instance.buildings["Mine"].buildable) return true;
         else return false;
     }
 

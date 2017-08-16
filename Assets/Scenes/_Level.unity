@@ -1008,7 +1008,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1563397762}
+      - m_Target: {fileID: 1650761767}
         m_MethodName: buildOnTile
         m_Mode: 5
         m_Arguments:
@@ -1929,7 +1929,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &712869340
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1946,7 +1946,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -62.06836, y: 0.0000095366995}
+  m_AnchoredPosition: {x: -62.070312, y: 0.0000095366995}
   m_SizeDelta: {x: 647, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &712869341
@@ -4206,7 +4206,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1563397762}
+      - m_Target: {fileID: 1650761767}
         m_MethodName: buildOnTile
         m_Mode: 5
         m_Arguments:
@@ -4292,22 +4292,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ab4086f19f3d445ba2fd22301f7608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 1580916999}
   worldHeight: 8
   worldWidth: 17
   Tile: {fileID: 1497144371436650, guid: ca21afeb6d86ee54fa0d7aea9eacf31e, type: 2}
   Parent: {fileID: 1563397760}
-  powerSupply: 0
-  PowerStored: 100
-  applyInspectorValsForResources: 0
-  resourcesInspector: []
-  houses: []
-  plants: []
-  buildingPanel: {fileID: 712869339}
-  hoverTile: {fileID: 0}
   sprites:
   - {fileID: 21300000, guid: bee6fc3ec0471d746a28db552ba31ccd, type: 3}
   expandCount: 1
+  menu: {fileID: 0}
 --- !u!1 &1580916999
 GameObject:
   m_ObjectHideFlags: 0
@@ -4599,9 +4591,14 @@ MonoBehaviour:
   maxPopulation: 0
   maxMineWorkers: 0
   maxMillWorkers: 0
+  PeopleCount: {fileID: 1408040985}
   ResourceCount: {fileID: 1095650793}
   UIBarPower: {fileID: 1920137008}
   PowerForground: {fileID: 972849455}
+  hoverTile: {fileID: 0}
+  buildingPanel: {fileID: 712869339}
+  houses: []
+  plants: []
 --- !u!1 &1685431495
 GameObject:
   m_ObjectHideFlags: 0
@@ -4923,7 +4920,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1563397762}
+      - m_Target: {fileID: 1650761767}
         m_MethodName: buildOnTile
         m_Mode: 5
         m_Arguments:
@@ -5068,7 +5065,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 655.0996, y: -20}
+  m_AnchoredPosition: {x: 655.10156, y: -20}
   m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1884850817
@@ -5175,6 +5172,48 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1912379693
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1912379694}
+  - component: {fileID: 1912379695}
+  m_Layer: 0
+  m_Name: Power Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912379694
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1912379693}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2139723244}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1912379695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1912379693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08b6642d3ae229f488b18a87682d036a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerSupply: 0
+  powerStored: 100
 --- !u!1 &1920137006
 GameObject:
   m_ObjectHideFlags: 0
@@ -5624,6 +5663,7 @@ Transform:
   - {fileID: 1650761766}
   - {fileID: 556283667}
   - {fileID: 1563397761}
+  - {fileID: 1912379694}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
