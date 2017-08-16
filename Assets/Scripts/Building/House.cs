@@ -66,7 +66,7 @@ public class House : Building
     // Update is called once per frame
     void Update()
     {
-        if (GenWorld._instance.isMainMenu || Manager._instance.isPaused) return;
+        if (Manager._instance.isMainMenu || Manager._instance.isPaused) return;
 
         if (currentMenu == GenWorld.menu && currentMenu != null)
         {
@@ -115,13 +115,13 @@ public class House : Building
                 float xOffset = Random.Range(-newHouseRadius, newHouseRadius);
                 float yOffset = Random.Range(-newHouseRadius, newHouseRadius);
 
-                Vector3 cPos = GenWorld._instance.getTileCoord(transform.position);
+                Vector3 cPos = UtilityManager._instance.getTileCoord(transform.position);
 
                 if (GenWorld._instance.tiles.Length - 1 > (int)(cPos.x + xOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)].Length - 1 > (int)(cPos.y + yOffset) && GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)] != null)
                 {
                     if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().building != null)
                     {
-                        cPos = GenWorld._instance.getTileCoord(new Vector3((cPos.x + xOffset), (cPos.y + yOffset)));
+                        cPos = UtilityManager._instance.getTileCoord(new Vector3((cPos.x + xOffset), (cPos.y + yOffset)));
                         xOffset = Random.Range(-2, 2);
                         yOffset = Random.Range(-2, 2);
                     }
@@ -132,7 +132,7 @@ public class House : Building
                     }
                     if (GenWorld._instance.tiles[(int)(cPos.x + xOffset)][(int)(cPos.y + yOffset)].GetComponent<Tile>().ore != null)
                     {
-                        cPos = GenWorld._instance.getTileCoord(new Vector3((cPos.x + xOffset), (cPos.y + yOffset)));
+                        cPos = UtilityManager._instance.getTileCoord(new Vector3((cPos.x + xOffset), (cPos.y + yOffset)));
                         xOffset = Random.Range(-newHouseRadius, newHouseRadius);
                         yOffset = Random.Range(-newHouseRadius, newHouseRadius);
                     }
@@ -166,7 +166,7 @@ public class House : Building
         }
     }
 
-    public void register()
+    public override void register()
     {
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Copper, 0);

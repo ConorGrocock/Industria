@@ -74,7 +74,7 @@ public class Tile : MonoBehaviour
     public void OnMouseUp()
     {
         if (menuClose) { menuClose = false; return; }
-        if (IsPointerOverUIObject() || GenWorld._instance.gameOver) { mouseOver = false; return; }
+        if (IsPointerOverUIObject() || Manager._instance.isGameOver) { mouseOver = false; return; }
         if (building != null) return;
         if (GenWorld._instance.buildTile != null) { GenWorld._instance.buildTile = null; return; }
         if (mouseOver && GenWorld.menu == null)
@@ -90,7 +90,7 @@ public class Tile : MonoBehaviour
     {
         GenWorld._instance.hoverTile = this;
 
-        if (IsPointerOverUIObject() || GenWorld._instance.gameOver || GenWorld._instance.isMainMenu || Manager._instance.isPaused) { mouseOver = false; return; }
+        if (IsPointerOverUIObject() || Manager._instance.isGameOver || Manager._instance.isMainMenu || Manager._instance.isPaused) { mouseOver = false; return; }
         mouseOver = true;
 
         if (Input.GetMouseButtonDown(0))

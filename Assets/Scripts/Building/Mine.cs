@@ -61,7 +61,7 @@ public class Mine : Building
         }
     }
 
-    public void register()
+    public override void register()
     {
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Wood, 5);

@@ -11,35 +11,18 @@ public class ResourceArray
     public int amount;
 }
 
-public class GenWorld : MonoBehaviour
+public class GenWorld : MonoBehaviourSingleton<GenWorld>
 {
-    public static GenWorld _instance;
-    public float minOrthoSize = 1.0f;
-    public float maxOrthoSize = 10.0f;
-    public float zoomSpeed = 0.5f;
     public GameObject gameManager;
-    private Manager managerScript;
 
     public int worldHeight = 10;
     public int worldWidth = 10;
     public GameObject Tile;
     public GameObject Parent;
 
-    [HideInInspector]
-    public bool gameOver;
-    [HideInInspector]
-    public bool isMainMenu;
-    [HideInInspector]
-    public bool isPaused;
+    public float powerSupply;
 
-    float PowerSupply;
-    public float powerSupply
-    {
-        get { return PowerSupply; }
-        set { PowerSupply = value; }
-    }
-
-    public float PowerStored = 100f;
+    public float PowerStored = 100.0f;
 
     public float powerDraw
     {
@@ -107,21 +90,11 @@ public class GenWorld : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        if (_instance == null) _instance = this;
-        else Debug.LogError("YOU HAVE FUCKED UP. You have more than one World gen class");
-
         if (!Application.isEditor) applyInspectorValsForResources = false;
-
-        isMainMenu = SceneManager.GetActiveScene().name == "_Menu";
-
-        if (managerScript == null && !isMainMenu)
-        {
-            managerScript = gameManager.GetComponent<Manager>();
-        }
 
         if (buildingPanel == null) buildingPanel = GameObject.Find("BuildingPanel");
 
-        if (!isMainMenu)
+        if (!Manager._instance.isMainMenu)
             buildingPanel.SetActive(false);
 
         buildings = new Dictionary<string, BuildingType>();
@@ -149,7 +122,6 @@ public class GenWorld : MonoBehaviour
         {
             Resources.Add(resourcesInspector[i].type, resourcesInspector[i].amount);
         }
-
 
         Camera.main.transform.Translate(new Vector3((worldWidth / 2) * 1.28f, ((worldHeight / 2) * 1.28f) - 0.5f));
 
@@ -247,7 +219,7 @@ public class GenWorld : MonoBehaviour
                 }
             }
         }
-        if (!isMainMenu)
+        if (!Manager._instance.isMainMenu)
             updateInfomationBar();
     }
 
@@ -260,7 +232,7 @@ public class GenWorld : MonoBehaviour
             count += house.occupancy;
         }
 
-        GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = "Normal: " + count;
+        GameObject.Find("PeopleCount").GetComponent<Text>().text = "Normal: " + count;
 
         string resource = "";
         foreach (KeyValuePair<OreTypes, int> entry in Resources)
@@ -268,35 +240,15 @@ public class GenWorld : MonoBehaviour
             resource += entry.Key.ToString() + ": " + entry.Value + " ";
         }
 
-        GameObject.Find("ResourceCount").GetComponent<UnityEngine.UI.Text>().text = resource;
-        GameObject.Find("UIBarPower").GetComponent<Text>().text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(this.PowerStored), Mathf.Round(this.powerSupply), Mathf.Round(this.powerDraw));
+        GameObject.Find("ResourceCount").GetComponent<Text>().text = resource;
+        GameObject.Find("UIBarPower").GetComponent<Text>().text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(PowerStored), Mathf.Round(powerSupply), Mathf.Round(powerDraw));
     }
 
-    private Bounds OrthographicBounds()
-    {
-        float screenAspect = (float)Screen.width / (float)Screen.height;
-        float cameraHeight = Camera.main.orthographicSize * 2;
-        Bounds bounds = new Bounds(
-            Camera.main.transform.position,
-            new Vector3(cameraHeight * screenAspect, cameraHeight, 0));
-        return bounds;
-    }
-
-    public int cPop = 0;
-    public int totalMiners = 0;
-    public int totalJacks = 0;
-    public int totalPowerWorkers = 0;
-    public int maxPopulation = 0;
-    public int maxMineWorkers = 0;
-    public int maxMillWorkers = 0;
+    
 
     void Update()
     {
-        _instance = this;
-
-        if (isMainMenu || Manager._instance.isPaused) return;
-
-        int j = 0;
+        if (Manager._instance.isMainMenu || Manager._instance.isPaused) return;
 
         if (applyInspectorValsForResources)
         {
@@ -310,149 +262,13 @@ public class GenWorld : MonoBehaviour
 
         if (PowerStored < 0)
         {
-            if (managerScript == null)
-            {
-                managerScript = gameManager.GetComponent<Manager>();
-            }
-
             PowerStored = 0;
             Time.timeScale = 0;
-            managerScript.ShowGameOver();
-            gameOver = true;
-        }
-
-
-        cPop = 0;
-        totalMiners = 0;
-        totalJacks = 0;
-        totalPowerWorkers = 0;
-        maxPopulation = 0;
-
-        maxMineWorkers = 0;
-        maxMillWorkers = 0;
-        foreach (Building building in Building.buildings)
-        {
-            switch (building.tile.building.name)
-            {
-                case "Mine":
-                    Mine mine = (Mine)building;
-                    maxMineWorkers += mine.maxWorkers;
-                    break;
-                case "Mill":
-                    Mill mill = (Mill)building;
-                    maxMillWorkers += mill.maxWorkers;
-                    break;
-            }
-        }
-
-        foreach (House house in houses)
-        {
-            cPop += house.occupancy;
-            maxPopulation += house.maxCapacity;
-
-            int mi = totalMiners;
-            int jo = totalJacks;
-
-            totalMiners = Mathf.Min(maxMineWorkers, totalMiners + house.miners);
-            totalJacks  = Mathf.Min(maxMillWorkers, totalJacks + house.lumberjacks);
-            
-            house.lumberProvided = totalJacks - jo;
-            house.minerProvided = totalMiners - mi;
-            //totalPowerWorkers += house.power;
-        }
-
-        GameObject.Find("PeopleCount").GetComponent<UnityEngine.UI.Text>().text = string.Format("Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}", cPop, maxPopulation, totalMiners, maxMineWorkers, totalJacks, maxMillWorkers);
-        foreach (Building building in Building.buildings)
-        {
-            switch (building.tile.building.name)
-            {
-                case "Mine":
-                    Mine mine = (Mine)building;
-                    if (mine.workers >= mine.maxWorkers) continue;
-                    int inc = Mathf.Min(mine.maxWorkers, totalMiners);
-                    mine.workers = inc;
-                    totalMiners -= inc;
-                    break;
-                case "Mill":
-                    Mill mill = (Mill)building;
-                    if (mill.workers >= mill.maxWorkers) continue;
-                    inc = Mathf.Min(mill.maxWorkers, totalJacks);
-                    mill.workers = inc;
-                    totalJacks -= inc;
-                    break;
-            }
-        }
-
-        foreach (KeyValuePair<string, BuildingType> bType in buildings)
-        {
-            if (Input.GetKey(bType.Value.hotkey))
-            {
-                if (hoverTile != null)
-                {
-                    if (hoverTile.building == null)
-                    {
-                        if (bType.Value.buildable && canBuild(hoverTile, bType.Value))
-                        {
-                            GenWorld._instance.buildOnTile(bType.Key);
-                        }
-                    }
-                }
-            }
-        }
-
-        this.PowerSupply = 0;
-        float powerLimitOverall = 0;
-
-        foreach (Building building in Building.buildings)
-        {
-            if (building.tile.building.name != "PowerPlant")
-                powerLimitOverall += building.powerLimit;
-        }
-
-        foreach (PowerPlant building in plants)
-        {
-            this.PowerSupply += building.powerStored;
-            building.powerStored = 0;
-        }
-
-        string resource = "";
-        foreach (KeyValuePair<OreTypes, int> entry in Resources)
-        {
-            resource += entry.Key.ToString() + ": " + entry.Value + " ";
-        }
-        GameObject.Find("ResourceCount").GetComponent<UnityEngine.UI.Text>().text = resource;
-        PowerStored += (Mathf.Round(this.PowerSupply) * Time.deltaTime) - (Mathf.Round(this.powerDraw) * Time.deltaTime);
-        GameObject.Find("UIBarPower").GetComponent<Text>().text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(this.PowerStored), Mathf.Round(this.powerSupply), Mathf.Round(this.powerDraw));
-
-        GameObject PowerForground = GameObject.Find("PowerForground");
-        PowerForground.transform.localScale = new Vector3(Mathf.Min(/*(GenWorld._instance.powerSupply / GenWorld._instance.powerDraw)*/this.PowerStored / powerLimitOverall, 1), 1, 1);
-
-        if (Input.GetKey(KeyCode.UpArrow)) if (OrthographicBounds().max.y < (worldHeight + 2) * 1.28) Camera.main.transform.Translate(new Vector3(0, 1));
-        if (Input.GetKey(KeyCode.DownArrow)) if (OrthographicBounds().min.y > -2 * 1.28) Camera.main.transform.Translate(new Vector3(0, -1));
-        if (Input.GetKey(KeyCode.LeftArrow)) if (OrthographicBounds().min.x > -2 * 1.28) Camera.main.transform.Translate(new Vector3(-1, 0));
-        if (Input.GetKey(KeyCode.RightArrow)) if (OrthographicBounds().max.x < (worldWidth + 2) * 1.28) Camera.main.transform.Translate(new Vector3(1, 0));
-        if (Input.GetKey(KeyCode.PageDown)) Camera.main.orthographicSize += zoomSpeed;
-        if (Input.GetKey(KeyCode.PageUp)) Camera.main.orthographicSize -= zoomSpeed;
-        if (Input.GetKey(KeyCode.KeypadPlus)) Time.timeScale += 0.5f;
-        if (Input.GetKey(KeyCode.KeypadMinus)) Time.timeScale -= 0.5f;
-
-        if (Camera.main.orthographicSize < minOrthoSize)
-        {
-            Camera.main.orthographicSize = minOrthoSize;
-        }
-
-        if (Camera.main.orthographicSize > maxOrthoSize)
-        {
-            Camera.main.orthographicSize = maxOrthoSize;
-        }
-
-        if (houses.Count > Mathf.Min(10,Mathf.Pow(2f, expandCount)))
-        {
-            expandMap(5);
-            expandCount++;
+            Manager._instance.ShowGameOver();
         }
     }
-    [SerializeField]int expandCount = 1;
+
+    public int expandCount = 1;
 
     public static GameObject menu;
 
@@ -464,6 +280,7 @@ public class GenWorld : MonoBehaviour
 
     void registerBuildings()
     {
+        // TODO: Get rid of "new" keyword
         new House().register();
         new Mine().register();
         new Mill().register();
@@ -542,12 +359,7 @@ public class GenWorld : MonoBehaviour
             }
         }
 
-        maxOrthoSize += Mathf.Pow(2,expandCount);
-    }
-
-    public Vector3 getTileCoord(Vector3 vector)
-    {
-        return vector / 1.28f;
+        InputManager._instance.maximumZoomSize += Mathf.Pow(2, expandCount);
     }
 
     public void buildOnTile(string building)
@@ -562,16 +374,5 @@ public class GenWorld : MonoBehaviour
         BuildTile = null;
     }
 
-    bool canBuild(Tile tile, BuildingType building)
-    {
-        if (tile.ore == null)
-        {
-            if (building.name == "Lab") return false;
-            else if (building.name == "PowerPlant" && buildings["PowerPlant"].buildable) return true;
-            else return false;
-        }
-        else if (building.name == "Mill" && (tile.ore != null || tile.ore.mine == MineType.Mill)  && buildings["Mill"].buildable) return true;
-        else if (building.name == "Mine" && (tile.ore != null || tile.ore.mine == MineType.Shaft) && buildings["Mine"].buildable) return true;
-        else return false;
-    }
+    
 }

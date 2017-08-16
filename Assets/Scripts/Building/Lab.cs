@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lab : Building {
-    
+public class Lab : Building
+{
     public GameObject Villager;
 
     // Use this for initialization
@@ -16,7 +16,7 @@ public class Lab : Building {
         
     }
 
-    public void register() {
+    public override void register() {
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Copper, 2);
         required.Add(OreTypes.Wood, 5);

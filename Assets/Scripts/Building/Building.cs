@@ -43,7 +43,7 @@ public class Building : MonoBehaviour
                     continue;
                 }
 
-                Vector3 pos = GenWorld._instance.getTileCoord(building.transform.position);
+                Vector3 pos = UtilityManager._instance.getTileCoord(building.transform.position);
 
                 if (buildings.Count <= i + 1) break;
 
@@ -128,19 +128,15 @@ public class Building : MonoBehaviour
         return new Vector3(centerX, centerY) * 1.28f;
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void register()
     {
-
     }
 
     public virtual void clickMenu(GameObject top, GameObject panel)
     {
-
     }
 
     public virtual void closeMenu()
     {
-
     }
 }

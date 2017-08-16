@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Manager : MonoBehaviour
+public class Manager : MonoBehaviourSingleton<Manager>
 {
-    public static Manager _instance;
+    [Header("Main Menu")]
+    public bool isMainMenu;
 
     [Header("Tutorial")]
     public GameObject tutorialPanel;
@@ -21,15 +22,13 @@ public class Manager : MonoBehaviour
     [Header("Game Over")]
     public GameObject gameOverObject;
     public Button retryButton;
-
-    void Start()
-    {
-        //_instance = this;
-    }
+    public bool isGameOver;
 
     void Awake()
     {
-        _instance = this;
+        isMainMenu = SceneManager.GetActiveScene().name == "_Menu";
+
+        if (isMainMenu) return;
 
         retryButton.onClick.AddListener(RestartScene);
         yesButton.onClick.AddListener(ShowTutorial);
@@ -46,7 +45,7 @@ public class Manager : MonoBehaviour
         }
         else
         {
-            GenWorld._instance.isPaused = false;
+            isPaused = false;
             pauseBorder.gameObject.SetActive(false);
             remotePause = false;
         }
@@ -54,7 +53,7 @@ public class Manager : MonoBehaviour
 
     void Update()
     {
-        _instance = this;
+        if (isMainMenu) return;
 
         if (Input.GetKeyDown(KeyCode.Escape) && !remotePause)
         {
@@ -62,13 +61,13 @@ public class Manager : MonoBehaviour
 
             if (isPaused)
             {
-                GenWorld._instance.isPaused = true;
+                isPaused = true;
                 pauseBorder.gameObject.SetActive(true);
                 Time.timeScale = 0;
             }
             else
             {
-                GenWorld._instance.isPaused = false;
+                isPaused = false;
                 pauseBorder.gameObject.SetActive(false);
                 Time.timeScale = 1;
             }
@@ -89,7 +88,6 @@ public class Manager : MonoBehaviour
 
     public void Pause()
     {
-        GenWorld._instance.isPaused = true;
         isPaused = true;
         remotePause = true;
         pauseBorder.gameObject.SetActive(true);
@@ -97,7 +95,6 @@ public class Manager : MonoBehaviour
 
     public void Unpause()
     {
-        GenWorld._instance.isPaused = false;
         isPaused = false;
         remotePause = false;
         pauseBorder.gameObject.SetActive(false);
@@ -105,6 +102,7 @@ public class Manager : MonoBehaviour
 
     public void ShowGameOver()
     {
+        isGameOver = true;
         Pause();
         GenWorld._instance.closeMenu();
         GenWorld._instance.buildingPanel.SetActive(false);

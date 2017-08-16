@@ -14,15 +14,14 @@ public class PowerPlant : Building
     protected override void Start()
     {
         base.Start();
-        this.powerDraw = 0f;
+        powerDraw = 0.0f;
         GenWorld._instance.plants.Add(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GenWorld._instance.isMainMenu) return;
-        if (Manager._instance.isPaused) return;
+        if (Manager._instance.isMainMenu || Manager._instance.isPaused) return;
 
         cBurnTime -= Time.deltaTime;//s
         if (cBurnTime <= 0)
@@ -36,7 +35,7 @@ public class PowerPlant : Building
         else powerStored += (powerPerSecond);//* Time.deltaTime);
     }
 
-    public void register()
+    public override void register()
     {
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Copper, 1);

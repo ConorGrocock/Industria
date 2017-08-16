@@ -62,7 +62,8 @@ public class Mill : Building
         }
     }
 
-    public void register() {
+    public override void register()
+    {
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Copper, 6);
         required.Add(OreTypes.Wood, 10);
