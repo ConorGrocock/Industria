@@ -644,8 +644,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b73e3dfbdbaa94a4895a033dbee4c3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraMoveSpeed: 3
-  cameraZoomSpeed: 0.5
+  cameraMoveSpeed: 8
+  cameraZoomSpeed: 4
   minimumZoomSize: 1
   maximumZoomSize: 8
   changeTimeSpeed: 0.5
