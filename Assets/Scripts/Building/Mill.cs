@@ -69,4 +69,10 @@ public class Mill : Building
         required.Add(OreTypes.Wood, 10);
         BuildingManager._instance.buildings.Add("Mill", new BuildingType("Mill", this, Resources.Load<Sprite>("Sprites/Building/Mill/1"), required, KeyCode.Q, MineType.Mill));
     }
+
+    public override void OnHover()
+    {
+        base.OnHover();
+        Debug.Log("Mill hover!");
+    }
 }

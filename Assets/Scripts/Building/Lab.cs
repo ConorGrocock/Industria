@@ -23,4 +23,9 @@ public class Lab : Building
         required.Add(OreTypes.Wood, 5);
         BuildingManager._instance.buildings.Add("Lab", new BuildingType("Lab", this, Resources.Load("Sprites/Building/Lab/1", typeof(Sprite)) as Sprite, required, KeyCode.R));
     }
+
+    public override void OnHover()
+    {
+        base.OnHover();
+    }
 }

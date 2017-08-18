@@ -84,4 +84,10 @@ public class PowerPlant : Building
         //    }
         //}
     }
+
+    public override void OnHover()
+    {
+        base.OnHover();
+        Debug.Log("Power plant hover!");
+    }
 }

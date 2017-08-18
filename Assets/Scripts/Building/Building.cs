@@ -139,4 +139,8 @@ public class Building : MonoBehaviour
     public virtual void closeMenu()
     {
     }
+
+    public virtual void OnHover()
+    {
+    }
 }

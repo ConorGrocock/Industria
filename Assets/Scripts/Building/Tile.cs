@@ -50,6 +50,7 @@ public class Tile : MonoBehaviour
         if (ore != null)
         {
             Sprite oreResource = Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString());
+
             if (ore.type != OreTypes.Wood)
             {
                 spriteRenderer.sprite = oreResource;
@@ -86,12 +87,18 @@ public class Tile : MonoBehaviour
     GameObject panel;
     bool mouseOver = false;
     bool menuClose = false;
+
     public void OnMouseOver()
     {
         BuildingManager._instance.hoverTile = this;
 
         if (IsPointerOverUIObject() || Manager._instance.isGameOver || Manager._instance.isMainMenu || Manager._instance.isPaused) { mouseOver = false; return; }
         mouseOver = true;
+
+        if (building != null)
+        {
+            top.GetComponent<Building>().OnHover();
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -108,14 +115,15 @@ public class Tile : MonoBehaviour
                 top.GetComponent<Building>().clickMenu(top, createMenu()); 
             }
         }
-        hover = true;
 
+        hover = true;
     }
 
     public GameObject createMenu()
     {
         BuildingManager._instance.buildTile = null;
         GameObject sprite = Resources.Load<GameObject>("Prefabs/UI/" + building.name + "Panel");
+
         if (sprite != null)
         {
             panel = Instantiate(sprite);
@@ -129,6 +137,7 @@ public class Tile : MonoBehaviour
             foreach (Text text in t) if (text.gameObject.name == "Power") text.text = "POWER";
             return panel;
         }
+
         return null;
     }
 
@@ -147,7 +156,6 @@ public class Tile : MonoBehaviour
         return results.Count > 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         try

@@ -263,4 +263,10 @@ public class House : Building
 
         updateMenu();
     }
+
+    public override void OnHover()
+    {
+        base.OnHover();
+        Debug.Log("House hover!");
+    }
 }
