@@ -145,6 +145,11 @@ public class Tile : MonoBehaviour
     {
         mouseOver = false;
         hover = false;
+
+        if (building != null)
+        {
+            top.GetComponent<Building>().OnHoverEnd();
+        }
     }
 
     private bool IsPointerOverUIObject()

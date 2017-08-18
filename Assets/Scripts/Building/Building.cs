@@ -143,4 +143,8 @@ public class Building : MonoBehaviour
     public virtual void OnHover()
     {
     }
+
+    public virtual void OnHoverEnd()
+    {
+    }
 }
