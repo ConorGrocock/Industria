@@ -391,7 +391,7 @@ public class House : Building
         }
         else
         {
-            Debug.LogError("Hover panel is null!");
+            Debug.LogError("[House] [OnHover] Hover panel is null!");
         }
 
         //spriteRenderer.color = new Color(0.2f, 0.7f, 0.3f);

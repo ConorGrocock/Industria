@@ -10,11 +10,18 @@ public class PowerPlant : Building
     float powerPerSecond = 3f;
     public float powerStored = 0f;
 
+    public GameObject hoverPanel;
+    private GameObject hoverPanelInstance;
+
+    private Slider burningProgressSlider;
+    private Text generatingText;
+
     // Use this for initialization
     protected override void Start()
     {
         base.Start();
         powerDraw = 0.0f;
+        hoverPanel = Resources.Load("Prefabs/UI/PlantHoverPanel", typeof(GameObject)) as GameObject;
         BuildingManager._instance.plants.Add(this);
     }
 
@@ -88,6 +95,54 @@ public class PowerPlant : Building
     public override void OnHover()
     {
         base.OnHover();
-        Debug.Log("Power plant hover!");
+
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        if (hoverPanel != null)
+        {
+            if (hoverPanelInstance == null)
+            {
+                hoverPanelInstance = Instantiate(hoverPanel);
+                hoverPanelInstance.transform.SetParent(canvasTransform);
+
+                burningProgressSlider = hoverPanelInstance.transform.Find("BurningProgress").gameObject.GetComponent<Slider>();
+                generatingText = hoverPanelInstance.transform.Find("GeneratingText").gameObject.GetComponent<Text>();
+            }
+
+            hoverPanelInstance.transform.position = new Vector3(Input.mousePosition.x + 115, Input.mousePosition.y - 50);
+
+            burningProgressSlider.value = cBurnTime / coalBurnTime;
+            generatingText.text = powerPerSecond + " power per second";
+        }
+        else
+        {
+            Debug.LogError("[PowerPlant] [OnHover] Hover panel is null!");
+        }
+
+        //spriteRenderer.color = new Color(0.2f, 0.7f, 0.3f);
+    }
+
+    public override void OnHoverEnd()
+    {
+        base.OnHoverEnd();
+
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        if (hoverPanelInstance != null)
+        {
+            Destroy(hoverPanelInstance);
+            hoverPanelInstance = null;
+        }
+
+        burningProgressSlider = null;
+        generatingText = null;
+
+        //spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f);
     }
 }

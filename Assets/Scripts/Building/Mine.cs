@@ -28,6 +28,7 @@ public class Mine : Building
     private GameObject hoverPanelInstance;
 
     private Text oreTypeText;
+    private Text assignMoreText;
 
     private Image personOne;
     private Text personOneName;
@@ -111,6 +112,7 @@ public class Mine : Building
                 hoverPanelInstance.transform.SetParent(canvasTransform);
 
                 oreTypeText = hoverPanelInstance.transform.Find("OreTypeText").gameObject.GetComponent<Text>();
+                assignMoreText = hoverPanelInstance.transform.Find("AssignMoreText").gameObject.GetComponent<Text>();
 
                 personOne = hoverPanelInstance.transform.Find("PersonOne").gameObject.GetComponent<Image>();
                 personOneName = personOne.transform.Find("Name").gameObject.GetComponent<Text>();
@@ -164,6 +166,21 @@ public class Mine : Building
 
             switch (occupants.Count)
             {
+                case (0):
+                    personOne.gameObject.SetActive(false);
+                    personTwo.gameObject.SetActive(false);
+                    personThree.gameObject.SetActive(false);
+                    personFour.gameObject.SetActive(false);
+                    personFive.gameObject.SetActive(false);
+
+                    assignMoreText.gameObject.SetActive(true);
+                    break;
+                case (1):
+                    personTwo.gameObject.SetActive(false);
+                    personThree.gameObject.SetActive(false);
+                    personFour.gameObject.SetActive(false);
+                    personFive.gameObject.SetActive(false);
+                    break;
                 case (2):
                     personThree.gameObject.SetActive(false);
                     personFour.gameObject.SetActive(false);
@@ -222,7 +239,7 @@ public class Mine : Building
         }
         else
         {
-            Debug.LogError("Hover panel is null!");
+            Debug.LogError("[Mine] [OnHover] Hover panel is null!");
         }
 
         //spriteRenderer.color = new Color(0.2f, 0.7f, 0.3f);
@@ -244,6 +261,7 @@ public class Mine : Building
         }
 
         oreTypeText = null;
+        assignMoreText = null;
 
         personOne = null;
         personOneName = null;
