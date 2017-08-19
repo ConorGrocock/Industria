@@ -8,7 +8,7 @@ public class Building : MonoBehaviour
 {
     public static List<Building> buildings = new List<Building>();
     public Sprite sprite;
-    private SpriteRenderer spriteRenderer;
+    protected SpriteRenderer spriteRenderer;
     public Tile tile;
 
     public float powerLimit = 100f;

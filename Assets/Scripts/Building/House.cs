@@ -268,5 +268,27 @@ public class House : Building
     {
         base.OnHover();
         Debug.Log("House hover!");
+
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("Sprite renderer is null!");
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        spriteRenderer.color = new Color(0.2f, 0.7f, 0.3f);
+    }
+
+    public override void OnHoverEnd()
+    {
+        base.OnHoverEnd();
+        Debug.Log("House hover end!");
+
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("Sprite renderer is null!");
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f);
     }
 }
