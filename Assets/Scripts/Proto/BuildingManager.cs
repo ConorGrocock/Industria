@@ -123,7 +123,7 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
             //totalPowerWorkers += house.power;
         }
 
-        GameObject.Find("PeopleCount").GetComponent<Text>().text = string.Format("Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}", cPop, maxPopulation, totalMiners, maxMineWorkers, totalJacks, maxMillWorkers);
+        PeopleCount.text = string.Format("Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}", cPop, maxPopulation, totalMiners, maxMineWorkers, totalJacks, maxMillWorkers);
         foreach (Building building in Building.buildings)
         {
             switch (building.tile.building.name)

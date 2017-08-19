@@ -42,10 +42,15 @@ public class Tile : MonoBehaviour
     GameObject housePanel;
 
     private SpriteRenderer spriteRenderer;
+    protected Transform canvasTransform;
 
     // Use this for initialization
     void Start()
     {
+        TileManager._instance.tiles.Add(this);
+
+        canvasTransform = GameObject.Find("Canvas").transform;
+
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (ore != null)
         {
@@ -127,7 +132,7 @@ public class Tile : MonoBehaviour
         if (sprite != null)
         {
             panel = Instantiate(sprite);
-            panel.transform.SetParent(GameObject.Find("Canvas").transform);
+            panel.transform.SetParent(canvasTransform);
             //panel.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
             panel.transform.localPosition = new Vector3(0, 0, 0);
 
@@ -161,12 +166,12 @@ public class Tile : MonoBehaviour
         return results.Count > 0;
     }
 
-    void Update()
+    public void UpdateTile()
     {
         try
         {
-            if ((hover && !IsPointerOverUIObject() || BuildingManager._instance.buildTile == this)) this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0.5f, 0.7f);
-            else gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            if ((hover && !IsPointerOverUIObject() || BuildingManager._instance.buildTile == this)) spriteRenderer.color = new Color(0, 0.5f, 0.5f, 0.7f);
+            else spriteRenderer.color = Color.white;
         }
         catch (Exception e)
         {
