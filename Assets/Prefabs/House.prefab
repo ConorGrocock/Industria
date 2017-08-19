@@ -53,12 +53,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 5911858adfd29d541a7b134077f3116b, type: 3}
+  tile: {fileID: 0}
+  powerLimit: 100
+  powerDraw: 5
   babyTime: 4
   timeToNextBaby: 0
   occupancy: 0
   maxCapacity: 5
   full: 0
-  Villager: {fileID: 0}
+  lumberProvided: 0
+  minerProvided: 0
+  newHouseRadius: 5
+  hoverPanel: {fileID: 0}
+  miners: 0
+  lumberjacks: 0
+  power: 0
 --- !u!212 &212718298917885368
 SpriteRenderer:
   m_ObjectHideFlags: 1

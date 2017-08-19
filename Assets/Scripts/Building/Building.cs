@@ -14,15 +14,20 @@ public class Building : MonoBehaviour
     public float powerLimit = 100f;
     public float powerDraw = 5f;
 
+    protected Transform canvasTransform;
+
     // if (housePanel != null) Destroy(housePanel);
     // Use this for initialization
     protected virtual void Start()
     {
         buildings.Add(this);
+
+        canvasTransform = GameObject.Find("Canvas").transform;
+
         //this.transform.Translate(new Vector3(this.transform.position.x, this.transform.position.y, -1));
+        spriteRenderer = GetComponent<SpriteRenderer>();
         if (sprite != null)
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = sprite;
         }
         int i = 0;

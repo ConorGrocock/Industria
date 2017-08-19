@@ -30,10 +30,33 @@ public class House : Building
 
     public List<Villager> occupants = new List<Villager>();
 
+    public GameObject hoverPanel;
+    private GameObject hoverPanelInstance;
+
+    private Image personOne;
+    private Text personOneName;
+
+    private Image personTwo;
+    private Text personTwoName;
+
+    private Image personThree;
+    private Text personThreeName;
+
+    private Image personFour;
+    private Text personFourName;
+
+    private Image personFive;
+    private Text personFiveName;
+
+    private Text powerDrawText;
+
     // Use this for initialization
     protected override void Start()
     {
         base.Start();
+
+        hoverPanel = Resources.Load("Prefabs/UI/HouseHoverPanel", typeof(GameObject)) as GameObject;
+
         BuildingManager._instance.houses.Add(this);
         timeToNextBaby = babyTime;
         babyTime = Mathf.Min((1 / Mathf.Max(1, (BuildingManager._instance.houses.Count / 10))) * babyTime,120);
@@ -267,28 +290,142 @@ public class House : Building
     public override void OnHover()
     {
         base.OnHover();
-        Debug.Log("House hover!");
 
         if (spriteRenderer == null)
         {
-            Debug.LogError("Sprite renderer is null!");
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        spriteRenderer.color = new Color(0.2f, 0.7f, 0.3f);
+        if (hoverPanel != null)
+        {
+            if (hoverPanelInstance == null)
+            {
+                hoverPanelInstance = Instantiate(hoverPanel);
+                hoverPanelInstance.transform.SetParent(canvasTransform);
+
+                personOne = hoverPanelInstance.transform.Find("PersonOne").gameObject.GetComponent<Image>();
+                personOneName = personOne.transform.Find("Name").gameObject.GetComponent<Text>();
+
+                personTwo = hoverPanelInstance.transform.Find("PersonTwo").gameObject.GetComponent<Image>();
+                personTwoName = personTwo.transform.Find("Name").gameObject.GetComponent<Text>();
+
+                personThree = hoverPanelInstance.transform.Find("PersonThree").gameObject.GetComponent<Image>();
+                personThreeName = personThree.transform.Find("Name").gameObject.GetComponent<Text>();
+
+                personFour = hoverPanelInstance.transform.Find("PersonFour").gameObject.GetComponent<Image>();
+                personFourName = personFour.transform.Find("Name").gameObject.GetComponent<Text>();
+
+                personFive = hoverPanelInstance.transform.Find("PersonFive").gameObject.GetComponent<Image>();
+                personFiveName = personFive.transform.Find("Name").gameObject.GetComponent<Text>();
+
+                powerDrawText = hoverPanelInstance.transform.Find("PowerDraw").gameObject.GetComponent<Text>();
+            }
+
+            personOne.gameObject.SetActive(true);
+            personTwo.gameObject.SetActive(true);
+            personThree.gameObject.SetActive(true);
+            personFour.gameObject.SetActive(true);
+            personFive.gameObject.SetActive(true);
+
+            hoverPanelInstance.transform.position = new Vector3(Input.mousePosition.x + 105, Input.mousePosition.y - 105);
+
+            switch (occupants.Count)
+            {
+                case (2):
+                    personThree.gameObject.SetActive(false);
+                    personFour.gameObject.SetActive(false);
+                    personFive.gameObject.SetActive(false);
+                    break;
+                case (3):
+                    personFour.gameObject.SetActive(false);
+                    personFive.gameObject.SetActive(false);
+                    break;
+                case (4):
+                    personFive.gameObject.SetActive(false);
+                    break;
+                case (5):
+                    break;
+                default:
+                    Debug.LogError("[House] [OnHover] Unexpected occupant count for hover panel: " + occupants.Count);
+                    break;
+            }
+
+            int i = 1;
+
+            foreach (Villager occupant in occupants)
+            {
+                switch (i)
+                {
+                    case (1):
+                        personOne.sprite = occupant.getHead();
+                        personOneName.text = occupant.Vname;
+                        break;
+                    case (2):
+                        personTwo.sprite = occupant.getHead();
+                        personTwoName.text = occupant.Vname;
+                        break;
+                    case (3):
+                        personThree.sprite = occupant.getHead();
+                        personThreeName.text = occupant.Vname;
+                        break;
+                    case (4):
+                        personFour.sprite = occupant.getHead();
+                        personFourName.text = occupant.Vname;
+                        break;
+                    case (5):
+                        personFive.sprite = occupant.getHead();
+                        personFiveName.text = occupant.Vname;
+                        break;
+                    default:
+                        Debug.LogError("[House] [OnHover] Unexpected iterator for setting details on hover panel: " + i);
+                        break;
+                }
+
+                i++;
+            }
+
+            powerDrawText.text = "Power Draw: " + powerDraw;
+        }
+        else
+        {
+            Debug.LogError("Hover panel is null!");
+        }
+
+        //spriteRenderer.color = new Color(0.2f, 0.7f, 0.3f);
     }
 
     public override void OnHoverEnd()
     {
         base.OnHoverEnd();
-        Debug.Log("House hover end!");
 
         if (spriteRenderer == null)
         {
-            Debug.LogError("Sprite renderer is null!");
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f);
+        if (hoverPanelInstance != null)
+        {
+            Destroy(hoverPanelInstance);
+            hoverPanelInstance = null;
+        }
+
+        personOne = null;
+        personOneName = null;
+
+        personTwo = null;
+        personTwoName = null;
+
+        personThree = null;
+        personThreeName = null;
+
+        personFour = null;
+        personFourName = null;
+
+        personFive = null;
+        personFiveName = null;
+
+        powerDrawText = null;
+
+        //spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f);
     }
 }

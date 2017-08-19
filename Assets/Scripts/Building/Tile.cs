@@ -92,7 +92,7 @@ public class Tile : MonoBehaviour
     {
         BuildingManager._instance.hoverTile = this;
 
-        if (IsPointerOverUIObject() || Manager._instance.isGameOver || Manager._instance.isMainMenu || Manager._instance.isPaused) { mouseOver = false; return; }
+        if (IsPointerOverUIObject() || Manager._instance.isGameOver || Manager._instance.isMainMenu || Manager._instance.isPaused) { OnMouseExit(); return; }
         mouseOver = true;
 
         if (building != null)
