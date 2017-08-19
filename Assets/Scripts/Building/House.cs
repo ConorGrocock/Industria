@@ -49,6 +49,7 @@ public class House : Building
     private Text personFiveName;
 
     private Text powerDrawText;
+    private Text timeUntilNewVillagerText;
 
     // Use this for initialization
     protected override void Start()
@@ -240,9 +241,9 @@ public class House : Building
 
     public void updateMenu()
     {
-        if (GameObject.Find("Occupants") == null || this.currentMenu == null) return;
-        GameObject.Find("Occupants").GetComponent<UnityEngine.UI.Text>().text = occupants.Count + "";
-        GameObject.Find("VillagerTime").GetComponent<UnityEngine.UI.Text>().text = Mathf.RoundToInt(timeToNextBaby) + "";
+        if (GameObject.Find("Occupants") == null || currentMenu == null) return;
+        GameObject.Find("Occupants").GetComponent<Text>().text = occupants.Count + "";
+        GameObject.Find("VillagerTime").GetComponent<Text>().text = Mathf.RoundToInt(timeToNextBaby) + "";
 
         GameObject person = Resources.Load<GameObject>("Prefabs/UI/UIPerson");
         GameObject[] profiles = new GameObject[occupants.Count];
@@ -250,7 +251,7 @@ public class House : Building
         {
             if (i < shown) continue;
             profiles[i] = Instantiate(person);
-            profiles[i].transform.SetParent(this.currentMenu.transform);
+            profiles[i].transform.SetParent(currentMenu.transform);
             RectTransform rt = (RectTransform)profiles[i].transform;
             rt.pivot = new Vector2(1f, 0f);
             rt.anchorMin = new Vector2(0, 0);
@@ -319,6 +320,7 @@ public class House : Building
                 personFiveName = personFive.transform.Find("Name").gameObject.GetComponent<Text>();
 
                 powerDrawText = hoverPanelInstance.transform.Find("PowerDraw").gameObject.GetComponent<Text>();
+                timeUntilNewVillagerText = hoverPanelInstance.transform.Find("TimeUntilNewVillager").gameObject.GetComponent<Text>();
             }
 
             personOne.gameObject.SetActive(true);
@@ -327,7 +329,7 @@ public class House : Building
             personFour.gameObject.SetActive(true);
             personFive.gameObject.SetActive(true);
 
-            hoverPanelInstance.transform.position = new Vector3(Input.mousePosition.x + 105, Input.mousePosition.y - 105);
+            hoverPanelInstance.transform.position = new Vector3(Input.mousePosition.x + 115, Input.mousePosition.y - 115);
 
             switch (occupants.Count)
             {
@@ -385,6 +387,7 @@ public class House : Building
             }
 
             powerDrawText.text = "Power Draw: " + powerDraw;
+            timeUntilNewVillagerText.text = "Time until new Villager: " + Mathf.RoundToInt(timeToNextBaby);
         }
         else
         {
@@ -425,6 +428,7 @@ public class House : Building
         personFiveName = null;
 
         powerDrawText = null;
+        timeUntilNewVillagerText = null;
 
         //spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f);
     }
