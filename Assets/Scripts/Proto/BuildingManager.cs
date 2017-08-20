@@ -5,12 +5,37 @@ using UnityEngine.UI;
 
 public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
 {
+    /// <summary>
+    /// Current population
+    /// </summary>
     public int cPop = 0;
+    /// <summary>
+    /// Total number of miners
+    /// </summary>
     public int totalMiners = 0;
+    /// <summary>
+    /// Total number of lumberjacks
+    /// </summary>
     public int totalJacks = 0;
+    /// <summary>
+    /// Total number of power workers.
+    /// 
+    /// Not used at the moment.
+    /// </summary>
     public int totalPowerWorkers = 0;
+    /// <summary>
+    /// Maximum number of people
+    /// Sum of houses'
+    /// </summary>
     public int maxPopulation = 0;
+    /// <summary>
+    /// Maximum number of workers needed to work all the mines
+    /// </summary>
     public int maxMineWorkers = 0;
+
+    /// <summary>
+    /// Maximum number of workers needed to work all the lumber mills
+    /// </summary>
     public int maxMillWorkers = 0;
 
     [Header("UI")]
@@ -23,16 +48,29 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
     public Tile hoverTile;
     public GameObject buildingPanel;
 
+    /// <summary>
+    /// A list of building types that can be matched to a string
+    /// </summary>
     [HideInInspector]
     public Dictionary<string, BuildingType> buildings;
 
+    /// <summary>
+    /// List of houses
+    /// </summary>
     [HideInInspector]
     public List<House> houses = new List<House>();
 
+    /// <summary>
+    /// List of power plants
+    /// </summary>
     [HideInInspector]
     public List<PowerPlant> plants = new List<PowerPlant>();
-
+    
     Tile BuildTile;
+    
+    /// <summary>
+    /// Tile the user selects to build a building on
+    /// </summary>
     public Tile buildTile
     {
         get
@@ -70,6 +108,10 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
         registerBuildings();
     }
 
+    /// <summary>
+    /// <para>Register buildings</para>
+    /// <para>Buidlings should have there register methods callded here</para>
+    /// </summary>
     void registerBuildings()
     {
         // TODO: Get rid of "new" keyword
@@ -196,6 +238,9 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
         }
     }
 
+    /// <summary>
+    /// Update the infomation bar at the top of the screen
+    /// </summary>
     public void updateInformationBar()
     {
         if (Manager._instance.isMainMenu) return;
@@ -219,6 +264,10 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
         UIBarPower.text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(PowerManager._instance.powerStored), Mathf.Round(PowerManager._instance.powerSupply), Mathf.Round(PowerManager._instance.powerDraw));
     }
 
+    /// <summary>
+    /// Build a building on a tile
+    /// </summary>
+    /// <param name="building">The tyoe of building to be built, As registered in the <see cref="Buildings"/>building</see> dictionary</param>
     public void buildOnTile(string building)
     {
         foreach (KeyValuePair<OreTypes, int> cost in buildings[building].costs)
