@@ -1,21 +1,49 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class GenWorld : MonoBehaviourSingleton<GenWorld>
 {
+    /// <summary>
+    /// Height of the world
+    /// </summary>
     public int worldHeight = 10;
+    /// <summary>
+    /// Width of the world
+    /// </summary>
     public int worldWidth = 10;
+    /// <summary>
+    /// Tile prefab
+    /// </summary>
     public GameObject Tile;
+    /// <summary>
+    /// Gameobject to attach the tiles to
+    /// </summary>
     public GameObject Parent;
 
-    [HideInInspector]
+    /// <summary>
+    /// Resource array
+    /// </summary>
     public Dictionary<OreTypes, int> Resources;
 
+    /// <summary>
+    /// Ground textures
+    /// </summary>
     public Sprite[] sprites;
+
+    /// <summary>
+    /// World array
+    /// </summary>
     public GameObject[][] tiles;
 
+    /// <summary>
+    /// Number of times the world has been expanded
+    /// </summary>
     public int expandCount = 1;
 
+    /// <summary>
+    /// Instance of the menu
+    /// </summary>
     public GameObject menu;
 
     void Start()
@@ -34,6 +62,10 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld>
             BuildingManager._instance.updateInformationBar();
     }
 
+
+    /// <summary>
+    /// Generate a brand new world
+    /// </summary>
     void GenerateWorld()
     {
         tiles = new GameObject[worldWidth][];
@@ -66,79 +98,23 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld>
         tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = BuildingManager._instance.buildings["House"];
         tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().topBuilding.powerDraw = 1f;
         tiles[(worldWidth / 2) + Random.Range(1, 3)][(worldHeight / 2) + Random.Range(1, 3)].GetComponent<Tile>().building = BuildingManager._instance.buildings["PowerPlant"];
-
-        int copper = 0, wood = 0, coal = 0;
-
-        for (int ores = 0; ores < Random.Range(6, 10); ores++)
-        {
-            GameObject cTile = null;
-
-            while (cTile == null || cTile.GetComponent<Tile>().building != null || cTile.GetComponent<Tile>().ore != null)
-            {
-                cTile = tiles[Random.Range(2, worldWidth - 2)][Random.Range(2, worldHeight - 2)];
-            }
-            if (coal == 0)
-            {
-                Tile tile = cTile.GetComponent<Tile>();
-                tile.ore = new Ore(OreTypes.Coal, 1000);
-                tile.building = BuildingManager._instance.buildings["Mine"];
-                coal++;
-            }
-            else if (copper == 0)
-            {
-                cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
-                copper++;
-            }
-            //else if (iron == 0)
-            //{
-            //    cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
-            //    iron++;
-            //}
-            else if (wood == 0)
-            {
-                cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
-                wood++;
-            }
-            else
-            {
-                switch (Random.Range(0, 4))
-                {
-                    case (0):
-                        {
-                            cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Coal, 1000);
-                            coal++;
-                            break;
-                        }
-                    case (1):
-                    case 2:
-                        {
-                            cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Copper, 1000);
-                            copper++;
-                            break;
-                        }
-                    //case (2):
-                    //    {
-                    //        cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Iron, 1000);
-                    //        iron++;
-                    //        break;
-                    //    }
-                    case (3):
-                        {
-                            cTile.GetComponent<Tile>().ore = new Ore(OreTypes.Wood, 1000);
-                            wood++;
-                            break;
-                        }
-                }
-            }
-        }
+        
+        generateOres(10, 20);
     }
 
+    /// <summary>
+    /// Close any open menus
+    /// </summary>
     public void closeMenu()
     {
         Destroy(menu);
         menu = null;
     }
 
+    /// <summary>
+    /// Expand the current map
+    /// </summary>
+    /// <param name="amount">Number of tiles to expand the map</param>
     public void expandMap(int amount)
     {
         GameObject[][] oldTiles = tiles;
@@ -186,6 +162,11 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld>
         InputManager._instance.maximumZoomSize += Mathf.Pow(2, expandCount);
     }
 
+    /// <summary>
+    /// Generate the ores for the map
+    /// </summary>
+    /// <param name="minimum">Minimum number of ores</param>
+    /// <param name="maximum">Maximum number of ores</param>
     void generateOres(int minimum, int maximum) {
         for (int ores = 0; ores < Random.Range(minimum, maximum); ores++) {
             GameObject cTile = null;
