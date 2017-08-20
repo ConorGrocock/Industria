@@ -183,4 +183,19 @@ public class Tile : MonoBehaviour
             menuOpen = false;
         }
     }
+
+    public void generateOre() {
+        int orePercent = UnityEngine.Random.Range(0, 100);
+
+        if (orePercent > 50) {
+            ore = new Ore(OreTypes.Coal, 1000);
+        }
+        else if (orePercent > 30) {
+            ore = new Ore(OreTypes.Copper, 1000);
+        }
+        else if (orePercent > 00) {
+            ore = new Ore(OreTypes.Wood, 1000);
+        }
+        return;
+    }
 }
