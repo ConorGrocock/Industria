@@ -26,6 +26,7 @@ public class PowerManager : MonoBehaviourSingleton<PowerManager>
         if (powerStored < 0)
         {
             powerStored = 0;
+            BuildingManager._instance.updatePowerInfo();
             Time.timeScale = 0;
             Manager._instance.ShowGameOver();
         }

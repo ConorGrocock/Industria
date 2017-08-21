@@ -13,6 +13,8 @@ public class PowerPlant : Building
     public GameObject hoverPanel;
     private GameObject hoverPanelInstance;
 
+    private Text oreTypeText;
+
     private Slider burningProgressSlider;
     private Text generatingText;
 
@@ -26,8 +28,10 @@ public class PowerPlant : Building
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (Manager._instance.isMainMenu || Manager._instance.isPaused) return;
 
         cBurnTime -= Time.deltaTime;//s
@@ -37,9 +41,18 @@ public class PowerPlant : Building
             {
                 GenWorld._instance.Resources[OreTypes.Coal]--;
                 cBurnTime = coalBurnTime;
+                hideWarningSign();
+            }
+            else
+            {
+                showWarningSign(true);
             }
         }
-        else powerStored += (powerPerSecond);//* Time.deltaTime);
+        else
+        {
+            powerStored += (powerPerSecond);//* Time.deltaTime);
+            hideWarningSign();
+        }
     }
 
     public override void register()
@@ -108,14 +121,26 @@ public class PowerPlant : Building
                 hoverPanelInstance = Instantiate(hoverPanel);
                 hoverPanelInstance.transform.SetParent(canvasTransform);
 
+                oreTypeText = hoverPanelInstance.transform.Find("OreTypeText").gameObject.GetComponent<Text>();
+
                 burningProgressSlider = hoverPanelInstance.transform.Find("BurningProgress").gameObject.GetComponent<Slider>();
                 generatingText = hoverPanelInstance.transform.Find("GeneratingText").gameObject.GetComponent<Text>();
             }
 
             hoverPanelInstance.transform.position = new Vector3(Input.mousePosition.x + 115, Input.mousePosition.y - 50);
 
-            burningProgressSlider.value = cBurnTime / coalBurnTime;
-            generatingText.text = powerPerSecond + " power per second";
+            if (cBurnTime <= 0 && GenWorld._instance.Resources[OreTypes.Coal] <= 0)
+            {
+                oreTypeText.text = "Burning: Coal (EMPTY)";
+                burningProgressSlider.value = 0;
+                generatingText.text = "0 power per second";
+            }
+            else
+            {
+                oreTypeText.text = "Burning: Coal";
+                burningProgressSlider.value = cBurnTime / coalBurnTime;
+                generatingText.text = powerPerSecond + " power per second";
+            }
         }
         else
         {
@@ -139,6 +164,8 @@ public class PowerPlant : Building
             Destroy(hoverPanelInstance);
             hoverPanelInstance = null;
         }
+
+        oreTypeText = null;
 
         burningProgressSlider = null;
         generatingText = null;

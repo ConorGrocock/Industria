@@ -61,8 +61,10 @@ public class Mine : Building
     // Update is called once per frame
     int i = 0;
     int lastWorkers = 0;
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (Time.time - timeSinceLastMine >= 1f / miningSpeed)
         {
             timeSinceLastMine = Time.time;
@@ -161,6 +163,8 @@ public class Mine : Building
             personThree.gameObject.SetActive(true);
             personFour.gameObject.SetActive(true);
             personFive.gameObject.SetActive(true);
+
+            assignMoreText.gameObject.SetActive(false);
 
             hoverPanelInstance.transform.position = new Vector3(Input.mousePosition.x + 115, Input.mousePosition.y - 115);
 

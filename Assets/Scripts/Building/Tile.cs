@@ -175,7 +175,7 @@ public class Tile : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log(hover + ":" + IsPointerOverUIObject() + ":" + GenWorld._instance);
+            Debug.LogError("TILE ERROR! (" + e.Message + ") hover: " + hover + ", pointerOverUI: " + IsPointerOverUIObject() + ", GenWorld instance: " + GenWorld._instance);
         }
         if (Input.GetKeyDown(KeyCode.Escape) && menuOpen && panel != null)
         {

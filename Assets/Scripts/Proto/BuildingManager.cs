@@ -227,7 +227,7 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
 
         ResourceCount.text = resource;
         PowerManager._instance.powerStored += (Mathf.Round(PowerManager._instance.powerSupply) * Time.deltaTime) - (Mathf.Round(PowerManager._instance.powerDraw) * Time.deltaTime);
-        UIBarPower.text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(PowerManager._instance.powerStored), Mathf.Round(PowerManager._instance.powerSupply), Mathf.Round(PowerManager._instance.powerDraw));
+        updatePowerInfo();
 
         PowerForground.transform.localScale = new Vector3(Mathf.Min(/*(GenWorld._instance.powerSupply / GenWorld._instance.powerDraw)*/PowerManager._instance.powerStored / powerLimitOverall, 1), 1, 1);
 
@@ -243,8 +243,6 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
     /// </summary>
     public void updateInformationBar()
     {
-        if (Manager._instance.isMainMenu) return;
-
         int count = 0;
 
         foreach (House house in houses)
@@ -261,6 +259,15 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
         }
 
         ResourceCount.text = resource;
+        UIBarPower.text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(PowerManager._instance.powerStored), Mathf.Round(PowerManager._instance.powerSupply), Mathf.Round(PowerManager._instance.powerDraw));
+    }
+
+    /// <summary>
+    /// Updates the power information on the information bar.
+    /// Exists so it can be called from <see cref="PowerManager"/> on game over.
+    /// </summary>
+    public void updatePowerInfo()
+    {
         UIBarPower.text = string.Format("{0} Power stored  {1} Power generated  {2} Power drawn", Mathf.Round(PowerManager._instance.powerStored), Mathf.Round(PowerManager._instance.powerSupply), Mathf.Round(PowerManager._instance.powerDraw));
     }
 

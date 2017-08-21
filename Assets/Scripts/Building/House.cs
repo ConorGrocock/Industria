@@ -88,8 +88,10 @@ public class House : Building
     int lastPopulation = 0;
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (Manager._instance.isMainMenu || Manager._instance.isPaused) return;
 
         if (currentMenu == GenWorld._instance.menu && currentMenu != null)

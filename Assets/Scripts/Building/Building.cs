@@ -16,11 +16,27 @@ public class Building : MonoBehaviour
 
     protected Transform canvasTransform;
 
+    private Sprite warningSprite;
+
+    private Vector3 warningSpriteScale = new Vector3(0.1f, 0.1f);
+    private Vector3 warningSpritePosition = new Vector3(0.55f, 0.55f, -1.0f);
+
+    protected float w_SecondsPerFlash = 0.5f;
+    private float w_TimeSinceLastFlash;
+    private bool w_Flash;
+
+    private bool warningDoFlash;
+    private bool showingWarning;
+
+    private GameObject warningSpriteInstance;
+
     // if (housePanel != null) Destroy(housePanel);
     // Use this for initialization
     protected virtual void Start()
     {
         buildings.Add(this);
+
+        warningSprite = Resources.Load<Sprite>("Sprites/UI/warning");
 
         canvasTransform = GameObject.Find("Canvas").transform;
 
@@ -59,6 +75,27 @@ public class Building : MonoBehaviour
         }
         displayedHeads = new List<GameObject>();
         drawnLines = 0;
+    }
+
+    protected virtual void Update()
+    {
+        if (warningDoFlash && showingWarning)
+        {
+            if (Time.time - w_TimeSinceLastFlash >= w_SecondsPerFlash)
+            {
+                w_TimeSinceLastFlash = Time.time;
+                w_Flash = !w_Flash;
+
+                if (w_Flash)
+                {
+                    warningSpriteInstance.SetActive(true);
+                }
+                else
+                {
+                    warningSpriteInstance.SetActive(false);
+                }
+            }
+        }
     }
 
     private int drawnLines;//What lines have been drawn already?
@@ -102,6 +139,48 @@ public class Building : MonoBehaviour
 
             displayedHeads.Add(go);
         }
+    }
+
+    public void showWarningSign(bool flash)
+    {
+        if (showingWarning) return;
+
+        warningDoFlash = flash;
+
+        if (warningSpriteInstance == null)
+        {
+            warningSpriteInstance = new GameObject();
+            SpriteRenderer image = warningSpriteInstance.AddComponent<SpriteRenderer>();
+            warningSpriteInstance.transform.SetParent(transform);
+
+            warningSpriteInstance.transform.localScale = warningSpriteScale;
+
+            image.sprite = warningSprite;
+            image.transform.localPosition = warningSpritePosition;
+        }
+        else
+        {
+            warningSpriteInstance.SetActive(true);   
+        }
+
+        showingWarning = true;
+    }
+
+    public void hideWarningSign()
+    {
+        if (!showingWarning) return;
+
+        if (warningSpriteInstance != null)
+        {
+            warningSpriteInstance.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("[Building] [hideWarningSign] Warning sprite instance is null!");
+        }
+
+        showingWarning = false;
+        warningDoFlash = false;
     }
 
     void DrawLine(Vector3 start, Vector3 end, Color color)
