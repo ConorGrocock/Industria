@@ -11,9 +11,15 @@ public class InputManager : MonoBehaviourSingleton<InputManager>
     [Header("Time Settings")]
     public float changeTimeSpeed = 0.5f;
 
+    /// <summary>
+    /// Minimum game time scale
+    /// </summary>
     [Range(0.0f, 100.0f)]
     public float minTimeSpeed = 0.0f;
 
+    /// <summary>
+    /// Maximum game time scale
+    /// </summary>
     [Range(0.0f, 100.0f)]
     public float maxTimeSpeed = 100.0f;
 

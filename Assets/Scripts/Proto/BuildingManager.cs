@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -67,7 +67,6 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
     public List<PowerPlant> plants = new List<PowerPlant>();
     
     Tile BuildTile;
-    
     /// <summary>
     /// Tile the user selects to build a building on
     /// </summary>
@@ -136,7 +135,7 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
         maxMillWorkers = 0;
         foreach (Building building in Building.buildings)
         {
-            switch (building.tile.building.name)
+            switch (building.tile.buildingType.name)
             {
                 case "Mine":
                     Mine mine = (Mine)building;
@@ -168,7 +167,7 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
         PeopleCount.text = string.Format("Total: {0}/{1}  Miners: {2}/{3}  Lumberjacks: {4}/{5}", cPop, maxPopulation, totalMiners, maxMineWorkers, totalJacks, maxMillWorkers);
         foreach (Building building in Building.buildings)
         {
-            switch (building.tile.building.name)
+            switch (building.tile.buildingType.name)
             {
                 case "Mine":
                     Mine mine = (Mine)building;
@@ -193,7 +192,7 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
             {
                 if (hoverTile != null)
                 {
-                    if (hoverTile.building == null)
+                    if (hoverTile.buildingType == null)
                     {
                         if (bType.Value.buildable && UtilityManager._instance.canBuild(hoverTile, bType.Value))
                         {
@@ -209,7 +208,7 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
 
         foreach (Building building in Building.buildings)
         {
-            if (building.tile.building.name != "PowerPlant")
+            if (building.tile.buildingType.name != "PowerPlant")
                 powerLimitOverall += building.powerLimit;
         }
 
@@ -282,8 +281,8 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
             GenWorld._instance.Resources[cost.Key] -= cost.Value;
         }
 
-        if (buildTile != null) buildTile.building = buildings[building];
-        else if (hoverTile != null) hoverTile.building = buildings[building];
+        if (buildTile != null) buildTile.buildingType = buildings[building];
+        else if (hoverTile != null) hoverTile.buildingType = buildings[building];
         buildingPanel.SetActive(false);
         buildTile = null;
     }

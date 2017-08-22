@@ -95,9 +95,9 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld>
             }
         }
 
-        tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().building = BuildingManager._instance.buildings["House"];
+        tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().buildingType = BuildingManager._instance.buildings["House"];
         tiles[worldWidth / 2][worldHeight / 2].GetComponent<Tile>().topBuilding.powerDraw = 1f;
-        tiles[(worldWidth / 2) + Random.Range(1, 3)][(worldHeight / 2) + Random.Range(1, 3)].GetComponent<Tile>().building = BuildingManager._instance.buildings["PowerPlant"];
+        tiles[(worldWidth / 2) + Random.Range(1, 3)][(worldHeight / 2) + Random.Range(1, 3)].GetComponent<Tile>().buildingType = BuildingManager._instance.buildings["PowerPlant"];
         
         generateOres(10, 20);
     }
@@ -170,7 +170,7 @@ public class GenWorld : MonoBehaviourSingleton<GenWorld>
     void generateOres(int minimum, int maximum) {
         for (int ores = 0; ores < Random.Range(minimum, maximum); ores++) {
             GameObject cTile = null;
-            while (cTile == null || cTile.GetComponent<Tile>().building != null || cTile.GetComponent<Tile>().ore != null) {
+            while (cTile == null || cTile.GetComponent<Tile>().buildingType != null || cTile.GetComponent<Tile>().ore != null) {
                 cTile = tiles[Random.Range(2, worldWidth - 2)][Random.Range(2, worldHeight - 2)];
             }
             cTile.GetComponent<Tile>().generateOre();

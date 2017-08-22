@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,12 +11,12 @@ public class Tile : MonoBehaviour
     /// <summary>
     /// Building on this tile
     /// </summary>
-    BuildingType Building;
-    public BuildingType building
+    BuildingType BuildingType;
+    public BuildingType buildingType
     {
         get
         {
-            return Building;
+            return BuildingType;
         }
 
         set
@@ -29,7 +29,7 @@ public class Tile : MonoBehaviour
             Destroy(top.GetComponent<BoxCollider>());
             top.transform.parent = transform;
             top.transform.localPosition = new Vector3(0, 0, -10);
-            Building = value;
+            BuildingType = value;
         }
     }
 
@@ -62,12 +62,6 @@ public class Tile : MonoBehaviour
             }
             else
             {
-                //GameObject fB = Instantiate(new GameObject("Forest_Background"));
-                //fB.transform.position = this.transform.position;
-                //fB.transform.Translate(new Vector3(0, 0, 1));
-                //fB.AddComponent<SpriteRenderer>().sprite = spriteRenderer.sprite;
-                //spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Ore/" + ore.type.ToString());
-
                 GameObject fB = new GameObject("Tree");
                 fB.transform.position = this.transform.position;
                 fB.transform.Translate(new Vector3(0, 0, -1));
@@ -81,7 +75,7 @@ public class Tile : MonoBehaviour
     {
         if (menuClose) { menuClose = false; return; }
         if (IsPointerOverUIObject() || Manager._instance.isGameOver) { mouseOver = false; return; }
-        if (building != null) return;
+        if (buildingType != null) return;
         if (BuildingManager._instance.buildTile != null) { BuildingManager._instance.buildTile = null; return; }
         if (mouseOver && GenWorld._instance.menu == null)
             BuildingManager._instance.buildTile = this;
@@ -100,7 +94,7 @@ public class Tile : MonoBehaviour
         if (IsPointerOverUIObject() || Manager._instance.isGameOver || Manager._instance.isMainMenu || Manager._instance.isPaused) { OnMouseExit(); return; }
         mouseOver = true;
 
-        if (building != null)
+        if (buildingType != null)
         {
             top.GetComponent<Building>().OnHover();
         }
@@ -115,7 +109,7 @@ public class Tile : MonoBehaviour
             }
 
             //building = GenWorld._instance.buildings["House"];
-            if (building != null)
+            if (buildingType != null)
             {
                 top.GetComponent<Building>().clickMenu(top, createMenu()); 
             }
@@ -127,7 +121,7 @@ public class Tile : MonoBehaviour
     public GameObject createMenu()
     {
         BuildingManager._instance.buildTile = null;
-        GameObject sprite = Resources.Load<GameObject>("Prefabs/UI/" + building.name + "Panel");
+        GameObject sprite = Resources.Load<GameObject>("Prefabs/UI/" + buildingType.name + "Panel");
 
         if (sprite != null)
         {
@@ -151,7 +145,7 @@ public class Tile : MonoBehaviour
         mouseOver = false;
         hover = false;
 
-        if (building != null)
+        if (buildingType != null)
         {
             top.GetComponent<Building>().OnHoverEnd();
         }
@@ -185,16 +179,32 @@ public class Tile : MonoBehaviour
     }
 
     public void generateOre() {
-        int orePercent = UnityEngine.Random.Range(0, 100);
 
-        if (orePercent > 50) {
+        if (!TileManager._instance.oreCounts.ContainsKey(OreTypes.Coal)) {
             ore = new Ore(OreTypes.Coal, 1000);
+            buildingType = BuildingManager._instance.buildings["Mine"];
+            TileManager._instance.oreCounts.Add(OreTypes.Coal,1);
         }
-        else if (orePercent > 30) {
+        else if (!TileManager._instance.oreCounts.ContainsKey(OreTypes.Copper)) {
             ore = new Ore(OreTypes.Copper, 1000);
+            TileManager._instance.oreCounts.Add(OreTypes.Copper, 1);
         }
-        else if (orePercent > 00) {
+        else if (!TileManager._instance.oreCounts.ContainsKey(OreTypes.Coal)) {
             ore = new Ore(OreTypes.Wood, 1000);
+            TileManager._instance.oreCounts.Add(OreTypes.Wood, 1);
+        }
+
+        if (ore == null) {
+            int orePercent = UnityEngine.Random.Range(0, 100);
+            if (orePercent > 50) {
+                ore = new Ore(OreTypes.Coal, 1000);
+            }
+            else if (orePercent > 30) {
+                ore = new Ore(OreTypes.Copper, 1000);
+            }
+            else if (orePercent > 00) {
+                ore = new Ore(OreTypes.Wood, 1000);
+            }
         }
         return;
     }

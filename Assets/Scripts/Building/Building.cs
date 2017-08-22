@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +8,7 @@ public class Building : MonoBehaviour
 {
     public static List<Building> buildings = new List<Building>();
     public Sprite sprite;
+    public BuildingType type;
     protected SpriteRenderer spriteRenderer;
     public Tile tile;
 
@@ -51,7 +52,7 @@ public class Building : MonoBehaviour
         bool plantExists = false;
 
         foreach (Building building in buildings)
-            if (building.tile.building.name == "PowerPlant")
+            if (building.tile.buildingType.name == "PowerPlant")
                 plantExists = true;
 
         if (plantExists)

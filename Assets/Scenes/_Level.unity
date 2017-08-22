@@ -1197,99 +1197,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 511875692}
---- !u!1 &545211426
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 545211427}
-  - component: {fileID: 545211430}
-  - component: {fileID: 545211429}
-  - component: {fileID: 545211428}
-  - component: {fileID: 545211431}
-  m_Layer: 0
-  m_Name: No
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &545211427
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 545211426}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 883540826}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &545211428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 545211426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c4d820714bf04640b4079c824c1454e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueAttachedTo: {fileID: 0}
-  scriptsToRun: []
-  secondsPerCharacter: 0.05
-  responseType: 0
-  yesResponseTree: {fileID: 0}
-  noResponseTree: {fileID: 0}
-  typingSoundScript: {fileID: 0}
-  sentence: You pressed no. Why?
---- !u!114 &545211429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 545211426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c04b493f31e27f49a4e9fec2c436be4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speakerName: Mr. Man
-  speakerImage: {fileID: 21300000, guid: 1532191f8dc250045869d3f7e294322a, type: 3}
-  pauseGame: 1
-  isCurrentlyDisplayed: 0
-  sentences:
-  - {fileID: 545211428}
---- !u!114 &545211430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 545211426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee160c4e0d149c44f9f51b2fd4f4c8ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue: {fileID: 545211429}
---- !u!114 &545211431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 545211426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d06d8c1a2f8213945b954c5bb6663eb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  structAttachedTo: {fileID: 0}
-  typingSound: {fileID: 0}
 --- !u!1 &556283665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,8 +1314,8 @@ MonoBehaviour:
   - {fileID: 631594690}
   secondsPerCharacter: 0.05
   responseType: 0
-  yesResponseTree: {fileID: 846293533}
-  noResponseTree: {fileID: 545211430}
+  yesResponseTree: {fileID: 0}
+  noResponseTree: {fileID: 0}
   typingSoundScript: {fileID: 0}
   sentence: This is your power. If you run out of power, it's game over, no matter
     how far you get!
@@ -2435,99 +2342,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 844028156}
---- !u!1 &846293529
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 846293530}
-  - component: {fileID: 846293533}
-  - component: {fileID: 846293532}
-  - component: {fileID: 846293531}
-  - component: {fileID: 846293534}
-  m_Layer: 0
-  m_Name: Yes
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &846293530
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 846293529}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 883540826}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &846293531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 846293529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c4d820714bf04640b4079c824c1454e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueAttachedTo: {fileID: 0}
-  scriptsToRun: []
-  secondsPerCharacter: 0.05
-  responseType: 0
-  yesResponseTree: {fileID: 0}
-  noResponseTree: {fileID: 0}
-  typingSoundScript: {fileID: 0}
-  sentence: You pressed yes!
---- !u!114 &846293532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 846293529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c04b493f31e27f49a4e9fec2c436be4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speakerName: Mr. Man
-  speakerImage: {fileID: 21300000, guid: 1532191f8dc250045869d3f7e294322a, type: 3}
-  pauseGame: 1
-  isCurrentlyDisplayed: 0
-  sentences:
-  - {fileID: 846293531}
---- !u!114 &846293533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 846293529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee160c4e0d149c44f9f51b2fd4f4c8ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue: {fileID: 846293532}
---- !u!114 &846293534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 846293529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d06d8c1a2f8213945b954c5bb6663eb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  structAttachedTo: {fileID: 0}
-  typingSound: {fileID: 0}
 --- !u!1 &867139923
 GameObject:
   m_ObjectHideFlags: 0
@@ -2676,36 +2490,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 720063233}
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &883540825
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 883540826}
-  m_Layer: 0
-  m_Name: Test Response Tree
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &883540826
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 883540825}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 707.40063, y: 388.47626, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 846293530}
-  - {fileID: 545211427}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5734,5 +5518,5 @@ Transform:
   - {fileID: 1912379694}
   - {fileID: 1876081650}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
