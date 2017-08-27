@@ -21,10 +21,28 @@ public class Tile : MonoBehaviour
 
         set
         {
+            if (value == null)
+            {
+                if (topBuilding.type.name == "House")
+                {
+                    Debug.LogError("Can't remove house.");
+                    return;
+                }
+
+                OnMouseExit();
+                Building.buildings.Remove(topBuilding);
+                topBuilding = null;
+                BuildingType = null;
+                Destroy(top);
+
+                return;
+            }
+
             top = Instantiate(tile);
             top.GetComponent<SpriteRenderer>().sprite = value.sprite;
             topBuilding = ((Building)top.AddComponent(value.script.GetType()));
             topBuilding.tile = this;
+            topBuilding.type = value;
             if (value.name == "House") if (BuildingManager._instance.houses.Count <= 1) topBuilding.powerDraw = 1;
             Destroy(top.GetComponent<BoxCollider>());
             top.transform.parent = transform;
@@ -144,6 +162,7 @@ public class Tile : MonoBehaviour
     {
         mouseOver = false;
         hover = false;
+        BuildingManager._instance.hoverTile = null;
 
         if (buildingType != null)
         {
@@ -164,6 +183,19 @@ public class Tile : MonoBehaviour
     {
         if (Manager._instance.isMainMenu) return;
 
+        if (Manager._instance.isPaused)
+        {
+            spriteRenderer.color = Color.white;
+
+            if (menuOpen && panel != null)
+            {
+                Destroy(panel);
+                menuOpen = false;
+            }
+
+            return;
+        }
+
         try
         {
             if ((hover && !IsPointerOverUIObject() || BuildingManager._instance.buildTile == this)) spriteRenderer.color = new Color(0, 0.5f, 0.5f, 0.7f);
@@ -172,11 +204,6 @@ public class Tile : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError("TILE ERROR! (" + e.Message + ") hover: " + hover + ", pointerOverUI: " + IsPointerOverUIObject() + ", GenWorld instance: " + GenWorld._instance);
-        }
-        if (Input.GetKeyDown(KeyCode.Escape) && menuOpen && panel != null)
-        {
-            Destroy(panel);
-            menuOpen = false;
         }
     }
 

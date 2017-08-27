@@ -38,15 +38,18 @@ public class InputManager : MonoBehaviourSingleton<InputManager>
     public KeyCode mineHotkey = KeyCode.W;
     public KeyCode powerPlantHotkey = KeyCode.E;
     public KeyCode labHotkey = KeyCode.R;
+    public KeyCode destroyHotkey = KeyCode.Delete;
 
     void Update()
     {
         if (Manager._instance.isGameOver || Manager._instance.isMainMenu || Manager._instance.isPaused) return;
 
-        if (Input.GetKey(cameraMoveUpKey)) if (UtilityManager._instance.GetOrthographicBounds().max.y < (GenWorld._instance.worldHeight + 2) * 1.28) Camera.main.transform.Translate(new Vector3(0, cameraMoveSpeed * Time.deltaTime));
-        if (Input.GetKey(cameraMoveDownKey)) if (UtilityManager._instance.GetOrthographicBounds().min.y > -2 * 1.28) Camera.main.transform.Translate(new Vector3(0, -cameraMoveSpeed * Time.deltaTime));
-        if (Input.GetKey(cameraMoveLeftKey)) if (UtilityManager._instance.GetOrthographicBounds().min.x > -2 * 1.28) Camera.main.transform.Translate(new Vector3(-cameraMoveSpeed * Time.deltaTime, 0));
-        if (Input.GetKey(cameraMoveRightKey)) if (UtilityManager._instance.GetOrthographicBounds().max.x < (GenWorld._instance.worldWidth + 2) * 1.28) Camera.main.transform.Translate(new Vector3(cameraMoveSpeed * Time.deltaTime, 0));
+        Bounds orthoBounds = UtilityManager._instance.GetOrthographicBounds();
+
+        if (Input.GetKey(cameraMoveUpKey)) if (orthoBounds.max.y < (GenWorld._instance.worldHeight + 2) * 1.28) Camera.main.transform.Translate(new Vector3(0, cameraMoveSpeed * Time.deltaTime));
+        if (Input.GetKey(cameraMoveDownKey)) if (orthoBounds.min.y > -2 * 1.28) Camera.main.transform.Translate(new Vector3(0, -cameraMoveSpeed * Time.deltaTime));
+        if (Input.GetKey(cameraMoveLeftKey)) if (orthoBounds.min.x > -2 * 1.28) Camera.main.transform.Translate(new Vector3(-cameraMoveSpeed * Time.deltaTime, 0));
+        if (Input.GetKey(cameraMoveRightKey)) if (orthoBounds.max.x < (GenWorld._instance.worldWidth + 2) * 1.28) Camera.main.transform.Translate(new Vector3(cameraMoveSpeed * Time.deltaTime, 0));
         if (Input.GetKey(cameraZoomOutKey)) Camera.main.orthographicSize += cameraZoomSpeed * Time.deltaTime;
         if (Input.GetKey(cameraZoomInKey)) Camera.main.orthographicSize -= cameraZoomSpeed * Time.deltaTime;
 
@@ -73,6 +76,11 @@ public class InputManager : MonoBehaviourSingleton<InputManager>
         if (Camera.main.orthographicSize > maximumZoomSize)
         {
             Camera.main.orthographicSize = maximumZoomSize;
+        }
+
+        if (Input.GetKey(destroyHotkey))
+        {
+            BuildingManager._instance.destroyBuildingOnTile();
         }
     }
 }

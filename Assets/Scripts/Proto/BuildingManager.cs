@@ -292,11 +292,19 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
         if (tile.ore == null)
         {
             if (building.name == "Lab") return false;
-            else if (building.name == "PowerPlant" && BuildingManager._instance.buildings["PowerPlant"].buildable) return true;
+            else if (building.name == "PowerPlant" && buildings["PowerPlant"].buildable) return true;
             else return false;
         }
         else if (building.name == "Mill" && (tile.ore != null && tile.ore.mine == MineType.Mill) && building.buildable) return true;
         else if (building.name == "Mine" && (tile.ore != null && tile.ore.mine == MineType.Shaft) && building.buildable) return true;
         else return false;
+    }
+
+    public void destroyBuildingOnTile()
+    {
+        if (hoverTile != null && hoverTile.buildingType != null)                                        
+        {
+            hoverTile.buildingType = null;
+        }
     }
 }
