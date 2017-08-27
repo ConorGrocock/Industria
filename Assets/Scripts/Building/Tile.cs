@@ -162,6 +162,8 @@ public class Tile : MonoBehaviour
 
     public void UpdateTile()
     {
+        if (Manager._instance.isMainMenu) return;
+
         try
         {
             if ((hover && !IsPointerOverUIObject() || BuildingManager._instance.buildTile == this)) spriteRenderer.color = new Color(0, 0.5f, 0.5f, 0.7f);
