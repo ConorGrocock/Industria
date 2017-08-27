@@ -60,7 +60,7 @@ public class PowerPlant : Building
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Copper, 1);
         required.Add(OreTypes.Wood, 10);
-        BuildingManager._instance.buildings.Add("PowerPlant", new BuildingType("PowerPlant", this, Resources.Load("Sprites/Building/PowerPlant/1", typeof(Sprite)) as Sprite, required, KeyCode.E));
+        BuildingManager._instance.buildings.Add("PowerPlant", new BuildingType("PowerPlant", this, Resources.Load("Sprites/Building/PowerPlant/1", typeof(Sprite)) as Sprite, required, InputManager._instance.powerPlantHotkey));
     }
 
     public bool menuDrawn = false;

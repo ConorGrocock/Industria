@@ -94,7 +94,7 @@ public class Mine : Building
     {
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Wood, 5);
-        BuildingManager._instance.buildings.Add("Mine", new BuildingType("Mine", this, Resources.Load("Sprites/Building/Mine/1", typeof(Sprite)) as Sprite, required, KeyCode.W, MineType.Shaft));
+        BuildingManager._instance.buildings.Add("Mine", new BuildingType("Mine", this, Resources.Load("Sprites/Building/Mine/1", typeof(Sprite)) as Sprite, required, InputManager._instance.mineHotkey, MineType.Shaft));
     }
 
     public override void OnHover()

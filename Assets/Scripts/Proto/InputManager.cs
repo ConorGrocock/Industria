@@ -33,6 +33,12 @@ public class InputManager : MonoBehaviourSingleton<InputManager>
     public KeyCode increaseGameSpeedKey = KeyCode.KeypadPlus;
     public KeyCode decreaseGameSpeedKey = KeyCode.KeypadMinus;
 
+    [Header("Hotkeys")]
+    public KeyCode millHotkey = KeyCode.Q;
+    public KeyCode mineHotkey = KeyCode.W;
+    public KeyCode powerPlantHotkey = KeyCode.E;
+    public KeyCode labHotkey = KeyCode.R;
+
     void Update()
     {
         if (Manager._instance.isGameOver || Manager._instance.isMainMenu || Manager._instance.isPaused) return;

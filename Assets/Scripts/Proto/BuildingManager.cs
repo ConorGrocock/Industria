@@ -194,7 +194,7 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
                 {
                     if (hoverTile.buildingType == null)
                     {
-                        if (bType.Value.buildable && UtilityManager._instance.canBuild(hoverTile, bType.Value))
+                        if (canBuild(hoverTile, bType.Value))
                         {
                             buildOnTile(bType.Key);
                         }
@@ -285,5 +285,18 @@ public class BuildingManager : MonoBehaviourSingleton<BuildingManager>
         else if (hoverTile != null) hoverTile.buildingType = buildings[building];
         buildingPanel.SetActive(false);
         buildTile = null;
+    }
+
+    public bool canBuild(Tile tile, BuildingType building)
+    {
+        if (tile.ore == null)
+        {
+            if (building.name == "Lab") return false;
+            else if (building.name == "PowerPlant" && BuildingManager._instance.buildings["PowerPlant"].buildable) return true;
+            else return false;
+        }
+        else if (building.name == "Mill" && (tile.ore != null && tile.ore.mine == MineType.Mill) && building.buildable) return true;
+        else if (building.name == "Mine" && (tile.ore != null && tile.ore.mine == MineType.Shaft) && building.buildable) return true;
+        else return false;
     }
 }

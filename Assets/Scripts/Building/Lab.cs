@@ -21,7 +21,7 @@ public class Lab : Building
         Dictionary<OreTypes, int> required = new Dictionary<OreTypes, int>();
         required.Add(OreTypes.Copper, 2);
         required.Add(OreTypes.Wood, 5);
-        BuildingManager._instance.buildings.Add("Lab", new BuildingType("Lab", this, Resources.Load("Sprites/Building/Lab/1", typeof(Sprite)) as Sprite, required, KeyCode.R));
+        BuildingManager._instance.buildings.Add("Lab", new BuildingType("Lab", this, Resources.Load("Sprites/Building/Lab/1", typeof(Sprite)) as Sprite, required, InputManager._instance.labHotkey));
     }
 
     public override void OnHover()
