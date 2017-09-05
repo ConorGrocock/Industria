@@ -33,34 +33,7 @@ public class MusicManager : MonoBehaviourSingleton<MusicManager>
         currentMusic.bypassReverbZones = true;
         currentMusic.playOnAwake = false;
 
-        int i = 0;
-
-        List<AudioClip> clipsToRemove = new List<AudioClip>();
-
-        foreach (AudioClip clip in musicList)
-        {
-            if (clip == null)
-            {
-                clipsToRemove.Add(clip);
-                Debug.LogError("[MusicManager] Audio clip " + i + " is null! Removing.");
-            }
-
-            i++;
-        }
-
-        foreach (AudioClip clip in clipsToRemove)
-        {
-            musicList.Remove(clip);
-        }
-
-        if (musicList.Count == 0)
-        {
-            noMusic = true;
-            Debug.LogError("[MusicManager] No music added to music list! Disabling.");
-            gameObject.SetActive(false);
-            return;
-        }
-
+        if (!AnyMusic()) return;
         PlayMusic();
     }
 
@@ -92,37 +65,11 @@ public class MusicManager : MonoBehaviourSingleton<MusicManager>
         }
 	}
 
-    void NextMusic()
+    private void NextMusic()
     {
         if (noMusic) return;
 
-        int i = 0;
-
-        List<AudioClip> clipsToRemove = new List<AudioClip>();
-
-        foreach (AudioClip clip in musicList)
-        {
-            if (clip == null)
-            {
-                clipsToRemove.Add(clip);
-                Debug.LogError("[MusicManager] Audio clip " + i + " is null! Removing.");
-            }
-
-            i++;
-        }
-
-        foreach (AudioClip clip in clipsToRemove)
-        {
-            musicList.Remove(clip);
-        }
-
-        if (musicList.Count == 0)
-        {
-            noMusic = true;
-            Debug.LogError("[MusicManager] No music added to music list! Disabling.");
-            gameObject.SetActive(false);
-            return;
-        }
+        if (!AnyMusic()) return;
 
         previousPointer = currentPointer;
 
@@ -155,6 +102,33 @@ public class MusicManager : MonoBehaviourSingleton<MusicManager>
     {
         if (noMusic) return;
 
+        if (!AnyMusic()) return;
+
+        if (musicList[currentPointer] != null)
+        {
+            currentMusic.clip = musicList[currentPointer];
+            currentMusic.Play();
+        }
+        else
+        {
+            Debug.LogError("[MusicManager] Music element " + currentPointer + " is null! Skipping.");
+            NextMusic();
+        }
+    }
+
+    public void AddMusic(AudioClip music)
+    {
+        musicList.Add(music);
+
+        if (noMusic)
+        {
+            noMusic = false;
+            gameObject.SetActive(true);
+        }
+    }
+
+    private bool AnyMusic()
+    {
         int i = 0;
 
         List<AudioClip> clipsToRemove = new List<AudioClip>();
@@ -180,29 +154,9 @@ public class MusicManager : MonoBehaviourSingleton<MusicManager>
             noMusic = true;
             Debug.LogError("[MusicManager] No music added to music list! Disabling.");
             gameObject.SetActive(false);
-            return;
+            return false;
         }
 
-        if (musicList[currentPointer] != null)
-        {
-            currentMusic.clip = musicList[currentPointer];
-            currentMusic.Play();
-        }
-        else
-        {
-            Debug.LogError("[MusicManager] Music element " + currentPointer + " is null! Skipping.");
-            NextMusic();
-        }
-    }
-
-    public void AddMusic(AudioClip music)
-    {
-        musicList.Add(music);
-
-        if (noMusic)
-        {
-            noMusic = false;
-            gameObject.SetActive(true);
-        }
+        return true;
     }
 }
