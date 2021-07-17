@@ -1,6 +1,6 @@
 # Industria
 
-This was our entry into the Ludum Dare game competition
+This was our entry into the Ludum Dare game competition. The competition is 72 hours for teams, so please excuse some of the more questionable code choices, they were made while we were rushed and sleep deprived. 
 
 Here is the game I made with 2 other people! As you will probably be able to tell, it’s our first time using Unity…
 
